@@ -39,6 +39,6 @@ def get_battery():
 
 if __name__ == '__main__':
     try:
-        SaveLocal()
+        get_battery()
     except rospy.ROSInterruptException:
         pass
