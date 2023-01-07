@@ -1,0 +1,3 @@
+#!C:\Users\andre\GitHub\Thesis-ROS-Packges\venv\Scripts\python.exe
+from rospy import rosconsole
+rosconsole.main()
