@@ -7,9 +7,6 @@ from GlobalSets.Mongo import Clients as MongoClient, DataBases as db, Collection
 import rospy
 from std_msgs.msg import String
 
-
-import
-
 def up2cloud():
     #node = rospy.Publisher('Upload2Cloud', String, queue_size=1)
     rospy.init_node('Upload2Cloud', anonymous=False)
@@ -30,7 +27,6 @@ def talker():
             "second": 'a'
         }
 
-
         result = MongoClient.LocalClient[db.dbBuffer][col.Battery].insert_one(teste)
 
 
@@ -41,6 +37,6 @@ def talker():
 
 if __name__ == '__main__':
     try:
-        up2cloud()
+        print("Hello")
     except rospy.ROSInterruptException:
         pass
