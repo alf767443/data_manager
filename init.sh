@@ -1,3 +1,3 @@
-# scr
+cd src
 chmod +x *
 

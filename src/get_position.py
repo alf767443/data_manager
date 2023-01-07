@@ -10,14 +10,14 @@ import rospy, bson, pymongo
 from std_msgs.msg import String
 
 ## What's the database?
-database = MongoClient.LocalClient[db.dbBuffer][col.Battery]
+database = MongoClient.LocalClient[db.dbBuffer][col.Position]
 
 # To fake data
 from random import random
 from datetime import datetime
 
-def get_battery():
-    rospy.init_node('getBattery', anonymous=False)
+def get_position():
+    rospy.init_node('getPosition', anonymous=False)
     rate = rospy.Rate(1)
 
 
@@ -43,6 +43,6 @@ def get_battery():
         
 if __name__ == '__main__':
     try:
-        get_battery()
+        get_position()
     except rospy.ROSInterruptException:
         pass
