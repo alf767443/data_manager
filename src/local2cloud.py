@@ -7,14 +7,16 @@ from GlobalSets.Mongo import Clients as MongoClient, DataBases as db, Collection
 import rospy
 from std_msgs.msg import String
 
+
+import
+
 def up2cloud():
     #node = rospy.Publisher('Upload2Cloud', String, queue_size=1)
     rospy.init_node('Upload2Cloud', anonymous=False)
     rate = rospy.Rate(10)
 
     while not rospy.is_shutdown():
-        print('Hello')
-
+        print('Node ok')
 
 
 def talker():
