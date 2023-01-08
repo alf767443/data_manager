@@ -1,4 +1,5 @@
 import pymongo
+from pymongo import collection
 from datetime import datetime
 
 # ---------------------------------------------------
@@ -38,8 +39,27 @@ class Collections:
     Log         = 'Log'
 
     #
-    Collections = [Battery, Position, Log]
+    Collections = [
+        {
+            'name'              : Battery,
+            'maxBufferSize'     : 2e6,      #bytes
+            'maxDashboardSize'  : 100       #Itens
+        },
+        {
+            'name'              : Position,
+            'maxBufferSize'     : 2e6,      #bytes
+            'maxDashboardSize'  : 100       #Itens
+        },
+        {
+            'name'              : Log,
+            'maxBufferSize'     : 2e6,      #bytes
+            'maxDashboardSize'  : 100       #Itens
+        }
+    ]
 
+# ---------------------------------------------------
+# FUNCTIONS
+# Log
 def log(logData:str):
     try:
         Clients.LocalClient[DataBases.dbDashboard][Collections.Log].insert_one({
@@ -48,3 +68,34 @@ def log(logData:str):
         })
     except:
         pass
+
+# Size of a collection
+def sizeOf(database: collection.Collection):
+    aggreation =  [
+        {
+            '$collStats': {
+                'storageStats': {}
+            }
+        }
+    ]
+    result = database.aggregate(aggreation)
+    return list(result)[0]['storageStats']['storageSize']
+
+# Delete a random item
+def delRandomItem(database: collection.Collection):
+    aggreation = [
+        {
+            '$sample': {
+                'size': 1
+            }
+        }
+    ]
+    result =  database.aggregate(aggreation)
+    while result._has_next():
+            temp = result.next()
+            try:
+                database.delete_one(temp).deleted_count
+            except Exception as e:
+                eStr    = str(e)
+                result  =  log(eStr)
+                print(eStr)

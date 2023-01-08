@@ -38,7 +38,7 @@ def uploadBase(database: str, collection: str):
                         }
                     },
                     {
-                        '$limit': 100
+                        '$limit': 1000
                     }
                 ])
                 while documents._has_next():
