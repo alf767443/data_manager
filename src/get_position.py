@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# license removed for brevity
 
 # Global imports
 from GlobalSets.Mongo import Clients as MongoClient, DataBases as db, Collections as col
@@ -33,8 +32,8 @@ def get_position():
                 "Y": randint(-5, 1000),
             },
             "Whell"      : {
-                "Left"  : randint(),
-                "Right" : randint()
+                "Left"  : randint(1,10),
+                "Right" : randint(1,10)
             }
         }
         ###############################

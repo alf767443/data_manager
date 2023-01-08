@@ -5,10 +5,16 @@ import pymongo
 # CLIENTS
 class Clients:
     # Local Client
-    LocalClient = pymongo.MongoClient('mongodb://localhost:27017/')
+    try:
+        LocalClient = pymongo.MongoClient('mongodb://localhost:27017/')
+    except:
+        pass
 
     # Cloud Client
-    CloudClient = pymongo.MongoClient("mongodb+srv://Admin:admin@cedri.hfunart.mongodb.net/?retryWrites=true&w=majority")
+    try:
+        CloudClient = pymongo.MongoClient("mongodb+srv://Admin:admin@cedri.hfunart.mongodb.net/?retryWrites=true&w=majority")
+    except:
+        pass
 
 # ---------------------------------------------------
 # DATABASES
@@ -34,4 +40,7 @@ class Collections:
     #
     Collections = [Battery, Position, Log]
 
-log = Clients.LocalClient[DataBases.dbDashboard][Collections.Log]
+try:
+    log = Clients.LocalClient[DataBases.dbDashboard][Collections.Log]
+except:
+    pass
