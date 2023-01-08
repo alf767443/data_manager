@@ -42,17 +42,20 @@ class Collections:
     Collections = [
         {
             'name'              : Battery,
-            'maxBufferSize'     : 2e4,      #bytes
+            'maxBufferSize'     : 2e5,      #bytes
+            'maxBufferCloud'    : 1e5,      #bytes
             'maxDashboardSize'  : 100       #Itens
         },
         {
             'name'              : Position,
-            'maxBufferSize'     : 2e4,      #bytes
+            'maxBufferSize'     : 2e5,      #bytes
+            'maxBufferCloud'    : 1e5,      #bytes
             'maxDashboardSize'  : 100       #Itens
         },
         {
             'name'              : Log,
-            'maxBufferSize'     : 2e4,      #bytes
+            'maxBufferSize'     : 1e2,      #bytes
+            'maxBufferCloud'    : 1e2,      #bytes
             'maxDashboardSize'  : 100       #Itens
         }
     ]
