@@ -1,5 +1,5 @@
 import pymongo
-
+from datetime import datetime
 
 # ---------------------------------------------------
 # CLIENTS
@@ -40,7 +40,11 @@ class Collections:
     #
     Collections = [Battery, Position, Log]
 
-try:
-    log = Clients.LocalClient[DataBases.dbDashboard][Collections.Log]
-except:
-    pass
+def log(logData:str):
+    try:
+        Clients.LocalClient[DataBases.dbDashboard][Collections.Log].insert_one({
+            "dateTime": datetime.now(),
+            "log": logData 
+        })
+    except:
+        pass

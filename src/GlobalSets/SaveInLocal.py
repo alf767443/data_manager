@@ -12,7 +12,7 @@ def localSave(database: collection.Collection, data: bson):
         result = database.insert_one(data)
     except Exception as e:
         eStr = str(e)
-        result =  log.insert_one(eStr)
+        result =  log(eStr)
         print(eStr)
     return result
 

@@ -12,13 +12,15 @@ import bson
 
 def uploadElement(document: dict, local: collection.Collection, cloud: collection.Collection):
     try:
-        if local.insert_one(document).acknowledged:
-            cloud.delete_one(document)
+        for upTry in range(0,5):
+            if MongoClient.CloudClient.is_primary and cloud.insert_one(document).acknowledged:
+                local.delete_one(document)
+                break
     except errors.DuplicateKeyError:
-        cloud.delete_one(document)
+        local.delete_one(document)
     except Exception as e:
         eStr = str(e)
-        log.insert_one(eStr)
+        log(eStr)
         print(eStr)  
 
 def uploadBase(database: str, collection: str):
@@ -28,7 +30,7 @@ def uploadBase(database: str, collection: str):
     except:
         return
     try:
-        if MongoClient.CloudClient.is_primary and local.count_documents(filter={}):
+        if MongoClient.CloudClient.is_primary and local.count_documents(filter={}) > 0:
                 documents = local.aggregate([
                     {
                         '$sort': {
@@ -44,5 +46,5 @@ def uploadBase(database: str, collection: str):
                        
     except Exception as e:
         eStr = str(e)
-        log.insert_one(eStr)
+        log(eStr)
         print(eStr)
