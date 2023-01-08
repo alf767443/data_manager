@@ -7,8 +7,8 @@ import GlobalSets.l2c_functions as l2c
 import rospy
 from std_msgs.msg import String
 
-def bufferSizeKeeper():
-    rospy.init_node('bufferSizeKeeper', anonymous=False)
+def bufferSizeManager():
+    rospy.init_node('bufferSizeManager', anonymous=False)
     rate = rospy.Rate(1) # 10hz
     mongodb_databases = [MongoClient.LocalClient, MongoClient.CloudClient]
     while not rospy.is_shutdown():  
@@ -24,6 +24,6 @@ def bufferSizeKeeper():
 
 if __name__ == '__main__':
     try:
-        bufferSizeKeeper()
+        bufferSizeManager()
     except rospy.ROSInterruptException:
         pass
