@@ -2,41 +2,60 @@
 # license removed for brevity
 
 # Global imports
-from GlobalSets.Mongo import Clients as MongoClient, DataBases as db, Collections as col
+from GlobalSets.Mongo import Clients as MongoClient, DataBases as db, Collections as col, log
 
 import rospy
 from std_msgs.msg import String
 
-def up2cloud():
-    #node = rospy.Publisher('Upload2Cloud', String, queue_size=1)
-    rospy.init_node('Upload2Cloud', anonymous=False)
-    rate = rospy.Rate(10)
+# Import librarys
+from pymongo import collection, errors
+import bson
 
-    while not rospy.is_shutdown():
-        print('Node ok')
+def local2cloud():
+    rospy.init_node('local2cloud', anonymous=True)
+    rate = rospy.Rate(1) # 10hz
 
-
-def talker():
-    pub = rospy.Publisher('chatter', String, queue_size=10)
-    rospy.init_node('talker', anonymous=True)
-    rate = rospy.Rate(10) # 10hz
-
-    while not rospy.is_shutdown():
-        teste = {
-            "first": 1,
-            "second": 'a'
-        }
-
-        result = MongoClient.LocalClient[db.dbBuffer][col.Battery].insert_one(teste)
-
-
-        
-        rospy.loginfo(str(result))
-        pub.publish(str(result))
+    while not rospy.is_shutdown():   
+        for collection in col.Collections:
+            uploadBase(database=db.dbBuffer, collection=collection)
         rate.sleep()
 
 if __name__ == '__main__':
     try:
-        talker()
+        local2cloud()
     except rospy.ROSInterruptException:
         pass
+
+def uploadElement(document: dict, local: collection.Collection, cloud: collection.Collection):
+    try:
+        if local.insert_one(document).acknowledged:
+            cloud.delete_one(document)
+    except errors.DuplicateKeyError:
+        cloud.delete_one(document)
+    except Exception as e:
+        eStr = str(e)
+        log.insert_one(eStr)
+        print(eStr)  
+
+def uploadBase(database: str, collection: str):
+    local = MongoClient.LocalClient[database][collection]
+    cloud = MongoClient.CloudClient[database][collection]
+    try:
+        if MongoClient.CloudClient.is_primary and local.count_documents(filter={}):
+                documents = local.aggregate([
+                    {
+                        '$sort': {
+                            'dateTime': -1
+                        }
+                    },
+                    {
+                        '$limit': 100
+                    }
+                ])
+                while documents._has_next():
+                    uploadElement(document=documents.next(), local=local, cloud=cloud)
+                       
+    except Exception as e:
+        eStr = str(e)
+        log.insert_one(eStr)
+        print(eStr)

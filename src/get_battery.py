@@ -10,7 +10,7 @@ import rospy, bson, pymongo
 from std_msgs.msg import String
 
 ## What's the database?
-database = MongoClient.LocalClient[db.dbBuffer][col.Battery]
+database = MongoClient.LocalClient[db.dbBuffer][col.Position]
 
 # To fake data
 from random import random
@@ -27,11 +27,11 @@ def get_battery():
         ###############################
         # Fake data generator
         data = {
-            "dateTime": datetime.now(),
-            "Voltage": random()*15,
-            "Current": random()*5,
-            "Percent": random(),
-            "Temperature": random()*100
+            "dateTime"      : datetime.now(),
+            "Voltage"       : random()*15,
+            "Current"       : random()*5,
+            "Percent"       : random(),
+            "Temperature"   : random()*100
         }
         ###############################
 

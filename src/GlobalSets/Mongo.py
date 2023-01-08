@@ -27,3 +27,11 @@ class Collections:
 
     # Collection position
     Position    = 'Position_Data'
+
+    # Collection log
+    Log         = 'Log'
+
+    #
+    Collections = [Battery, Position, Log]
+
+log = Clients.LocalClient[DataBases.dbDashboard][Collections.Log]

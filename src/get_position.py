@@ -13,7 +13,7 @@ from std_msgs.msg import String
 database = MongoClient.LocalClient[db.dbBuffer][col.Position]
 
 # To fake data
-from random import random
+from random import random, randint
 from datetime import datetime
 
 def get_position():
@@ -27,11 +27,15 @@ def get_position():
         ###############################
         # Fake data generator
         data = {
-            "dateTime": datetime.now(),
-            "Voltage": random()*15,
-            "Current": random()*5,
-            "Percent": random(),
-            "Temperature": random()*100
+            "dateTime"      : datetime.now(),
+            "Global"        : {
+                "X": randint(-5, 1000),
+                "Y": randint(-5, 1000),
+            },
+            "Whell"      : {
+                "Left"  : randint(),
+                "Right" : randint()
+            }
         }
         ###############################
 
