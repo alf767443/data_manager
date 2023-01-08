@@ -1,6 +1,6 @@
 #!C:\Users\andre\GitHub\Thesis-ROS-Packges\venv\Scripts\python.exe
 
-from __future__ import print_function
+from __future__ import rospy.loginfo_function
 import argparse
 import sys
 import os
@@ -46,7 +46,7 @@ def main():
             elif len(results) == 0:
                 raise RuntimeError('Could not find any path, checked the following paths:\n%s' % '\n'.join(checked))
         if results:
-            print('\n'.join(results))
+            rospy.loginfo('\n'.join(results))
 
     except Exception as e:
         sys.exit(str(e))

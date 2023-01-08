@@ -13,11 +13,10 @@ import bson
 
 def local2cloud():
     rospy.init_node('local2cloud', anonymous=False)
-    rate = rospy.Rate(1) # 10hz
-
+    rate = rospy.Rate(1) 
     while not rospy.is_shutdown():   
         for collection in col.Collections:
-            l2c.uploadBase(database=db.dbBuffer, collection=collection)
+            l2c.uploadBase(database=db.dbBuffer, collection=collection['name'])
         rate.sleep()
 
 if __name__ == '__main__':

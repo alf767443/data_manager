@@ -20,31 +20,35 @@ def uploadElement(document: dict, local: collection.Collection, cloud: collectio
         local.delete_one(document)
     except Exception as e:
         eStr = str(e)
-        log(eStr)
-        print(eStr)  
+        rospy.loginfo(eStr)  
 
 def uploadBase(database: str, collection: str):
     try:
         local = MongoClient.LocalClient[database][collection]
-        cloud = MongoClient.CloudClient[database][collection]
-    except:
+    except Exception as e:
+        eStr = str(e)
+        rospy.loginfo(eStr)
         return
     try:
+        cloud = MongoClient.CloudClient[database][collection]
+    except Exception as e:
+        return
+
+    try:
         if MongoClient.CloudClient.is_primary and local.count_documents(filter={}) > 0:
-                documents = local.aggregate([
-                    {
-                        '$sort': {
-                            'dateTime': -1
-                        }
-                    },
-                    {
-                        '$limit': 1000
+            documents = local.aggregate([
+                {
+                    '$sort': {
+                        'dateTime': -1
                     }
-                ])
-                while documents._has_next():
-                    uploadElement(document=documents.next(), local=local, cloud=cloud)
+                },
+                {
+                    '$limit': 1000
+                }
+            ])
+            while documents._has_next():
+                uploadElement(document=documents.next(), local=local, cloud=cloud)
                        
     except Exception as e:
         eStr = str(e)
-        log(eStr)
-        print(eStr)
+        rospy.loginfo(eStr)

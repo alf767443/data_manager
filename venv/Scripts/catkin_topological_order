@@ -1,6 +1,6 @@
 #!C:\Users\andre\GitHub\Thesis-ROS-Packges\venv\Scripts\python.exe
 
-from __future__ import print_function
+from __future__ import rospy.loginfo_function
 import argparse
 import os
 import sys
@@ -43,11 +43,11 @@ def main():
             sys.exit('The workspace contains packages with a circular dependency: %s' % package)
 
         if args.only_folders:
-            print('%s' % path)
+            rospy.loginfo('%s' % path)
         elif args.only_names:
-            print('%s' % package.name)
+            rospy.loginfo('%s' % package.name)
         else:
-            print('%s %s' % (package.name, path))
+            rospy.loginfo('%s %s' % (package.name, path))
 
 if __name__ == '__main__':
     main()

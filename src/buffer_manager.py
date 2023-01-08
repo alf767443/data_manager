@@ -9,18 +9,36 @@ from std_msgs.msg import String
 
 def bufferSizeManager():
     rospy.init_node('bufferSizeManager', anonymous=False)
-    rate = rospy.Rate(1) # 10hz
-    mongodb_databases = [MongoClient.LocalClient, MongoClient.CloudClient]
-    while not rospy.is_shutdown():  
-        for database in mongodb_databases:
-            for collection in col.Collections:
-                mongodb_collection = database[db.dbBuffer][collection['name']] 
-                while sizeOf(mongodb_collection) > collection['maxBufferSize']:
-                    try:
-                        delRandomItem(mongodb_collection)
-                    except:
-                        pass            
-        rate.sleep()
+    rate = rospy.Rate(1) 
+    while not rospy.is_shutdown(): 
+        try:
+            mongodb_databases = [MongoClient.LocalClient]
+        except Exception as e:
+            eStr    = str(e)
+            rospy.loginfo(eStr) 
+            continue
+        try:
+            mongodb_databases.append(MongoClient.CloudClient)
+        except:
+            mongodb_databases
+        try: 
+            for database in mongodb_databases:
+                for collection in col.Collections:
+                    mongodb_collection = database[db.dbBuffer][collection['name']] 
+                    delTry = 0
+                    while sizeOf(mongodb_collection) > collection['maxBufferSize'] and delTry < 50:
+                        delTry += 1
+                        try:
+                            delRandomItem(mongodb_collection)
+                        except Exception as e:
+                            eStr    = str(e)
+                            rospy.loginfo(eStr)
+                            continue            
+            rate.sleep()
+        except Exception as e:
+            eStr    = str(e)
+            rospy.loginfo(eStr)
+            continue
 
 if __name__ == '__main__':
     try:

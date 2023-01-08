@@ -1,6 +1,6 @@
 #!C:\Users\andre\GitHub\Thesis-ROS-Packges\venv\Scripts\python.exe
 
-from __future__ import print_function
+from __future__ import rospy.loginfo_function
 import argparse
 import os
 import sys

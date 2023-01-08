@@ -1,4 +1,4 @@
-import pymongo
+import pymongo, rospy
 from pymongo import collection
 from datetime import datetime
 
@@ -42,17 +42,17 @@ class Collections:
     Collections = [
         {
             'name'              : Battery,
-            'maxBufferSize'     : 2e6,      #bytes
+            'maxBufferSize'     : 2e4,      #bytes
             'maxDashboardSize'  : 100       #Itens
         },
         {
             'name'              : Position,
-            'maxBufferSize'     : 2e6,      #bytes
+            'maxBufferSize'     : 2e4,      #bytes
             'maxDashboardSize'  : 100       #Itens
         },
         {
             'name'              : Log,
-            'maxBufferSize'     : 2e6,      #bytes
+            'maxBufferSize'     : 2e4,      #bytes
             'maxDashboardSize'  : 100       #Itens
         }
     ]
@@ -62,7 +62,7 @@ class Collections:
 # Log
 def log(logData:str):
     try:
-        Clients.LocalClient[DataBases.dbDashboard][Collections.Log].insert_one({
+        Clients.LocalClient[DataBases.dbBuffer][Collections.Log].insert_one({
             "dateTime": datetime.now(),
             "log": logData 
         })
@@ -78,8 +78,13 @@ def sizeOf(database: collection.Collection):
             }
         }
     ]
-    result = database.aggregate(aggreation)
-    return list(result)[0]['storageStats']['storageSize']
+    try:
+        result = database.aggregate(aggreation)
+        result = list(result)[0]['storageStats']['size']
+    except Exception as e:
+                eStr    = str(e)
+                rospy.loginfo(eStr)
+    return result
 
 # Delete a random item
 def delRandomItem(database: collection.Collection):
@@ -97,5 +102,4 @@ def delRandomItem(database: collection.Collection):
                 database.delete_one(temp).deleted_count
             except Exception as e:
                 eStr    = str(e)
-                result  =  log(eStr)
-                print(eStr)
+                rospy.loginfo(eStr)

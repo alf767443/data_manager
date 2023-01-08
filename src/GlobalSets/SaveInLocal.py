@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# ROS import
+import rospy
+
 # Global imports
 from GlobalSets.Mongo import Clients as MongoClient, DataBases as db, Collections as col, log, sizeOf
 
@@ -13,7 +16,6 @@ def localSave(database: collection.Collection, data: bson):
         result  = database.insert_one(data)
     except Exception as e:
         eStr    = str(e)
-        result  =  log(eStr)
-        print(eStr)
+        rospy.loginfo(eStr)
     return result
 

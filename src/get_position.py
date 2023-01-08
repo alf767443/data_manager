@@ -20,7 +20,6 @@ def get_position():
     rate = rospy.Rate(1)
 
 
-
     while not rospy.is_shutdown():
         
         ###############################
@@ -40,7 +39,6 @@ def get_position():
 
         result = localSave(database=database, data=data)
 
-        rospy.loginfo(str(result))
         rate.sleep()
 
         
