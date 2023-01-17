@@ -7,7 +7,7 @@ from datetime import datetime
 class Clients:
     # Local Client
     try:
-        LocalClient = pymongo.MongoClient('mongodb://localhost:27017/')
+        LocalClient = pymongo.MongoClient('mongodb://localhost:27017/',)
     except:
         pass
 
