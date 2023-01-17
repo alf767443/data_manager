@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
 
 # Global imports
-from GlobalSets.Mongo import Clients as MongoClient, DataBases as db, Collections as col
-from GlobalSets.SaveInLocal import localSave
+from GlobalSets.Mongo import DataSource as Source, Clients as MongoClient, DataBases as db, Collections as col
+from GlobalSets.localSave import createFile
 
 # Import librarys
 import rospy, bson, pymongo
 from std_msgs.msg import String
 
-## What's the database?
-database = MongoClient.LocalClient[db.dbBuffer][col.Battery]
+## What is the database path
+dataPath = {
+    'dataSource': Source.CeDRI_UGV, 
+    'dataBase': db.dbBuffer, 
+    'collection': col.Battery
+}
 
 # To fake data
 from random import random
@@ -34,8 +38,13 @@ def get_battery():
         }
         ###############################
 
-        result = localSave(database=database, data=data)
-
+        try:
+            if not MongoClient.RemoteUnitClient[dataPath['dataBase']][dataPath['collection']].insert_one(data).acknowledged: 
+                createFile(dataPath=dataPath, content=data)
+        except Exception as e:
+            createFile(dataPath=dataPath, content=data)
+            print(e)
+            
         rate.sleep()
 
         

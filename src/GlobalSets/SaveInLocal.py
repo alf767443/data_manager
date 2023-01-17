@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# depreciated
 
 # ROS import
 import rospy

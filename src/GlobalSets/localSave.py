@@ -1,5 +1,7 @@
+#!/usr/bin/env python3
+
 import json, datetime, bson, os, random
-import Mongo
+import GlobalSets.Mongo as Mongo
 
 ## Create the path
 path =  os.path.expanduser('~')+'/UGV_tempData/'
@@ -37,27 +39,21 @@ def getFiles():
     ## Get files
     files = sorted(os.listdir(path=path), reverse=True)
     ## Read files
-    for file in files:
-        get = open(file=path+file, mode='rb')
-        data = bson.BSON.decode(get.read())
-        print(data['dataPath'])
-        print(data['content'])
-        print(file)
-        get.close()
-        if os.path.exists(path=path+file):
-            os.remove(path+file)
-            #print(1)
+    try:
+        while Mongo.Clients.RemoteUnitClient.is_primary and len(files) > 0:
+            for file in files:
+                ## Read file
+                get = open(file=path+file, mode='rb')
+                data = bson.BSON.decode(get.read())
+                dataPath = data['dataPath']
+                content = data['content']
+                ## Send to Remote Unit
+                if Mongo.Clients.RemoteUnitClient[dataPath['dataBase']][dataPath['collection']].insert_one(content).acknowledged:
+                    get.close()
+                    if os.path.exists(path=path+file):
+                        os.remove(path+file)
+            files = sorted(os.listdir(path=path), reverse=True)
+    except Exception as e:
+        print(e)
+        return False
     return True
-
-
-
-data = {
-            "dateTime"      : datetime.datetime.now(),
-            "Voltage"       : random.random()*15,
-            "Current"       : random.random()*5,
-            "Percent"       : random.random(),
-            "Temperature"   : random.random()*100
-        }
-
-createFile({'dataSource': 'CeDRI_UGV', 'dataBase': 'CeDRI_UGV_buffer', 'collection': 'Battery_Data'},content=data)
-getFiles()
