@@ -1,3 +1,1 @@
-cd src
-chmod +x *
-
+source venv/bin/activate

@@ -1,4 +1,4 @@
-import pymongo, rospy
+import pymongo #rospy
 from pymongo import collection
 from datetime import datetime
 
@@ -14,6 +14,12 @@ class Clients:
     # Cloud Client
     try:
         CloudClient = pymongo.MongoClient("mongodb+srv://Admin:admin@cedri.hfunart.mongodb.net/?retryWrites=true&w=majority")
+    except:
+        pass
+
+    # Cloud Client
+    try:
+        RemoteUnitClient = pymongo.MongoClient('mongodb://localhost:27017/')
     except:
         pass
 
@@ -86,7 +92,7 @@ def sizeOf(database: collection.Collection):
         result = list(result)[0]['storageStats']['size']
     except Exception as e:
                 eStr    = str(e)
-                rospy.loginfo(eStr)
+                #rospy.loginfo(eStr)
     return result
 
 # Delete a random item
@@ -105,4 +111,4 @@ def delRandomItem(database: collection.Collection):
                 database.delete_one(temp).deleted_count
             except Exception as e:
                 eStr    = str(e)
-                rospy.loginfo(eStr)
+                #rospy.loginfo(eStr)
