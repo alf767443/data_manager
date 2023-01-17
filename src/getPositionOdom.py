@@ -44,9 +44,9 @@ class getPosition():
 
         (raw, pitch, yaw) = euler_from_quaternion([or_x, or_y, or_z, or_w])
         data = {
-
-                'x'     : x,
-                'y'     : y,
+                'dateTime'  : datetime.now(),
+                'x'         : x,
+                'y'         : y,
                 'orient': 
                 {
                     'raw'   : raw,
