@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import json, datetime, bson, os, random
+import json, datetime, bson, os, random, pymongo
 import GlobalSets.Mongo as Mongo
 
 ## Create the path
@@ -48,12 +48,22 @@ def getFiles():
                 dataPath = data['dataPath']
                 content = data['content']
                 ## Send to Remote Unit
-                if Mongo.Clients.RemoteUnitClient[dataPath['dataBase']][dataPath['collection']].insert_one(content).acknowledged:
+                if sendFile(Client=Mongo.Clients.RemoteUnitClient, dataPath=dataPath, content=content):
                     get.close()
                     if os.path.exists(path=path+file):
                         os.remove(path+file)
             files = sorted(os.listdir(path=path), reverse=True)
+        return True
     except Exception as e:
         print(e)
         return False
-    return True
+
+def sendFile(Client: pymongo.MongoClient, dataPath: bson, content: bson):
+    try:
+        ## Check if dataPath is valid
+        dataSource = dataPath['dataSource']
+        dataBase = dataPath['dataBase']
+        collection = dataPath['collection']
+        return Client[dataBase][collection].insert_one(content).acknowledged
+    except Exception as e:
+        return False
