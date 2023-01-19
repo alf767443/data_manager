@@ -7,10 +7,11 @@ import rospy
 class bufferManager():
     def __init__(self) -> None:
         rospy.init_node('bufferManager', anonymous=False)
-
-        print(getFiles(), end='\r')
-
-        rospy.spin()
+        rate = rospy.Rate(1)
+        
+        while not rospy.is_shutdown():
+            print(getFiles(), end='\r')
+            rate.sleep() 
 
 if __name__ == '__main__':
     try:

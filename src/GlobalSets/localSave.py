@@ -58,6 +58,7 @@ def getFiles():
         get.close()
         if os.path.exists(path=path+file):
             os.remove(path+file)
+        return False
     except Exception as e:
         print(e)
         return False
