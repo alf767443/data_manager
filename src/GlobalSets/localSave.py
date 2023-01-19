@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 import json, datetime, bson, os, random, pymongo
-from pymongo import errors
+from pymongo import errors as pymongo_erros
+from bson import errors as bson_errors
 import GlobalSets.Mongo as Mongo
 
 ## Create the path
@@ -48,16 +49,16 @@ def getFiles():
                 data = bson.BSON.decode(get.read())
                 dataPath = data['dataPath']
                 content = data['content']
-                print(data)
-                print(dataPath)
-                print(content)
                 ## Send to Remote Unit
                 if Mongo.Clients.RemoteUnitClient[dataPath['dataBase']][dataPath['collection']].insert_one(content).acknowledged:
                     get.close()
                     if os.path.exists(path=path+file):
                         os.remove(path+file)
             files = sorted(os.listdir(path=path), reverse=True)
-    except errors.DuplicateKeyError:
+    except bson_errors.BSONError:
+        print('here')
+
+    except pymongo_erros.DuplicateKeyError:
         get.close()
         if os.path.exists(path=path+file):
             os.remove(path+file)
@@ -74,7 +75,7 @@ def sendFile(Client: pymongo.MongoClient, dataPath: bson, content: bson):
         dataBase = dataPath['dataBase']
         collection = dataPath['collection']
         return Client[dataBase][collection].insert_one(content).acknowledged
-    except errors.DuplicateKeyError:
+    except pymongo_erros.DuplicateKeyError:
         return True
     except Exception as e:
         return False
