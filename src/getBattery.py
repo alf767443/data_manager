@@ -26,23 +26,24 @@ class getBattery():
     def __init__(self) -> None:
         rospy.init_node('getBattery', anonymous=False)
 
-        rospy.Subscriber('/battery_state', BatteryState, self.callback_battery)
-        
+        rospy.Subscriber('/battery_state', BatteryState, self.callback)
+
         rospy.spin()
-        rospy.sleep(rospy.Rate(1))
 
 
-    def callback_battery(self, msg):
+    def callback(self, msg):
         data = {
             'dateTime'      : datetime.now(),
             'voltage'       : msg.voltage,
             'current'       : msg.current,
-            'percentage'    : msg.percent
-
+            'percentage'    : msg.percentage
         }
         try:
-            if sendFile(Client=MongoClient.RemoteUnitClient, dataPath=dataPath, content=data):
+            if not sendFile(Client=MongoClient.RemoteUnitClient, dataPath=dataPath, content=data):
                 createFile(dataPath=dataPath, content=data)
+            else:
+                rate = rospy.Rate(1)
+                rate.sleep()
         except Exception as e:
             createFile(dataPath=dataPath, content=data)
             print(e)

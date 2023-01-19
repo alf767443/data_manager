@@ -7,7 +7,7 @@ from datetime import datetime
 class Clients:
     # Local Client
     try:
-        LocalClient = pymongo.MongoClient('mongodb://localhost:27017/')
+        LocalClient = pymongo.MongoClient('mongodb://localhost:27017/',)
     except:
         pass
 
@@ -19,7 +19,7 @@ class Clients:
 
     # Cloud Client
     try:
-        RemoteUnitClient = pymongo.MongoClient('mongodb://localhost:27017/')
+        RemoteUnitClient = pymongo.MongoClient('mongodb://194.210.89.236:27017/')
     except:
         pass
 
@@ -42,13 +42,19 @@ class DataBases:
 # COLLECTIONS
 class Collections:
     # Collection battery
-    Battery     = 'Battery_Data'
+    Battery         = 'Battery_Data'
+
+    # Collection position odometry
+    PositionOdom    = 'PositionOdom_Data'
+
+    # Collection position amcl
+    PositionAMCL    = 'PositionAMCL_Data'
 
     # Collection position
-    Position    = 'Position_Data'
+    Motor           = 'Motor_Data'
 
     # Collection log
-    Log         = 'Log'
+    Log             = 'Log'
 
     #
     Collections = [
@@ -59,7 +65,19 @@ class Collections:
             'maxDashboardSize'  : 100       #Itens
         },
         {
-            'name'              : Position,
+            'name'              : PositionOdom,
+            'maxBufferSize'     : 2e5,      #bytes
+            'maxBufferCloud'    : 1e5,      #bytes
+            'maxDashboardSize'  : 100       #Itens
+        },
+        {
+            'name'              : PositionAMCL,
+            'maxBufferSize'     : 2e5,      #bytes
+            'maxBufferCloud'    : 1e5,      #bytes
+            'maxDashboardSize'  : 100       #Itens
+        },
+        {
+            'name'              : Motor,
             'maxBufferSize'     : 2e5,      #bytes
             'maxBufferCloud'    : 1e5,      #bytes
             'maxDashboardSize'  : 100       #Itens

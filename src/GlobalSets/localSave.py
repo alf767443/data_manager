@@ -64,6 +64,13 @@ def sendFile(Client: pymongo.MongoClient, dataPath: bson, content: bson):
         dataSource = dataPath['dataSource']
         dataBase = dataPath['dataBase']
         collection = dataPath['collection']
+<<<<<<< HEAD
         return Client[dataBase][collection].insert_one(content).acknowledged
     except Exception as e:
         return False
+=======
+        if Client.is_primary:
+            return Client[dataBase][collection].insert_one(content).acknowledged
+    except Exception as e:
+        return False
+>>>>>>> d3216f61e4abe9acc3130afbbcd061225894680a
