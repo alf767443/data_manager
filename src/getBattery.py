@@ -41,7 +41,7 @@ class getBattery():
         try:
             if not sendFile(Client=MongoClient.RemoteUnitClient, dataPath=dataPath, content=data):
                 createFile(dataPath=dataPath, content=data)
-            else
+            else:
                 rate = rospy.Rate(1)
                 rate.sleep()
         except Exception as e:
