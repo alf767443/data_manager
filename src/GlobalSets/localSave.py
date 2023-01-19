@@ -45,6 +45,7 @@ def getFiles():
                 ## Read file
                 get = open(file=path+file, mode='rb')
                 data = bson.BSON.decode(get.read())
+                print(data)
                 dataPath = data['dataPath']
                 content = data['content']
                 ## Send to Remote Unit
