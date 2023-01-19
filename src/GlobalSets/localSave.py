@@ -54,6 +54,10 @@ def getFiles():
                     if os.path.exists(path=path+file):
                         os.remove(path+file)
             files = sorted(os.listdir(path=path), reverse=True)
+    except errors.DuplicateKeyError:
+        get.close()
+        if os.path.exists(path=path+file):
+            os.remove(path+file)
     except Exception as e:
         print(e)
         return False
