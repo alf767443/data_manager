@@ -45,19 +45,18 @@ def getFiles():
                 ## Read file
                 get = open(file=path+file, mode='rb')
                 data = bson.BSON.decode(get.read())
-                print(data)
                 dataPath = data['dataPath']
                 content = data['content']
                 ## Send to Remote Unit
-                if sendFile(Client=Mongo.Clients.RemoteUnitClient, dataPath=dataPath, content=content):
+                if Mongo.Clients.RemoteUnitClient[dataPath['dataBase']][dataPath['collection']].insert_one(content).acknowledged:
                     get.close()
                     if os.path.exists(path=path+file):
                         os.remove(path+file)
             files = sorted(os.listdir(path=path), reverse=True)
-        return True
     except Exception as e:
         print(e)
         return False
+    return True
 
 def sendFile(Client: pymongo.MongoClient, dataPath: bson, content: bson):
     try:
