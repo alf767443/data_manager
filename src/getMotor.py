@@ -49,6 +49,8 @@ class getBattery():
                    'PWM'    : msg.rightPwmDrive
                 }
         }
+        ## Temporary debug
+        print(data)
         try:
             if not sendFile(Client=MongoClient.RemoteUnitClient, dataPath=dataPath, content=data):
                 createFile(dataPath=dataPath, content=data)

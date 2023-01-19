@@ -38,6 +38,8 @@ class getBattery():
             'current'       : msg.current,
             'percentage'    : msg.percentage
         }
+        ## Temporary debug
+        print(data)
         try:
             if not sendFile(Client=MongoClient.RemoteUnitClient, dataPath=dataPath, content=data):
                 createFile(dataPath=dataPath, content=data)
