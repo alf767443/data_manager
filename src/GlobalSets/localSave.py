@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import json, datetime, bson, os, random, pymongo
+from pymongo import errors
 import GlobalSets.Mongo as Mongo
 
 ## Create the path
@@ -65,5 +66,7 @@ def sendFile(Client: pymongo.MongoClient, dataPath: bson, content: bson):
         dataBase = dataPath['dataBase']
         collection = dataPath['collection']
         return Client[dataBase][collection].insert_one(content).acknowledged
+    except errors.DuplicateKeyError:
+        return True
     except Exception as e:
         return False
