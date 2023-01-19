@@ -9,13 +9,13 @@ import rospy, bson, pymongo
 from std_msgs.msg import String
 
 # Import listner
-from sensor_msgs.msg import BatteryState
+from ubiquity_motor.msg import MotorState
 
 ## What is the database path
 dataPath = {
     'dataSource': Source.CeDRI_UGV, 
     'dataBase': db.dbBuffer, 
-    'collection': col.Battery
+    'collection': col.Motor
 }
 
 # To fake data
@@ -24,12 +24,9 @@ from datetime import datetime
 
 class getBattery():
     def __init__(self) -> None:
-        rospy.init_node('getBattery', anonymous=False)
+        rospy.init_node('getMotors', anonymous=False)
 
-        rospy.Subscriber('/battery_state', BatteryState, self.callback)
-        
-        rate = rospy.Rate(1)
-        rate.sleep()
+        rospy.Subscriber('/motor_state', MotorState, self.callback)
 
         rospy.spin()
 
@@ -37,13 +34,27 @@ class getBattery():
     def callback(self, msg):
         data = {
             'dateTime'      : datetime.now(),
-            'voltage'       : msg.voltage,
-            'current'       : msg.current,
-            'percentage'    : msg.percentage
+            'left'          :
+                {
+                   'pos'    : msg.leftPosition,
+                   'rrate'  : msg.leftRotateRate,
+                   'current': msg.leftCurrent,
+                   'PWM'    : msg.leftPwmDrive
+                },
+            'right'          :
+                {
+                   'pos'    : msg.rightPosition,
+                   'rrate'  : msg.rightRotateRate,
+                   'current': msg.rightCurrent,
+                   'PWM'    : msg.rightPwmDrive
+                }
         }
         try:
             if not sendFile(Client=MongoClient.RemoteUnitClient, dataPath=dataPath, content=data):
                 createFile(dataPath=dataPath, content=data)
+            else:
+                rate = rospy.Rate(1)
+                rate.sleep()
         except Exception as e:
             createFile(dataPath=dataPath, content=data)
             print(e)

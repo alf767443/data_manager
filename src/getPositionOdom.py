@@ -59,6 +59,9 @@ class getPosition():
         try:
             if not sendFile(Client=MongoClient.RemoteUnitClient, dataPath=dataPath, content=data):
                 createFile(dataPath=dataPath, content=data)
+            else:
+                rate = rospy.Rate(1)
+                rate.sleep()
         except Exception as e:
             createFile(dataPath=dataPath, content=data)
             print(e)
