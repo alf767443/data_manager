@@ -19,7 +19,7 @@ class Clients:
 
     # Cloud Client
     try:
-        RemoteUnitClient = pymongo.MongoClient('mongodb://194.210.89.236:27017/')
+        RemoteUnitClient = pymongo.MongoClient('mongodb://194.210.89.236:27017/', connectTimeoutMS = 1000, serverSelectionTimeoutMS = 1000, socketTimeoutMS = 1000)
     except:
         pass
 
