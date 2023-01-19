@@ -48,6 +48,9 @@ def getFiles():
                 data = bson.BSON.decode(get.read())
                 dataPath = data['dataPath']
                 content = data['content']
+                print(data)
+                print(dataPath)
+                print(content)
                 ## Send to Remote Unit
                 if Mongo.Clients.RemoteUnitClient[dataPath['dataBase']][dataPath['collection']].insert_one(content).acknowledged:
                     get.close()
