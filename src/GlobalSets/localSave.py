@@ -56,8 +56,9 @@ def getFiles():
                         os.remove(path+file)
             files = sorted(os.listdir(path=path), reverse=True)
     except bson_errors.BSONError:
-        print('here')
-
+        get.close()
+        if os.path.exists(path=path+file):
+            os.remove(path+file)
     except pymongo_erros.DuplicateKeyError:
         get.close()
         if os.path.exists(path=path+file):
