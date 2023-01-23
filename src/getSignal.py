@@ -22,8 +22,10 @@ dataPath = {
 
 class getSignal():
     def __init__(self) -> None:
+        print('init')
         rospy.init_node('getSignal', anonymous=False)
-
+        print('node')
+        self.saveSignalRTT()
         rospy.spin()
 
     def getInfo(self, ip: str, port: int):
@@ -43,7 +45,8 @@ class getSignal():
                 'Connect': isAlive,
                 'RTT': RTT
             }
-            MongoClient.LocalClient[db.dbBuffer][col.UGVconnec].insert_one(data)
+            print(data)
+            #MongoClient.LocalClient[db.dbBuffer][col.UGVconnec].insert_one(data)
         except Exception as e:
             print(e)
         rate.sleep()
