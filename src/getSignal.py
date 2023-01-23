@@ -22,13 +22,9 @@ dataPath = {
 
 class getSignal():
     def __init__(self) -> None:
-        print('init')
         rospy.init_node('getSignal', anonymous=False)
-        print('node')
-        self.saveSignalRTT()
-        print('func')
-        rospy.spin()
-        print('spin')
+        while not rospy.is_shutdown(): 
+            self.saveSignalRTT()
 
     def getInfo(self, ip: str, port: int):
         try:
@@ -48,12 +44,9 @@ class getSignal():
                 'RTT': RTT
             }
             print(data)
-            #MongoClient.LocalClient[db.dbBuffer][col.UGVconnec].insert_one(data)
+            createFile(dataPath=dataPath, content=data)
         except Exception as e:
             print(e)
-        print('exe')
-        rate.sleep()
-        print('out')
 
 
 
