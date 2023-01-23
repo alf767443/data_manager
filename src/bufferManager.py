@@ -10,7 +10,7 @@ class bufferManager():
         rate = rospy.Rate(1)
         
         while not rospy.is_shutdown():
-            print(getFiles(), end='\r')
+            print(getFiles() + "     ", end='\r')
             rate.sleep() 
 
 if __name__ == '__main__':

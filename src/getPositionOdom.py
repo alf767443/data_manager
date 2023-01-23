@@ -30,12 +30,11 @@ class getPosition():
 
         rospy.Subscriber('/odom', Odometry, self.callback)
 
-        rate = rospy.Rate(1)
-        rate.sleep()
-
         rospy.spin()
 
     def callback(self, msg):
+        rate = rospy.Rate(1)
+
         or_x = msg.pose.pose.orientation.x
         or_y = msg.pose.pose.orientation.y
         or_z = msg.pose.pose.orientation.z
@@ -58,11 +57,8 @@ class getPosition():
         ## Temporary debug
         print(data)
         try:
-            if not sendFile(Client=MongoClient.RemoteUnitClient, dataPath=dataPath, content=data):
-                createFile(dataPath=dataPath, content=data)
-            else:
-                rate = rospy.Rate(1)
-                rate.sleep()
+           createFile(dataPath=dataPath, content=data)
+           rate.sleep()
         except Exception as e:
             createFile(dataPath=dataPath, content=data)
             print(e)

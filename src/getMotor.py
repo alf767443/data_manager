@@ -32,6 +32,8 @@ class getBattery():
 
 
     def callback(self, msg):
+        rate = rospy.Rate(1)
+
         data = {
             'dateTime'      : datetime.now(),
             'left'          :
@@ -52,11 +54,8 @@ class getBattery():
         ## Temporary debug
         print(data)
         try:
-            if not sendFile(Client=MongoClient.RemoteUnitClient, dataPath=dataPath, content=data):
-                createFile(dataPath=dataPath, content=data)
-            else:
-                rate = rospy.Rate(1)
-                rate.sleep()
+            createFile(dataPath=dataPath, content=data) 
+            rate.sleep()
         except Exception as e:
             createFile(dataPath=dataPath, content=data)
             print(e)
