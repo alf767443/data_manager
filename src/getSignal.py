@@ -39,7 +39,7 @@ class getSignal():
         try:
             (isAlive , RTT) = self.getInfo(ip=MongoClient.ip, port=MongoClient.port)
             data = {
-                'dateTime': datetime.datetime.now(),
+                'dateTime': datetime.now(),
                 'Connect': isAlive,
                 'RTT': RTT
             }
@@ -52,10 +52,10 @@ class getSignal():
 
 if __name__ == '__main__':
     try:
-        print(datetime.datetime.now(), 'Start get signal with UGV')
+        print(datetime.now(), 'Start get signal with UGV')
         getSignal()
-        print(datetime.datetime.now(), 'Stop get signal with UGV')
+        print(datetime.now(), 'Stop get signal with UGV')
     except Exception:
-        print(datetime.datetime.now(), 'Stop get signal with UGV')
+        print(datetime.now(), 'Stop get signal with UGV')
         pass
 
