@@ -19,7 +19,9 @@ class Clients:
 
     # Cloud Client
     try:
-        RemoteUnitClient = pymongo.MongoClient('mongodb://194.210.89.236:27017/', connectTimeoutMS = 1000, serverSelectionTimeoutMS = 1000, socketTimeoutMS = 1000)
+        ip      = '194.210.89.236'  # Remote Unit CLient
+        port    = 27017             # Port 
+        RemoteUnitClient = pymongo.MongoClient('mongodb://' + ip + ':' + str(port) + '/', connectTimeoutMS = 1000, serverSelectionTimeoutMS = 1000, socketTimeoutMS = 1000)
     except:
         pass
 
@@ -49,6 +51,9 @@ class Collections:
 
     # Collection position amcl
     PositionAMCL    = 'PositionAMCL_Data'
+
+    # Remote unit connection
+    RUConection     = 'RemoteUnitConection_Data'
 
     # Collection position
     Motor           = 'Motor_Data'
