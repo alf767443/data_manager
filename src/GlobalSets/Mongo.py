@@ -19,7 +19,7 @@ class Clients:
 
     # Cloud Client
     try:
-        ip      = '194.210.89.236'  # Remote Unit CLient
+        ip      = '192.168.217.183'  # Remote Unit CLient
         port    = 27017             # Port 
         RemoteUnitClient = pymongo.MongoClient('mongodb://' + ip + ':' + str(port) + '/', connectTimeoutMS = 1000, serverSelectionTimeoutMS = 1000, socketTimeoutMS = 1000)
     except:
