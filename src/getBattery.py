@@ -34,12 +34,20 @@ class getBattery():
     def callback(self, msg):
         rate = rospy.Rate(1)
 
+        # data = {
+        #     'dateTime'      : datetime.now(),
+        #     'voltage'       : msg.voltage,
+        #     'current'       : msg.current,
+        #     'percentage'    : msg.percentage
+        # }
+
         data = {
             'dateTime'      : datetime.now(),
-            'voltage'       : msg.voltage,
-            'current'       : msg.current,
-            'percentage'    : msg.percentage
+            'voltage'       : random(),
+            'current'       : random(),
+            'percentage'    : random(),
         }
+
         ## Temporary debug
         print(data)
         try:
