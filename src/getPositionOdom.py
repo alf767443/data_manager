@@ -5,7 +5,7 @@ from GlobalSets.Mongo import DataSource as Source, Clients as MongoClient, DataB
 from GlobalSets.localSave import createFile, sendFile
 
 # Import librarys
-import rospy, bson, pymongo, json
+import rospy, bson, pymongo, json, yaml
 from std_msgs.msg import String
 
 # Import listner
@@ -42,7 +42,8 @@ class getPosition():
 
     def callback(self, msg):
         # print(msg)
-        print(json.dumps(msg),default=documentHandler)
+        a = yaml.load(msg)
+        print(json.dumps(a),default=documentHandler)
 
 
         rate = rospy.Rate(1)
