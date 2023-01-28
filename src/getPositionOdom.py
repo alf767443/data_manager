@@ -24,6 +24,14 @@ dataPath = {
 from random import random
 from datetime import datetime
 
+def documentHandler(x):
+    if isinstance(x, datetime.datetime):
+        return x.isoformat()
+    elif isinstance(x, bson.objectid.ObjectId):
+        return str(x)
+    else:
+        raise TypeError(x)
+
 class getPosition():
     def __init__(self) -> None:
         rospy.init_node('getPositionOdom', anonymous=False)
@@ -33,8 +41,8 @@ class getPosition():
         rospy.spin()
 
     def callback(self, msg):
-        print(msg)
-        print(json.dumps(msg))
+        # print(msg)
+        print(json.dumps(msg),default=documentHandler)
 
 
         rate = rospy.Rate(1)
