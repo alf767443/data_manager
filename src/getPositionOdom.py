@@ -41,8 +41,8 @@ class getPosition():
         rospy.spin()
 
     def callback(self, msg):
-        print(msg)
-        print(list(msg))
+        print(msg.data)
+        # print(list(msg))
 
         # print(json.dumps(msg),default=documentHandler)
         # json.loads(json.dumps(list(MongoClient.LocalClient[db.dbDashboard][collection].aggregate(pipeline=pipeline)),default=documentHandler))
