@@ -33,35 +33,39 @@ class getPosition():
         rospy.spin()
 
     def callback(self, msg):
+        print(msg)
+
+
+
         rate = rospy.Rate(1)
 
-        or_x = msg.pose.pose.orientation.x
-        or_y = msg.pose.pose.orientation.y
-        or_z = msg.pose.pose.orientation.z
-        or_w = msg.pose.pose.orientation.w
-        x    = msg.pose.pose.position.x
-        y    = msg.pose.pose.position.y
+        # or_x = msg.pose.pose.orientation.x
+        # or_y = msg.pose.pose.orientation.y
+        # or_z = msg.pose.pose.orientation.z
+        # or_w = msg.pose.pose.orientation.w
+        # x    = msg.pose.pose.position.x
+        # y    = msg.pose.pose.position.y
 
-        (raw, pitch, yaw) = euler_from_quaternion([or_x, or_y, or_z, or_w])
-        data = {
-                'dateTime'  : datetime.now(),
-                'x'         : x,
-                'y'         : y,
-                'orient': 
-                {
-                    'raw'   : raw,
-                    'pitch' : pitch,
-                    'yaw'   : yaw
-                }
-            }
-        ## Temporary debug
-        print(data)
-        try:
-           createFile(dataPath=dataPath, content=data)
-           rate.sleep()
-        except Exception as e:
-            createFile(dataPath=dataPath, content=data)
-            print(e)
+        # (raw, pitch, yaw) = euler_from_quaternion([or_x, or_y, or_z, or_w])
+        # data = {
+        #         'dateTime'  : datetime.now(),
+        #         'x'         : x,
+        #         'y'         : y,
+        #         'orient': 
+        #         {
+        #             'raw'   : raw,
+        #             'pitch' : pitch,
+        #             'yaw'   : yaw
+        #         }
+        #     }
+        # ## Temporary debug
+        # print(data)
+        # try:
+        #    createFile(dataPath=dataPath, content=data)
+        #    rate.sleep()
+        # except Exception as e:
+        #     createFile(dataPath=dataPath, content=data)
+        #     print(e)
 
 
 if __name__ == '__main__':
