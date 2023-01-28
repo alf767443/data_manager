@@ -41,12 +41,15 @@ class getPosition():
         rospy.spin()
 
     def callback(self, msg):
-        # print(msg)
-        a = yaml.load(msg)
-        print(json.dumps(a),default=documentHandler)
+        print(msg)
+        print(list(msg))
+
+        # print(json.dumps(msg),default=documentHandler)
+        # json.loads(json.dumps(list(MongoClient.LocalClient[db.dbDashboard][collection].aggregate(pipeline=pipeline)),default=documentHandler))
 
 
         rate = rospy.Rate(1)
+        rate.sleep()
 
         # or_x = msg.pose.pose.orientation.x
         # or_y = msg.pose.pose.orientation.y
