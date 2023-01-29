@@ -26,7 +26,7 @@ class listenNode:
         rospy.init_node('get_' + self.Node_Name, anonymous=False)
         self.rate = rospy.Rate(self.rate)
         rospy.Subscriber('/' + self.Node_Name, self.Node_msg, self.callback)
-        rospy.spin()
+        #rospy.spin()
         
     def callback(self, msg):
         try:
