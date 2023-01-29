@@ -6,7 +6,7 @@ from GlobalSets.localSave import createFile, sendFile
 from GlobalSets.util import msg_to_document
 
 # Import librarys
-import rospy, bson, pymongo, json, yaml, datetime
+import rospy
 from std_msgs.msg import String
 
 # Import listner
@@ -36,7 +36,7 @@ class getPosition():
 
     def callback(self, msg):
         try:
-            data = msg_to_document(msg=msg)
+            data = msg_to_document(msg=msg).update('{dateTime': datetime.now())
             ##
             print(data)
             ##
