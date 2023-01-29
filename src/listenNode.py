@@ -26,7 +26,6 @@ class listenNode:
         rospy.init_node('get_' + self.Node_Name, anonymous=False)
         self.rate = rospy.Rate(self.rate)
         rospy.Subscriber('/' + self.Node_Name, self.Node_msg, self.callback)
-        rospy.spin()
         
     def callback(self, msg):
         try:
@@ -46,7 +45,7 @@ if __name__ == '__main__':
         activesNodes = []
         for node in NODES:
             try:
-                activesNodes.append(listenNode(node['node'], node['msg'], node['dataPath'], node['rate']))
+                listenNode(node['node'], node['msg'], node['dataPath'], node['rate'])
             except Exception as e:
                 print(e)
     except rospy.ROSInterruptException:
