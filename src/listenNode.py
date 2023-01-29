@@ -20,19 +20,20 @@ class listenNodes:
         rospy.spin()
                
     def newSubscriber(self, node):
-        rospy.Subscriber(name='/' + node['node'], data_class=node['msg'], callback=self.callback, callback_args=(node['dataPath'], node['rate']))
+        rospy.Subscriber(name='/' + node['node'], data_class=node['msg'], callback=self.callback, callback_args=node)
         
     def callback(self, msg, args):
-        print(args)
+        rate = rospy.Rate(args['rate'])
         try:
             data = msg_to_document(msg=msg)
             data.update({'dateTime': datetime.now()})
             ##
             print(data)
             ##
-            createFile(dataPath=self.dataPath, content=data) 
+            createFile(dataPath=args['dataPath'], content=data) 
         except Exception as e:
             print(e)
+        rate.sleep()
 
 
 if __name__ == '__main__':
