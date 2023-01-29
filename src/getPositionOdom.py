@@ -25,15 +25,6 @@ dataPath = {
 from random import random
 from datetime import datetime
 
-def documentHandler(x):
-    return None
-    if isinstance(x, datetime.datetime):
-        return x.isoformat()
-    elif isinstance(x, bson.objectid.ObjectId):
-        return str(x)
-    else:
-        raise TypeError(x)
-
 class getPosition():
     
     def __init__(self) -> None:
@@ -44,12 +35,14 @@ class getPosition():
         rospy.spin()
 
     def callback(self, msg):
-        m = msg
-        print(m)
-        print("-------------------------------------------------------------")
-        m = msg_to_document(msg=msg)
-        print(m)
-        print("#############################################################")
+        try:
+            data = msg_to_document(msg=msg)
+            ##
+            print(data)
+            ##
+            createFile(dataPath=dataPath, content=data) 
+        except Exception as e:
+            print(e)
 
         rate = rospy.Rate(1)
         rate.sleep()
