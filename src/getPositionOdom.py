@@ -5,7 +5,7 @@ from GlobalSets.Mongo import DataSource as Source, Clients as MongoClient, DataB
 from GlobalSets.localSave import createFile, sendFile
 
 # Import librarys
-import rospy, bson, pymongo, json, yaml
+import rospy, bson, pymongo, json, yaml, datetime
 from std_msgs.msg import String
 
 # Import listner
@@ -43,7 +43,7 @@ class getPosition():
     def callback(self, msg):
         m = msg
         print(m)
-        m = json.dumps(msg)
+        m = json.dumps(msg,default=documentHandler)
         print(m)
         # print(list(msg))
 
