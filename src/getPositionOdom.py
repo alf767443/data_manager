@@ -25,6 +25,7 @@ from random import random
 from datetime import datetime
 
 def documentHandler(x):
+    return None
     if isinstance(x, datetime.datetime):
         return x.isoformat()
     elif isinstance(x, bson.objectid.ObjectId):
