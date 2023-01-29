@@ -10,7 +10,7 @@ NODES = [
     # {
     #     'node'    : --The node address (odom),
     #     'msg'     : --The type of message
-    #     'rate'    : --Listen rate *Optional
+    #     'rate'    : --Listen rate
     #     'dataPath': {
     #         'dataSource': --Name of data source in MongoDB
     #         'dataBase'  : --Name of data base in MongoDB
@@ -23,7 +23,7 @@ NODES = [
     {
         'node'    : 'odom',
         'msg'     : Odometry,
-        #'rate'    : 1,
+        'rate'    : 1,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
             'dataBase'  : db.dbBuffer,
