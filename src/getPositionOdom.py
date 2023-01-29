@@ -6,7 +6,7 @@ from GlobalSets.localSave import createFile, sendFile
 from GlobalSets.util import msg_to_document
 
 # Import librarys
-import rospy
+import rospy, bson
 from std_msgs.msg import String
 
 # Import listner
@@ -25,13 +25,23 @@ dataPath = {
 from random import random
 from datetime import datetime
 
-class getPosition():
-    
-    def __init__(self) -> None:
-        rospy.init_node('getPositionOdom', anonymous=False)
+# rospy.init_node('getPositionOdom', anonymous=False)
 
-        rospy.Subscriber('/odom', Odometry, self.callback)
+# rospy.Subscriber('/odom', Odometry, self.callback)
 
+# rospy.spin()
+
+class listenNode:
+    def __init__(self, Node_Name:str, Node_msg, dataPath:bson, rate:int = 1) -> None:
+        self.Node_Name = Node_Name
+        self.Node_msg = Node_msg
+        self.dataPath = dataPath
+        self.rate = rospy.Rate(rate)
+        
+        
+    def init_node(self):
+        rospy.init_node('get_' + self.Node_Name, anonymous=False)
+        rospy.Subscriber('/' + self.Node_Name, self.Node_msg, self.callback)
         rospy.spin()
 
     def callback(self, msg):
@@ -41,19 +51,17 @@ class getPosition():
             ##
             print(data)
             ##
-            createFile(dataPath=dataPath, content=data) 
+            createFile(dataPath=self.dataPath, content=data) 
         except Exception as e:
             print(e)
-
-        rate = rospy.Rate(1)
-        rate.sleep()
+        self.rate.sleep()
 
     
     
 
 if __name__ == '__main__':
     try:
-        getPosition()
+        listenNode('odom',Odometry,dataPath)
     except rospy.ROSInterruptException:
         pass
 
