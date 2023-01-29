@@ -23,7 +23,7 @@ NODES = [
     {
         'node'    : 'odom',
         'msg'     : Odometry,
-        'rate'    : 1,
+        #'rate'    : 1,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
             'dataBase'  : db.dbBuffer,
