@@ -13,7 +13,7 @@ from datetime import datetime
 
 class listenNodes:
     def __init__(self, NODES) -> None:
-        rospy.init_node('listenNodes' + self.Node_Name, anonymous=False)
+        rospy.init_node('listenNodes', anonymous=False)
         self.NODES = NODES
         for node in self.NODES:
             self.newSubscriber(node=node)
