@@ -3,6 +3,8 @@ from GlobalSets.Mongo import DataSource as Source, DataBases as db, Collections 
 
 # Messages
 from nav_msgs.msg import Odometry
+from sensor_msgs import LaserScan
+
 
 
 NODES = [
@@ -30,13 +32,13 @@ NODES = [
             'collection': col.PositionOdom
         }
     }, {
-        'node'    : 'odom',
-        'msg'     : Odometry,
+        'node'    : 'scan',
+        'msg'     : LaserScan,
         'rate'    : 1,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
             'dataBase'  : db.dbBuffer,
-            'collection': col.PositionOdom
+            'collection': 'LiDAR'
         }
     }
 ]
