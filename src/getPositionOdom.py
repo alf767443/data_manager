@@ -43,7 +43,7 @@ class getPosition():
     def callback(self, msg):
         m = msg
         print(m)
-        m = {m}
+        m = json.dumps(msg)
         print(m)
         # print(list(msg))
 
