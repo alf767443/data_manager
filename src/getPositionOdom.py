@@ -36,7 +36,11 @@ class listenNode:
         self.Node_Name = Node_Name
         self.Node_msg = Node_msg
         self.dataPath = dataPath
-        self.rate = rospy.Rate(rate)
+        try:
+            self.init_node()
+            self.rate = rospy.Rate(rate)
+        except Exception as e:
+            print(e)
         
         
     def init_node(self):
