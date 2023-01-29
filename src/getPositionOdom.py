@@ -3,6 +3,7 @@
 # Global imports
 from GlobalSets.Mongo import DataSource as Source, Clients as MongoClient, DataBases as db, Collections as col
 from GlobalSets.localSave import createFile, sendFile
+from GlobalSets.util import msg_to_document
 
 # Import librarys
 import rospy, bson, pymongo, json, yaml, datetime
@@ -34,6 +35,7 @@ def documentHandler(x):
         raise TypeError(x)
 
 class getPosition():
+    
     def __init__(self) -> None:
         rospy.init_node('getPositionOdom', anonymous=False)
 
@@ -53,88 +55,7 @@ class getPosition():
         rate.sleep()
 
     
-    def msg_to_document(msg):
-        """
-        Given a ROS message, turn it into a (nested) dictionary suitable for the datacentre.
-        >>> from geometry_msgs.msg import Pose
-        >>> msg_to_document(Pose())
-        {'orientation': {'w': 0.0, 'x': 0.0, 'y': 0.0, 'z': 0.0},
-        'position': {'x': 0.0, 'y': 0.0, 'z': 0.0}}
-        :Args:
-            | msg (ROS Message): An instance of a ROS message to convert
-        :Returns:
-            | dict : A dictionary representation of the supplied message.
-        """
-
-
-
-
-        d = {}
-
-        slot_types = []
-        if hasattr(msg,'_slot_types'):
-            slot_types = msg._slot_types
-        else:
-            slot_types = [None] * len(msg.__slots__)
-
-
-        for (attr, type) in zip(msg.__slots__, slot_types):
-            d[attr] = sanitize_value(attr, getattr(msg, attr), type)
-
-        return d
-
-
-    def sanitize_value(attr, v, type):
-        """
-        De-rosify a msg.
-        Internal function used to convert ROS messages into dictionaries of pymongo insertable
-        values.
-        :Args:
-            | attr(str): the ROS message slot name the value came from
-            | v: the value from the message's slot to make into a MongoDB able type
-            | type (str): The ROS type of the value passed, as given by the ressage slot_types member.
-        :Returns:
-            | A sanitized version of v.
-        """
-
-            # print '---'
-            # print attr
-            # print v.__class__
-            # print type
-            # print v
-
-        if isinstance(v, str):
-            if type == 'uint8[]':
-                v = Binary(v)
-            else:
-                # ensure unicode
-                try:
-                    if _PY3:
-                        v = str(v, "utf-8")
-                    else:
-                        v = unicode(v, "utf-8")
-                except UnicodeDecodeError as e:
-                    # at this point we can deal with the encoding, so treat it as binary
-                    v = Binary(v)
-            # no need to carry on with the other type checks below
-            return v
-
-        if isinstance(v, rospy.Message):
-            return msg_to_document(v)
-        elif isinstance(v, genpy.rostime.Time):
-            return msg_to_document(v)
-        elif isinstance(v, genpy.rostime.Duration):
-            return msg_to_document(v)
-        elif isinstance(v, list):
-            result = []
-            for t in v:
-                if hasattr(t, '_type'):
-                    result.append(sanitize_value(None, t, t._type))
-                else:
-                    result.append(sanitize_value(None, t, None))
-            return result
-        else:
-            return v
+    
 
 if __name__ == '__main__':
     try:
