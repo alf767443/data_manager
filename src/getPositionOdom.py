@@ -36,7 +36,7 @@ class getPosition():
 
     def callback(self, msg):
         try:
-            data = msg_to_document(msg=msg).update('{dateTime': datetime.now())
+            data = msg_to_document(msg=msg).update({'{dateTime': datetime.now()})
             ##
             print(data)
             ##
