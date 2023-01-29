@@ -11,24 +11,19 @@ from nodes import NODES
 import rospy, bson
 from datetime import datetime
 
-class listenNode:
-    def __init__(self, Node_Name:str, Node_msg, dataPath:bson, rate:int = 1) -> None:
-        self.Node_Name = Node_Name
-        self.Node_msg = Node_msg
-        self.dataPath = dataPath
-        self.rate = rate
-        try:
-            self.init_node()
-        except Exception as e:
-            print(e)
+class listenNodes:
+    def __init__(self, NODES) -> None:
+        rospy.init_node('listenNodes' + self.Node_Name, anonymous=False)
+        self.NODES = NODES
+        for node in self.NODES:
+            self.newSubscriber(node=node)
+        rospy.spin()
                
-    def init_node(self):
-        rospy.init_node('get_' + self.Node_Name, anonymous=False)
-        self.rate = rospy.Rate(self.rate)
-        rospy.Subscriber('/' + self.Node_Name, self.Node_msg, self.callback)
-        #rospy.spin()
+    def newSubscriber(self, node):
+        rospy.Subscriber(name='/' + node['node'], data_class=self['msg'], callback=self.callback, callback_args=1)
         
-    def callback(self, msg):
+    def callback(self, msg, args):
+        print(args)
         try:
             data = msg_to_document(msg=msg)
             data.update({'dateTime': datetime.now()})
@@ -43,11 +38,6 @@ class listenNode:
 
 if __name__ == '__main__':
     try:
-        activesNodes = []
-        for node in NODES:
-            try:
-                listenNode(node['node'], node['msg'], node['dataPath'], node['rate'])
-            except Exception as e:
-                print(e)
+        listenNodes(NODES=NODES)
     except rospy.ROSInterruptException:
         pass
