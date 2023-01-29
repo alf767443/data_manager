@@ -29,5 +29,14 @@ NODES = [
             'dataBase'  : db.dbBuffer,
             'collection': col.PositionOdom
         }
+    }, {
+        'node'    : 'odom',
+        'msg'     : Odometry,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dbBuffer,
+            'collection': col.PositionOdom
+        }
     }
 ]
