@@ -14,104 +14,11 @@ if float(platform.python_version()[0:2]) >= 3.0:
 else:
     _PY3 = False
     import StringIO
-from mongodb_store_msgs.msg import SerialisedMessage
-from mongodb_store_msgs.srv import MongoQueryMsgRequest
 
 from pymongo.errors import ConnectionFailure
 
 import importlib
 from datetime import datetime
-
-def check_connection_to_mongod(db_host, db_port, connection_string=None):
-    """
-    Check connection to mongod server
-
-    :Returns:
-        | bool : True on success, False if connection is not established.
-    """
-    if check_for_pymongo():
-        try:
-            try:
-                # pymongo 2.X
-                from pymongo import Connection
-                Connection(db_host, db_port)
-                return True
-            except:
-                # pymongo 3.X
-                from pymongo import MongoClient
-                if connection_string is None:
-                    client = MongoClient(db_host, db_port, connect=False)
-                else:
-                    client = MongoClient(connection_string)
-                result = client.admin.command('ismaster')
-                return True
-        except ConnectionFailure:
-            if connection_string is None:
-                rospy.logerr("Could not connect to mongo server %s:%d" % (db_host, db_port))
-                rospy.logerr("Make sure mongod is launched on your specified host/port")
-            else:
-                rospy.logerr("Could not connect to mongo server %s" % (connection_string))
-                rospy.logerr("Make sure mongod is launched on your specified host/port")
-        
-            return False
-    else:
-        return False
-
-
-def wait_for_mongo(timeout=60, ns="/datacentre"):
-    """
-    Waits for the mongo server, as started through the mongodb_store/mongodb_server.py wrapper
-
-    :Returns:
-        | bool : True on success, False if server not even started.
-    """
-    # Check that mongo is live, create connection
-    try:
-        rospy.wait_for_service(ns + "/wait_ready", timeout)
-    except rospy.exceptions.ROSException as e:
-        rospy.logerr("Can't connect to MongoDB server. Make sure mongodb_store/mongodb_server.py node is started.")
-        return False
-    wait = rospy.ServiceProxy(ns + '/wait_ready', Empty)
-    wait()
-    return True
-
-def check_for_pymongo():
-    """
-    Checks for required version of pymongo python library.
-
-    :Returns:
-        | bool : True if found, otherwise Fale
-    """
-    try:
-        import pymongo
-    except:
-        rospy.logerr("ERROR!!!")
-        rospy.logerr("Can't import pymongo, this is needed by mongodb_store.")
-        rospy.logerr("Make sure it is installed (sudo pip install pymongo)")
-        return False
-
-    return True
-
-"""
-Pick an object to use as MongoClient based on the currently installed pymongo
-version. Use this instead of importing Connection or MongoClient from pymongo
-directly.
-
-Example:
-    MongoClient = util.importMongoClient()
-"""
-def import_MongoClient():
-    import pymongo
-    if pymongo.version >= '2.4':
-        def mongo_client_wrapper(*args, **kwargs):
-            return pymongo.MongoClient(*args, **kwargs)
-        return mongo_client_wrapper
-    else:
-        import functools
-        def mongo_client_wrapper(*args, **kwargs):
-            return pymongo.Connection(*args, **kwargs)
-        return functools.partial(mongo_client_wrapper, safe=True)
-
 
 """
 Given a ROS msg and a dictionary of the right values, fill in the msg
@@ -123,23 +30,6 @@ def _fill_msg(msg,dic):
         else:
             setattr(msg,i,dic[i])
 
-
-"""
-Given a document in the database, return metadata and ROS message -- must have been
-"""
-def document_to_msg_and_meta(document, TYPE):
-    meta = document["_meta"]
-    msg = TYPE()
-    _fill_msg(msg,document["msg"])
-    return meta,msg
-
-"""
-Given a document return ROS message
-"""
-def document_to_msg(document, TYPE):
-    msg = TYPE()
-    _fill_msg(msg,document)
-    return meta
 
 
 def msg_to_document(msg):
