@@ -41,7 +41,10 @@ class getPosition():
         rospy.spin()
 
     def callback(self, msg):
-        print(type(msg))
+        m = msg
+        print(m)
+        m = {m}
+        print(m)
         # print(list(msg))
 
         # print(json.dumps(msg),default=documentHandler)
