@@ -20,7 +20,7 @@ class listenNodes:
         rospy.spin()
                
     def newSubscriber(self, node):
-        rospy.Subscriber(name='/' + node['node'], data_class=node['msg'], callback=self.callback, callback_args=(1))
+        rospy.Subscriber(name='/' + node['node'], data_class=node['msg'], callback=self.callback, callback_args=(node['dataPath'], node['rate']))
         
     def callback(self, msg, args):
         print(args)
@@ -33,7 +33,6 @@ class listenNodes:
             createFile(dataPath=self.dataPath, content=data) 
         except Exception as e:
             print(e)
-        self.rate.sleep()
 
 
 if __name__ == '__main__':
