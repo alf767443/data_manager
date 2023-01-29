@@ -3,7 +3,7 @@ from GlobalSets.Mongo import DataSource as Source, DataBases as db, Collections 
 
 # Messages
 from nav_msgs.msg import Odometry
-from sensor_msgs import LaserScan
+from sensor_msgs.msg import LaserScan
 
 
 
