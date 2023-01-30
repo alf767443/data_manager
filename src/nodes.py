@@ -5,6 +5,7 @@ from GlobalSets.Mongo import DataSource as Source, DataBases as db, Collections 
 from nav_msgs.msg import Odometry
 from nav_msgs.msg import OccupancyGrid
 from sensor_msgs.msg import LaserScan
+from sensor_msgs.msg import BatteryState
 from geometry_msgs.msg import PoseWithCovarianceStamped
 from ubiquity_motor.msg import MotorState
 
@@ -79,5 +80,16 @@ NODES = [
             'collection': col.Occupancy
         }
     },
+    # Battery
+    {
+        'node'    : 'battery_state',
+        'msg'     : BatteryState,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dataLake,
+            'collection': col.Battery
+        }
+    }, 
     
 ]
