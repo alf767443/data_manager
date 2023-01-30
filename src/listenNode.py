@@ -28,7 +28,7 @@ class listenNodes:
             data = msg_to_document(msg=msg)
             data.update({'dateTime': datetime.now()})
             ##
-            print(data)
+            #print(data)
             ##
             createFile(dataPath=args['dataPath'], content=data) 
         except Exception as e:
