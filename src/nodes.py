@@ -26,14 +26,16 @@ NODES = [
     
     # Odometry
     # {
-    #     'node'    : 'odom',
-    #     'msg'     : Odometry,
-    #     'rate'    : 1,
-    #     'dataPath': {
-    #         'dataSource': Source.CeDRI_UGV, 
-    #         'dataBase'  : db.dbBuffer,
-    #         'collection': col.PositionOdom
-    #     }
+    {
+        'node'    : 'odom',
+        'msg'     : Odometry,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dbBuffer,
+            'collection': col.PositionOdom
+        }
+    }
     # }, {
     #     'node'    : 'scan',
     #     'msg'     : LaserScan,
@@ -44,16 +46,14 @@ NODES = [
     #         'collection': 'LiDAR'
     #     }
     # }, {
-    {
-        'node'    : 'amcl_pose',
-        'msg'     : PoseWithCovarianceStamped,
-        'rate'    : 1,
-        'dataPath': {
-            'dataSource': Source.CeDRI_UGV, 
-            'dataBase'  : db.dbBuffer,
-            'collection': col.PositionAMCL
-        }
-    }
+    #     'node'    : 'amcl_pose',
+    #     'msg'     : PoseWithCovarianceStamped,
+    #     'rate'    : 1,
+    #     'dataPath': {
+    #         'dataSource': Source.CeDRI_UGV, 
+    #         'dataBase'  : db.dbBuffer,
+    #         'collection': col.PositionAMCL
+    #     }
     # }, {
     #     'node'    : 'motor_state',
     #     'msg'     : MotorState,
