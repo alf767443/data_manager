@@ -25,7 +25,6 @@ NODES = [
     #############################################################
     
     # Odometry
-    # {
     {
         'node'    : 'odom',
         'msg'     : Odometry,
@@ -35,43 +34,50 @@ NODES = [
             'dataBase'  : db.dbBuffer,
             'collection': col.PositionOdom
         }
-    }
-    # }, {
-    #     'node'    : 'scan',
-    #     'msg'     : LaserScan,
-    #     'rate'    : 1,
-    #     'dataPath': {
-    #         'dataSource': Source.CeDRI_UGV, 
-    #         'dataBase'  : db.dbBuffer,
-    #         'collection': 'LiDAR'
-    #     }
-    # }, {
-    #     'node'    : 'amcl_pose',
-    #     'msg'     : PoseWithCovarianceStamped,
-    #     'rate'    : 1,
-    #     'dataPath': {
-    #         'dataSource': Source.CeDRI_UGV, 
-    #         'dataBase'  : db.dbBuffer,
-    #         'collection': col.PositionAMCL
-    #     }
-    # }, {
-    #     'node'    : 'motor_state',
-    #     'msg'     : MotorState,
-    #     'rate'    : 1,
-    #     'dataPath': {
-    #         'dataSource': Source.CeDRI_UGV, 
-    #         'dataBase'  : db.dbBuffer,
-    #         'collection': col.Motor
-    #     }
-    # }, {
-    #     'node'    : 'map',
-    #     'msg'     : OccupancyGrid,
-    #     'rate'    : 1,
-    #     'dataPath': {
-    #         'dataSource': Source.CeDRI_UGV, 
-    #         'dataBase'  : db.dbBuffer,
-    #         'collection': 'Occupancy'
-    #     }
-    # },
+    }, 
+    # LiDAR
+    {
+        'node'    : 'scan',
+        'msg'     : LaserScan,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dbBuffer,
+            'collection': col.LiDAR
+        }
+    }, 
+    # AMCL_pos
+    {
+        'node'    : 'amcl_pose',
+        'msg'     : PoseWithCovarianceStamped,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dbBuffer,
+            'collection': col.PositionAMCL
+        }
+    }, 
+    # Motor state
+    {
+        'node'    : 'motor_state',
+        'msg'     : MotorState,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dbBuffer,
+            'collection': col.Motor
+        }
+    }, 
+    # Occupancy map
+    {
+        'node'    : 'map',
+        'msg'     : OccupancyGrid,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dbBuffer,
+            'collection': col.Occupancy
+        }
+    },
     
 ]
