@@ -44,25 +44,25 @@ NODES = [
     #         'collection': 'LiDAR'
     #     }
     # }, {
-    #     'node'    : 'amcl_pose',
-    #     'msg'     : PoseWithCovarianceStamped,
-    #     'rate'    : 1,
-    #     'dataPath': {
-    #         'dataSource': Source.CeDRI_UGV, 
-    #         'dataBase'  : db.dbBuffer,
-    #         'collection': col.PositionAMCL
-    #     }
-    # }, {
     {
-        'node'    : 'motor_state',
-        'msg'     : MotorState,
+        'node'    : 'amcl_pose',
+        'msg'     : PoseWithCovarianceStamped,
         'rate'    : 1,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
             'dataBase'  : db.dbBuffer,
-            'collection': col.Motor
+            'collection': col.PositionAMCL
         }
     }
+    # }, {
+    #     'node'    : 'motor_state',
+    #     'msg'     : MotorState,
+    #     'rate'    : 1,
+    #     'dataPath': {
+    #         'dataSource': Source.CeDRI_UGV, 
+    #         'dataBase'  : db.dbBuffer,
+    #         'collection': col.Motor
+    #     }
     # }, {
     #     'node'    : 'map',
     #     'msg'     : OccupancyGrid,
