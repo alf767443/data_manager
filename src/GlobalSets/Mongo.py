@@ -40,6 +40,9 @@ class DataBases:
     # Cloud buffer
     dbBuffer    = 'CeDRI_UGV_buffer'
 
+    # Cloud datalake
+    dataLake  = 'CeDRI_UGV_datalake'
+
 # ---------------------------------------------------
 # COLLECTIONS
 class Collections:
@@ -69,7 +72,7 @@ class Collections:
 # Log
 def log(logData:str):
     try:
-        Clients.LocalClient[DataBases.dbBuffer][Collections.Log].insert_one({
+        Clients.LocalClient[DataBases.dataLake][Collections.Log].insert_one({
             "dateTime": datetime.now(),
             "log": logData 
         })

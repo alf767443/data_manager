@@ -31,7 +31,7 @@ NODES = [
         'rate'    : 1,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
-            'dataBase'  : db.dbBuffer,
+            'dataBase'  : db.dataLake,
             'collection': col.PositionOdom
         }
     }, 
@@ -42,7 +42,7 @@ NODES = [
         'rate'    : 1,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
-            'dataBase'  : db.dbBuffer,
+            'dataBase'  : db.dataLake,
             'collection': col.LiDAR
         }
     }, 
@@ -53,7 +53,7 @@ NODES = [
         'rate'    : 1,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
-            'dataBase'  : db.dbBuffer,
+            'dataBase'  : db.dataLake,
             'collection': col.PositionAMCL
         }
     }, 
@@ -64,7 +64,7 @@ NODES = [
         'rate'    : 1,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
-            'dataBase'  : db.dbBuffer,
+            'dataBase'  : db.dataLake,
             'collection': col.Motor
         }
     }, 
@@ -75,7 +75,7 @@ NODES = [
         'rate'    : 1,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
-            'dataBase'  : db.dbBuffer,
+            'dataBase'  : db.dataLake,
             'collection': col.Occupancy
         }
     },
