@@ -30,7 +30,7 @@ class listenNodes:
             data.update({'dateTime': datetime.now()})
             if(args['q2e']):
                 print('1-----------',data)
-                orientation = data['pose','pose','orientation']
+                orientation = data['pose']['pose']['orientation']
                 print('2-----------',orientation)
                 (raw, pitch, yaw) = euler_from_quaternion([orientation['x'], orientation['y'], orientation['z'], orientation['w']])
                 orientation = {
