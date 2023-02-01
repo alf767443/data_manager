@@ -22,7 +22,7 @@ class initDatamanager():
 
     payload = json.dumps(payload)
 
-    response = requests.request("POST", self.url, headers=headers, data=payload)
+    response = requests.request("POST", self.url, headers=headers, data=payload).json
 
     print(response)
 
