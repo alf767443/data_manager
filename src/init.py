@@ -27,7 +27,7 @@ class initDatamanager():
     return response.json()
 
   def syncDate(self, request):
-    command = 'timedatectl set-time ' + request['timedate']
+    command = 'timedatectl set-time "' + request['timedate'] + '"'
     print(command)
     p = os.system('echo %s|sudo -S %s' % (self.sudoPassword, command))
     print(p)
