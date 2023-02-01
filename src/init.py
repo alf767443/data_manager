@@ -36,5 +36,5 @@ class initDatamanager():
 if __name__ == '__main__':
     try:
         initDatamanager()
-    except rospy.ROSInterruptException:
+    except Exception as e:
         pass
