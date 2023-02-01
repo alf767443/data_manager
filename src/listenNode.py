@@ -10,6 +10,7 @@ from nodes import NODES
 # Import librarys
 import rospy, bson
 from datetime import datetime
+from tf.transformations import euler_from_quaternion
 
 class listenNodes:
     def __init__(self, NODES) -> None:
@@ -27,6 +28,15 @@ class listenNodes:
         try:
             data = msg_to_document(msg=msg)
             data.update({'dateTime': datetime.now()})
+            if(args['q2t']):
+                orientation = msg['pose','pose','orientation']
+                (raw, pitch, yaw) = euler_from_quaternion([orientation.x, orientation.y, orientation.z, orientation.w])
+                orientation.update({
+                    raw     :  raw,
+                    pitch   : pitch,
+                    yaw     : yaw,
+                })
+                print(orientation)
             ##
             #print(data)
             ##

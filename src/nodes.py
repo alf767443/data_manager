@@ -30,6 +30,7 @@ NODES = [
         'node'    : 'odom',
         'msg'     : Odometry,
         'rate'    : 1,
+        'q2e'     : True,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
             'dataBase'  : db.dataLake,
@@ -41,6 +42,7 @@ NODES = [
         'node'    : 'scan',
         'msg'     : LaserScan,
         'rate'    : 1,
+        'q2e'     : False,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
             'dataBase'  : db.dataLake,
@@ -52,6 +54,7 @@ NODES = [
         'node'    : 'amcl_pose',
         'msg'     : PoseWithCovarianceStamped,
         'rate'    : 1,
+        'q2e'     : True,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
             'dataBase'  : db.dataLake,
@@ -63,6 +66,7 @@ NODES = [
         'node'    : 'motor_state',
         'msg'     : MotorState,
         'rate'    : 1,
+        'q2e'     : False,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
             'dataBase'  : db.dataLake,
@@ -74,6 +78,7 @@ NODES = [
         'node'    : 'map',
         'msg'     : OccupancyGrid,
         'rate'    : 1,
+        'q2e'     : False,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
             'dataBase'  : db.dataLake,
@@ -85,6 +90,7 @@ NODES = [
         'node'    : 'battery_state',
         'msg'     : BatteryState,
         'rate'    : 1,
+        'q2e'     : False,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
             'dataBase'  : db.dataLake,
