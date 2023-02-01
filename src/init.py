@@ -29,12 +29,10 @@ class initDatamanager():
     return response.json()
 
   def syncDate(self, request):
-    print(request)
     command = 'timedatectl set-time "' + request['timedate'] + '"'
-    print(request)
     p = os.system('echo %s|sudo -S %s' % (self.sudoPassword, command))
     print(p)
-    ##p = os.system('bash ../runROSnodes.sh')
+    p = os.system('bash ../runROSnodes.sh')
 
 
 
