@@ -29,8 +29,8 @@ class initDatamanager():
     return response
 
   def syncDate(self, request):
-    print('here')
-    command = 'timedatectl'
+    print(request)
+    command = 'timedatectl set-time ' + '2023-1-1'
     p = os.system('echo %s|sudo -S %s' % (self.sudoPassword, command))
     print(p)
 
