@@ -24,9 +24,7 @@ class initDatamanager():
 
     response =  requests.request("POST", self.url, headers=headers, data=payload)
 
-    print(response.json())
-
-    return response
+    return response.json()
 
   def syncDate(self, request):
     print(request)
