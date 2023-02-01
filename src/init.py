@@ -30,7 +30,7 @@ class initDatamanager():
     command = 'timedatectl set-time "' + request['timedate'] + '"'
     p = os.system('echo %s|sudo -S %s' % (self.sudoPassword, command))
     print(p)
-    p = os.system('bash ../runROSnodes.sh')
+    ##p = os.system('bash ../runROSnodes.sh')
 
 
 
