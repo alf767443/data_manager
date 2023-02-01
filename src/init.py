@@ -1,5 +1,5 @@
-import requests, json, os
-
+import requests, json, os, socket
+ 
 
 class initDatamanager():
 
@@ -17,7 +17,7 @@ class initDatamanager():
     }
 
     payload = {
-      'ip': '0.0.0.0'
+      'ip': socket.gethostbyname(socket.gethostname())
     }
 
     payload = json.dumps(payload)
@@ -28,7 +28,6 @@ class initDatamanager():
 
   def syncDate(self, request):
     command = 'timedatectl set-time "' + request['timedate'] + '"'
-    print(command)
     p = os.system('echo %s|sudo -S %s' % (self.sudoPassword, command))
     print(p)
 
