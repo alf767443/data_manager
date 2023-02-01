@@ -8,8 +8,7 @@ class initDatamanager():
 
   def __init__(self) -> None:
     print('hello')
-    self.firstConnection()
-    self.syncDate()
+    self.syncDate(self.firstConnection())
     pass
   
   def firstConnection(self) -> json:
@@ -25,9 +24,11 @@ class initDatamanager():
 
     response = requests.request("POST", self.url, headers=headers, data=payload)
 
+    print(response)
+
     return response
 
-  def syncDate(self,response):
+  def syncDate(self, request):
     print('here')
     command = 'timedatectl'
     p = os.system('echo %s|sudo -S %s' % (self.sudoPassword, command))
