@@ -7,7 +7,7 @@ class initDatamanager():
   sudoPassword = 'ubuntu'
 
   def __init__(self) -> None:
-    print('hello')
+    print('Try to sync')
     self.syncDate(self.firstConnection())
     pass
   
@@ -30,6 +30,8 @@ class initDatamanager():
     command = 'timedatectl set-time "' + request['timedate'] + '"'
     p = os.system('echo %s|sudo -S %s' % (self.sudoPassword, command))
     print(p)
+    p = os.system('bash ../runROSnodes.sh')
+
 
 
 if __name__ == '__main__':
