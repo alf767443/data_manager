@@ -8,8 +8,10 @@ class initDatamanager():
 
   def __init__(self) -> None:
     print('Try to sync')
-    self.syncDate(self.firstConnection())
-    pass
+    try: 
+      self.syncDate(self.firstConnection())
+    except Exception as e:
+      print(e)
   
   def firstConnection(self) -> json:
     headers = {
@@ -29,6 +31,7 @@ class initDatamanager():
   def syncDate(self, request):
     print(request)
     command = 'timedatectl set-time "' + request['timedate'] + '"'
+    print(request)
     p = os.system('echo %s|sudo -S %s' % (self.sudoPassword, command))
     print(p)
     ##p = os.system('bash ../runROSnodes.sh')
