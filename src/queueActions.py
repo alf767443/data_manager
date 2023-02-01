@@ -8,7 +8,7 @@ import pymongo, bson, datetime, rospy
 from GlobalSets.Mongo import Clients as MongoClient, DataBases as db, Collections as col
 
 class listenNodes:
-    def __init__(self, NODES) -> None:
+    def __init__(self) -> None:
         rospy.init_node('queueActions', anonymous=False)
         self.getFromRemoteUnit()
         rospy.spin()
