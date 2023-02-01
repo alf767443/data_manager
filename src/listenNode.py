@@ -29,8 +29,10 @@ class listenNodes:
             data = msg_to_document(msg=msg)
             data.update({'dateTime': datetime.now()})
             if(args['q2e']):
+                print(data)
                 orientation = data['pose','pose','orientation']
-                (raw, pitch, yaw) = euler_from_quaternion([orientation.x, orientation.y, orientation.z, orientation.w])
+                print(orientation)
+                (raw, pitch, yaw) = euler_from_quaternion([orientation['x'], orientation['y'], orientation['z'], orientation['w']])
                 orientation.update({
                     raw     :  raw,
                     pitch   : pitch,
