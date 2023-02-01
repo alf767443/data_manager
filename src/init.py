@@ -24,7 +24,7 @@ class initDatamanager():
 
     response =  requests.request("POST", self.url, headers=headers, data=payload)
 
-    print(type(response))
+    print(response[0].json())
 
     return response
 
