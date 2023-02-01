@@ -39,7 +39,7 @@ class listenNodes:
                 data.update({'pose': {'pose': {'orientation': orientation}}})
                 
             ##
-            #print(data)
+            print(data)
             ##
             createFile(dataPath=args['dataPath'], content=data) 
         except Exception as e:
