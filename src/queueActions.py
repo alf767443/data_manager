@@ -4,7 +4,7 @@
 from GlobalSets.localSave import createFile
 from GlobalSets.util import msg_to_document
 
-import pymongo, bson, datetime
+import pymongo, bson, datetime, rospy
 from GlobalSets.Mongo import Clients as MongoClient, DataBases as db, Collections as col
 
 class listenNodes:
