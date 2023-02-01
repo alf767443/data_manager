@@ -33,11 +33,11 @@ class listenNodes:
                 orientation = data['pose','pose','orientation']
                 print(orientation)
                 (raw, pitch, yaw) = euler_from_quaternion([orientation['x'], orientation['y'], orientation['z'], orientation['w']])
-                orientation.update({
+                orientation = {
                     raw     :  raw,
                     pitch   : pitch,
                     yaw     : yaw,
-                })
+                }
                 print(orientation)
             ##
             #print(data)
