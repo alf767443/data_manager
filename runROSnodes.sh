@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # init and sinc
-python3 init.py &&
+python3 src/init.py && (
 
 # Clean
 # rosnode kill /getBattery
@@ -24,4 +24,4 @@ rosnode kill /bufferManager
 rosrun data_manager listenNodes.py &
 rosrun data_manager bufferManager.py
 
-
+)
