@@ -4,7 +4,7 @@ import requests, json, os
 class initDatamanager():
 
   url = "http://192.168.217.183:8000/ugv/firstConnection"
-  sudoPassword = '321'
+  sudoPassword = 'ubuntu'
 
   def __init__(self) -> None:
     print('hello')
