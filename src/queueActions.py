@@ -15,7 +15,7 @@ class listenNodes:
                        
     def getFromRemoteUnit(self):
         print('__________________')
-        print(list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].aggregate({})))
+        print(list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].aggregate([{}])))
 
         rate = rospy.Rate(1)
         rate.sleep()
