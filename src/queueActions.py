@@ -35,9 +35,12 @@ class listenNodes:
                        
     def getFromRemoteUnit(self):
         actionsQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].aggregate(pipeline=pipeline['Status_0|1']))
-        for new in actionsQueue:
-            print(new)
         print(actionsQueue)
+        for actual in self.queue:
+            print(actionsQueue.pop(actual))
+        self.queue.append(actionsQueue)
+        print(self.queue)
+        
         rate = rospy.Rate(1)
         rate.sleep()
 
