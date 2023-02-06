@@ -57,9 +57,10 @@ class listenNodes:
         command = command.replace('{','').replace('}','').replace('"', '').replace(',','\n')
         print(command)
         # command.replace('{','').replace('}','')
-        command = "rostopic pub " + action['topic'] + ' '+ action['msg'] + ' "' + command + '"'
+        command = "rostopic pub -1 " + action['topic'] + ' '+ action['msg'] + ' "' + command + '"'
         try:
             result = subprocess.call(command, shell=True)
+            
             print(result)
         except Exception as e:
             print(e)
