@@ -42,7 +42,7 @@ class listenNodes:
                 else:
                     print(action)
                     action.update({'status': 2})
-            
+            print(self.queue)
             rate.sleep()
         rospy.spin()
                        
