@@ -47,8 +47,9 @@ class listenNodes:
                 else:
                     print(action)
                     action.update({'status': 2})
-                updateMany(Client = MongoClient.RemoteUnitClient, dataPath = dataPath, content = self.queue )
             print(self.queue)
+            updateMany(Client = MongoClient.RemoteUnitClient, dataPath = dataPath, content = self.queue)
+            
             
             rate.sleep()
         rospy.spin()
