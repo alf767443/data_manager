@@ -45,7 +45,8 @@ class listenNodes:
         print(actionsQueue)
         for actual in self.queue:
             print(actionsQueue.pop(actual))
-        self.queue.append(actionsQueue)
+        for actual in actionsQueue:
+            self.queue.append(actual)
         print(self.queue)
         
         
