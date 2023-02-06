@@ -57,7 +57,7 @@ class listenNodes:
         command.replace('{','').replace('}','')
         command = "rostopic pub " + action['topic'] + ' '+ action['msg'] + ' ' + command
         print(command)
-        os.system(command)
+        # os.system(command)
 
         
 
