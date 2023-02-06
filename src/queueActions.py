@@ -38,15 +38,19 @@ class listenNodes:
         rate = rospy.Rate(1)
         while not rospy.is_shutdown():
             self.getFromRemoteUnit()
-            for action in list(filter(lambda d: d['status'] in [0], self.queue)):
-                # Action run ok
-                if self.runAction(action):
-                    # print(action)
-                    action.update({'status': 1})
-                # Action failed
-                else:
-                    # print(action)
-                    action.update({'status': 2})
+            try:
+                for action in list(filter(lambda d: d['status'] in [0], self.queue)):
+                    # Action run ok
+                    if self.runAction(action):
+                        # print(action)
+                        action.update({'status': 1})
+                    # Action failed
+                    else:
+                        # print(action)
+                        action.update({'status': 2})
+            except Exception as e:
+                print(e)
+                
             # print(self.queue)
             updateMany(Client = MongoClient.RemoteUnitClient, dataPath = dataPath, content = self.queue)     
             rate.sleep()
