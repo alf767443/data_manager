@@ -52,7 +52,8 @@ class listenNodes:
         print('topic:   ', action['topic'])
         print('msg:     ', action['msg'])
         print('command: ', action['command'])
-        os.system("rostopic " + str(action['topic']) +  str(action['msg']) + str(action['command']))
+        print("rostopic " + str(action['topic']) +  str(action['msg']) + str(action['command']))
+        # os.system()
 
         
 
