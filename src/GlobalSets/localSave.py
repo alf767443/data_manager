@@ -90,6 +90,6 @@ def updateMany(Client: pymongo.MongoClient, dataPath: bson, content: bson):
 
         for action in content:
             try:
-                Client[dataBase][collection].update_one(filter={'_id': action['_id']}, upsert=True, update={'$set':action}))
+                Client[dataBase][collection].update_one(filter={'_id': action['_id']}, upsert=True, update={'$set':action})
             except Exception as e:
                 return False
