@@ -48,9 +48,9 @@ class listenNodes:
 
     def runAction(self, action):
         print(action)
-        # print('topic:   ', action['topic'])
-        # print('msg:     ', action['msg'])
-        # print('command: ', action['command'])
+        print('topic:   ', action['topic'])
+        print('msg:     ', action['msg'])
+        print('command: ', action['command'])
 
 if __name__ == '__main__':
     try:
