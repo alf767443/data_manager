@@ -5,7 +5,7 @@ from GlobalSets.localSave import createFile, updateMany
 from GlobalSets.util import msg_to_document
 
 import pymongo, bson, datetime, rospy, os, json, subprocess
-from GlobalSets.Mongo import Source, Clients as MongoClient, DataBases as db, Collections as col
+from GlobalSets.Mongo import DataSource as Source, Clients as MongoClient, DataBases as db, Collections as col
 
 
 pipeline = {
