@@ -58,7 +58,7 @@ class listenNodes:
         actionsQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].aggregate(pipeline=pipeline['Status_0|1']))
         # print(actionsQueue)
         for actual in self.queue:
-            print(actionsQueue.pop(actual))
+            print(actual)
         for actual in actionsQueue:
             self.queue.append(actual)
         # print(self.queue)
