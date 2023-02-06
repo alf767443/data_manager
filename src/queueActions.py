@@ -33,7 +33,7 @@ class listenNodes:
         self.getFromRemoteUnit()
         print(self.queue)
         for action in self.queue:
-            if self.runAction(action[1]):
+            if self.runAction(action):
                 print(action)
                 #actual.update({: False})
         rate = rospy.Rate(1)
