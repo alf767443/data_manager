@@ -32,7 +32,7 @@ class listenNodes:
         rospy.init_node('queueActions', anonymous=False)
         self.getFromRemoteUnit()
         for action in self.queue:
-            self.runAction(action)
+            self.runAction(action[0])
         rospy.spin()
                        
     def getFromRemoteUnit(self):
