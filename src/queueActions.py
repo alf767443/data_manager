@@ -47,6 +47,7 @@ class listenNodes:
         rate.sleep()
 
     def runAction(self, action):
+        print(action)
         print('topic:   ', action['topic'])
         print('msg:     ', action['msg'])
         print('command: ', action['command'])
