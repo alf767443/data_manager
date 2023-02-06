@@ -87,19 +87,6 @@ def updateMany(Client: pymongo.MongoClient, dataPath: bson, content: bson):
         dataSource = dataPath['dataSource']
         dataBase = dataPath['dataBase']
         collection = dataPath['collection']
-        return Client[dataBase][collection].
-        insert_one(content).acknowledged
-    except pymongo_erros.DuplicateKeyError:
-        return True
-    except Exception as e:
-        return False
-
-def updateMany(Client: pymongo.MongoClient, dataPath: bson, content: bson):
-    try:
-        ## Check if dataPath is valid
-        dataSource = dataPath['dataSource']
-        dataBase = dataPath['dataBase']
-        collection = dataPath['collection']
         return Client[dataBase][collection].updateMany(content, upsert=True)
     except pymongo_erros.DuplicateKeyError:
         return True
