@@ -37,11 +37,11 @@ class listenNodes:
                 # Action run ok
                 if self.runAction(action):
                     print(action)
-                    actual.update({'status': 1})
+                    action.update({'status': 1})
                 # Action failed
                 else:
                     print(action)
-                    actual.update({'status': 2})
+                    action.update({'status': 2})
             
             rate.sleep()
         rospy.spin()
