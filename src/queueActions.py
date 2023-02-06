@@ -60,7 +60,6 @@ class listenNodes:
         command = "rostopic pub -1 " + action['topic'] + ' '+ action['msg'] + ' "' + command + '"'
         try:
             result = subprocess.call(command, shell=True)
-            
             print(result)
         except Exception as e:
             print(e)
