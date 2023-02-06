@@ -89,9 +89,8 @@ def updateMany(Client: pymongo.MongoClient, dataPath: bson, content: bson):
         collection = dataPath['collection']
 
         print('\n\n----------------------------------------------------------')
-        print(dataPath)
-        print(content)
-        Client[dataBase][collection].update_many(update=content, upsert=True, filter={})
+        for action in content:
+            print(Client[dataBase][collection].update_one(filter=action['_id'], upsert=True, update=action).acknowledged)
         print('----------------------------------------------------------\n\n')
         # return Client[dataBase][collection].updateMany(update=content, upsert=True)
 
