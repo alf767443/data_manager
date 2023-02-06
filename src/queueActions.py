@@ -56,10 +56,10 @@ class listenNodes:
         actionsQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].aggregate(pipeline=pipeline['Status_0|1']))
         # print(actionsQueue)
         for actual in self.queue:
-            print(actual)
+            print('')
         for actual in actionsQueue:
             self.queue.append(actual)
-        # print(self.queue)
+            print(self.queue)
         
     def runAction(self, action):
         command = json.dumps(action['command'], indent=1)
