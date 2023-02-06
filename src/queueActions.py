@@ -58,8 +58,12 @@ class listenNodes:
         print(command)
         # command.replace('{','').replace('}','')
         command = "rostopic pub " + action['topic'] + ' '+ action['msg'] + ' "' + command + '"'
-        print(command)
-        # os.system(command)
+        try:
+            result = os.system(command)
+            print(result)
+        except Exception as e:
+            print(e)
+        
 
         
 
