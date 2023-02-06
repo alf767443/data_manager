@@ -38,7 +38,7 @@ class listenNodes:
         rate = rospy.Rate(1)
         while not rospy.is_shutdown():
             self.getFromRemoteUnit()
-            print(list(filter(lambda d: d['status'] in ['0'], self.queue)))
+            print(list(filter(lambda d: d['status'] in [0], self.queue)))
             for action in list(filter(lambda d: d['status'] in ['0'], self.queue)):
                 # Action run ok
                 if self.runAction(action):
