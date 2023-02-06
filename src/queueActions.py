@@ -38,8 +38,7 @@ class listenNodes:
         rate = rospy.Rate(1)
         while not rospy.is_shutdown():
             self.getFromRemoteUnit()
-            print(list(filter(lambda d: d['status'] in [0], self.queue)))
-            for action in list(filter(lambda d: d['status'] in ['0'], self.queue)):
+            for action in list(filter(lambda d: d['status'] in [0], self.queue)):
                 # Action run ok
                 if self.runAction(action):
                     # print(action)
@@ -56,11 +55,8 @@ class listenNodes:
     def getFromRemoteUnit(self):
         actionsQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].aggregate(pipeline=pipeline['Status_0|1']))
         # print(actionsQueue)
-        for actual in self.queue:
-            print('')
-        for actual in actionsQueue:
-            self.queue.append(actual)
-            print(self.queue)
+        self.queue = actionsQueue
+        
         
     def runAction(self, action):
         command = json.dumps(action['command'], indent=1)
