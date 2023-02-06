@@ -41,16 +41,14 @@ class listenNodes:
             for action in list(filter(lambda d: d['status'] in ['1'], self.queue)):
                 # Action run ok
                 if self.runAction(action):
-                    print(action)
+                    # print(action)
                     action.update({'status': 1})
                 # Action failed
                 else:
-                    print(action)
+                    # print(action)
                     action.update({'status': 2})
-            print(self.queue)
-            updateMany(Client = MongoClient.RemoteUnitClient, dataPath = dataPath, content = self.queue)
-            
-            
+            # print(self.queue)
+            updateMany(Client = MongoClient.RemoteUnitClient, dataPath = dataPath, content = self.queue)     
             rate.sleep()
         rospy.spin()
                        
