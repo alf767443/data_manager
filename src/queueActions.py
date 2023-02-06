@@ -58,7 +58,7 @@ class listenNodes:
         print(_id)
         print(list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': _id})))
         
-        self.queue = actionsQueue
+        self.queue.append(actionsQueue)
         
         
     def runAction(self, action):
