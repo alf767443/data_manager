@@ -4,7 +4,7 @@
 from GlobalSets.localSave import createFile
 from GlobalSets.util import msg_to_document
 
-import pymongo, bson, datetime, rospy, os, json
+import pymongo, bson, datetime, rospy, os, json, subprocess
 from GlobalSets.Mongo import Clients as MongoClient, DataBases as db, Collections as col
 
 
@@ -59,7 +59,7 @@ class listenNodes:
         # command.replace('{','').replace('}','')
         command = "rostopic pub " + action['topic'] + ' '+ action['msg'] + ' "' + command + '"'
         try:
-            result = os.system(command)
+            result = subprocess.call(command, shell=True)
             print(result)
         except Exception as e:
             print(e)
