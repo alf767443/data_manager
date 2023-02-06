@@ -88,14 +88,8 @@ def updateMany(Client: pymongo.MongoClient, dataPath: bson, content: bson):
         dataBase = dataPath['dataBase']
         collection = dataPath['collection']
 
-        print('\n\n----------------------------------------------------------')
         for action in content:
-            print(action)
-            print(Client[dataBase][collection].update_one(filter={'_id': action['_id']}, upsert=True, update={'$set':action}))
-        print('----------------------------------------------------------\n\n')
-        # return Client[dataBase][collection].updateMany(update=content, upsert=True)
-
-    # except pymongo_erros.DuplicateKeyError:
-    #     return True
-    # except Exception as e:
-    #     return False
+            try:
+                Client[dataBase][collection].update_one(filter={'_id': action['_id']}, upsert=True, update={'$set':action}))
+            except Exception as e:
+                return False

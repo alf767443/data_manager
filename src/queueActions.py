@@ -38,7 +38,7 @@ class listenNodes:
         rate = rospy.Rate(1)
         while not rospy.is_shutdown():
             self.getFromRemoteUnit()
-            for action in self.queue:
+            for action in list(filter(lambda d: d['status'] in ['1'], self.queue)):
                 # Action run ok
                 if self.runAction(action):
                     print(action)
@@ -63,17 +63,9 @@ class listenNodes:
             self.queue.append(actual)
         # print(self.queue)
         
-
     def runAction(self, action):
-        # print(action)
-        # print('topic:   ', action['topic'])
-        # print('msg:     ', action['msg'])
-        # print('command: ', action['command'])
-        # command = "rostopic pub {} {} {}".format(str(action['topic']), str(action['msg']), str(action['command']))
         command = json.dumps(action['command'], indent=1)
         command = command.replace('{','').replace('}','').replace('"', '').replace(',','\n')
-        print(command)
-        # command.replace('{','').replace('}','')
         command = "rostopic pub -1 " + action['topic'] + ' '+ action['msg'] + ' "' + command + '"'
         try:
             result = subprocess.call(command, shell=True)
