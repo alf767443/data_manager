@@ -95,7 +95,7 @@ def updateMany(Client: pymongo.MongoClient, dataPath: bson, content: bson):
         print('----------------------------------------------------------\n\n')
         # return Client[dataBase][collection].updateMany(update=content, upsert=True)
 
-    except pymongo_erros.DuplicateKeyError:
-        return True
-    except Exception as e:
-        return False
+    # except pymongo_erros.DuplicateKeyError:
+    #     return True
+    # except Exception as e:
+    #     return False
