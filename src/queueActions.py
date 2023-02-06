@@ -53,11 +53,11 @@ class listenNodes:
         print('msg:     ', action['msg'])
         print('command: ', action['command'])
         # command = "rostopic pub {} {} {}".format(str(action['topic']), str(action['msg']), str(action['command']))
-        command = json.dumps(action['command'])
+        command = json.dumps(action['command'], indent=1)
         command = command.replace('{','').replace('}','').replace('"', '')
         print(command)
         # command.replace('{','').replace('}','')
-        command = "rostopic pub " + action['topic'] + ' '+ action['msg'] + ' ' + command
+        command = "rostopic pub " + action['topic'] + ' '+ action['msg'] + ' "' + command + '"'
         print(command)
         # os.system(command)
 
