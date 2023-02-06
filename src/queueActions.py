@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
 # Global imports
-from GlobalSets.localSave import createFile
+from GlobalSets.localSave import createFile, updateMany
 from GlobalSets.util import msg_to_document
 
 import pymongo, bson, datetime, rospy, os, json, subprocess
-from GlobalSets.Mongo import Clients as MongoClient, DataBases as db, Collections as col
+from GlobalSets.Mongo import Source, Clients as MongoClient, DataBases as db, Collections as col
 
 
 pipeline = {
@@ -24,6 +24,11 @@ pipeline = {
     ]
 }
 
+dataPath = {
+    'dataSource': Source.CeDRI_UGV, 
+    'dataBase'  : db.dataLake,
+    'collection': col.Actions
+}
 
 class listenNodes:
     queue = []
@@ -42,7 +47,9 @@ class listenNodes:
                 else:
                     print(action)
                     action.update({'status': 2})
+                updateMany(Client = MongoClient.RemoteUnitClient, dataPath = dataPath, content = self.queue )
             print(self.queue)
+            
             rate.sleep()
         rospy.spin()
                        
@@ -54,7 +61,6 @@ class listenNodes:
         for actual in actionsQueue:
             self.queue.append(actual)
         # print(self.queue)
-        
         
 
     def runAction(self, action):

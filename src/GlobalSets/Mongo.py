@@ -67,6 +67,9 @@ class Collections:
     # Collection Occupancy
     Occupancy       = 'Occupancy'
 
+    # Collection Occupancy
+    Actions         = 'Actions'
+
 # ---------------------------------------------------
 # FUNCTIONS
 # Log
