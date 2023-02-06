@@ -13,7 +13,7 @@ pipeline = {
         {
             '$match': {
                 'status': {
-                    '$lte': 1
+                    '$lt': 1
                 }
             }
         }, {
@@ -30,24 +30,30 @@ class listenNodes:
 
     def __init__(self) -> None:
         rospy.init_node('queueActions', anonymous=False)
-        self.getFromRemoteUnit()
-        print(self.queue)
-        for action in self.queue:
-            if self.runAction(action):
-                print(action)
-                #actual.update({: False})
         rate = rospy.Rate(1)
-        rate.sleep()
+        while not rospy.is_shutdown():
+            self.getFromRemoteUnit()
+            for action in self.queue:
+                # Action run ok
+                if self.runAction(action):
+                    print(action)
+                    actual.update({'status': 1})
+                # Action failed
+                else:
+                    print(action)
+                    actual.update({'status': 2})
+            
+            rate.sleep()
         rospy.spin()
                        
     def getFromRemoteUnit(self):
         actionsQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].aggregate(pipeline=pipeline['Status_0|1']))
-        print(actionsQueue)
+        # print(actionsQueue)
         for actual in self.queue:
             print(actionsQueue.pop(actual))
         for actual in actionsQueue:
             self.queue.append(actual)
-        print(self.queue)
+        # print(self.queue)
         
         
 
