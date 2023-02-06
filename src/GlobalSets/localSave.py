@@ -82,7 +82,7 @@ def sendFile(Client: pymongo.MongoClient, dataPath: bson, content: bson):
         return False
 
 def updateMany(Client: pymongo.MongoClient, dataPath: bson, content: bson):
-    try:
+    # try:
         ## Check if dataPath is valid
         dataSource = dataPath['dataSource']
         dataBase = dataPath['dataBase']
