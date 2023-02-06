@@ -31,6 +31,7 @@ class listenNodes:
     def __init__(self) -> None:
         rospy.init_node('queueActions', anonymous=False)
         self.getFromRemoteUnit()
+        print(self.queue)
         for action in self.queue:
             if self.runAction(action[1]):
                 print(action)
