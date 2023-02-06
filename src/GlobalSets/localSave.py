@@ -88,11 +88,11 @@ def updateMany(Client: pymongo.MongoClient, dataPath: bson, content: bson):
         dataBase = dataPath['dataBase']
         collection = dataPath['collection']
 
-        print('----------------------------------------------------------')
+        print('\n\n----------------------------------------------------------')
         print(dataPath)
         print(content)
         print(Client[dataBase][collection].updateMany(update=content, upsert=True))
-        print('----------------------------------------------------------')
+        print('----------------------------------------------------------\n\n')
         # return Client[dataBase][collection].updateMany(update=content, upsert=True)
 
     except pymongo_erros.DuplicateKeyError:
