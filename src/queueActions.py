@@ -54,7 +54,7 @@ class listenNodes:
         print('command: ', action['command'])
         # command = "rostopic pub {} {} {}".format(str(action['topic']), str(action['msg']), str(action['command']))
         command = json.dumps(action['command'])
-        command = command.replace('{','').replace('}','')
+        command = command.replace('{','').replace('}','').replace('"', '')
         print(command)
         # command.replace('{','').replace('}','')
         command = "rostopic pub " + action['topic'] + ' '+ action['msg'] + ' ' + command
