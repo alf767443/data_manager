@@ -32,7 +32,9 @@ class listenNodes:
         rospy.init_node('queueActions', anonymous=False)
         self.getFromRemoteUnit()
         for action in self.queue:
-            self.runAction(action[0])
+            if self.runAction(action[1]):
+                print(actual)
+                #actual.update({: False})
         rate = rospy.Rate(1)
         rate.sleep()
         rospy.spin()
@@ -48,10 +50,10 @@ class listenNodes:
         
 
     def runAction(self, action):
-        print(action)
-        print('topic:   ', action['topic'])
-        print('msg:     ', action['msg'])
-        print('command: ', action['command'])
+        # print(action)
+        # print('topic:   ', action['topic'])
+        # print('msg:     ', action['msg'])
+        # print('command: ', action['command'])
         # command = "rostopic pub {} {} {}".format(str(action['topic']), str(action['msg']), str(action['command']))
         command = json.dumps(action['command'], indent=1)
         command = command.replace('{','').replace('}','').replace('"', '').replace(',','\n')
@@ -60,9 +62,10 @@ class listenNodes:
         command = "rostopic pub -1 " + action['topic'] + ' '+ action['msg'] + ' "' + command + '"'
         try:
             result = subprocess.call(command, shell=True)
-            print(result)
+            return True   
         except Exception as e:
             print(e)
+            return False
         
 
         
