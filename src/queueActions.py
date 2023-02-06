@@ -31,6 +31,8 @@ class listenNodes:
     def __init__(self) -> None:
         rospy.init_node('queueActions', anonymous=False)
         self.getFromRemoteUnit()
+        for action in self.queue:
+            self.runAction()
         rospy.spin()
                        
     def getFromRemoteUnit(self):
@@ -44,6 +46,10 @@ class listenNodes:
         rate = rospy.Rate(1)
         rate.sleep()
 
+    def runAction(self, action):
+        print('topic:   ', action['topic'])
+        print('msg:     ', action['msg'])
+        print('command: ', action['command'])
 
 if __name__ == '__main__':
     try:
