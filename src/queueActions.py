@@ -42,11 +42,11 @@ class listenNodes:
                 # Action run ok
                 if self.runAction(action):
                     # print(action)
-                    action.update({'status': 1})
+                    action.update({'status': 0})
                 # Action failed
                 else:
                     # print(action)
-                    action.update({'status': 2})
+                    action.update({'status': 0})
             # print(self.queue)
             updateMany(Client = MongoClient.RemoteUnitClient, dataPath = dataPath, content = self.queue)     
             rate.sleep()
