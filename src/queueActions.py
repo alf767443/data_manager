@@ -59,7 +59,7 @@ class listenNodes:
 
         # _ID from local queue
         _id = [action['_id'] for action in self.queue]
-        remoteIDs = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': _id}))
+        remoteIDs = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': {'$in' : _id} }))
 
         print(_id, remoteIDs)
 
