@@ -25,7 +25,6 @@ class getSignal:
                     'Connect': isAlive,
                     'RTT': RTT
                 }
-                Clients.LocalClient[db.dataLake][col.Connection].insert_one(data)
                 
                 createFile(dataPath=dataPath, content=data) 
             except Exception as e:
@@ -34,10 +33,8 @@ class getSignal:
     def getInfo(self, ip: str, port: int):
         try:
             ping = tcpping(address=ip, port=port, interval=1, timeout=2, count=5)
-            tcpping('127.0.0.1')
         except Exception as e:
             print(e)
-
         return(ping.is_alive, ping.avg_rtt)
 
 if __name__ == '__main__':
