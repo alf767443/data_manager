@@ -23,9 +23,9 @@ class initDatamanager():
     }
 
     payload = json.dumps(payload)
-
-    response =  requests.request("POST", self.url, headers=headers, data=payload)
-
+    while response['timedate'] == None:
+      response =  requests.request("POST", self.url, headers=headers, data=payload) 
+    
     return response.json()
 
   def syncDate(self, request):
