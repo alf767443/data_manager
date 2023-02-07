@@ -1,6 +1,6 @@
-import requests, json, os, socket
- 
+#!/usr/bin/env python3
 
+import requests, json, os, socket
 class initDatamanager():
 
   url = "http://192.168.217.183:8000/ugv/firstConnection"
