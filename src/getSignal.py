@@ -3,7 +3,7 @@ from GlobalSets.localSave import createFile
 from tcppinglib import tcpping
 
 import rospy, bson
-from datetime import datetime
+import datetime
 
 dataPath = {
     'dataSource': Source.CeDRI_UGV, 
@@ -12,7 +12,7 @@ dataPath = {
 }
 
 class getSignal:
-    def __init__(self, NODES) -> None:
+    def __init__(self) -> None:
         rospy.init_node('getSignal', anonymous=False)
 
         while not rospy.is_shutdown():
