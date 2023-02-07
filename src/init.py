@@ -23,6 +23,7 @@ class initDatamanager():
     }
 
     payload = json.dumps(payload)
+    response = {}
     while response['timedate'] == None:
       response =  requests.request("POST", self.url, headers=headers, data=payload) 
     
