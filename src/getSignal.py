@@ -5,7 +5,7 @@ from tcppinglib import tcpping
 import rospy, bson
 from datetime import datetime
 
-dataPath= {
+dataPath = {
     'dataSource': Source.CeDRI_UGV, 
     'dataBase'  : db.dataLake,
     'collection': col.Battery
