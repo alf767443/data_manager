@@ -62,7 +62,11 @@ class listenNodes:
         remoteQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': {'$in' : _id} }))
 
         for local in actionsQueue:
-            print(next(remote for remote in remoteQueue if remote['_id'] == local['_id']))
+            remote = next(remote for remote in remoteQueue if remote['_id'] == local['_id'])
+            if remote['status'] == local['status']:
+                actionsQueue.remove(local)
+                print(local)
+                
 
         # print(_id, remoteQueue)
     
