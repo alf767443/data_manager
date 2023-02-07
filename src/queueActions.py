@@ -69,7 +69,7 @@ class listenNodes:
 
 
         
-        print(self.queue)
+        #print(self.queue)
         #print(_id)
 
             
