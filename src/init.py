@@ -12,6 +12,7 @@ class initDatamanager():
       self.syncDate(self.firstConnection())
     except Exception as e:
       print(e)
+      pass
   
   def firstConnection(self) -> json:
     headers = {
