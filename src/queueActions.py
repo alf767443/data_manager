@@ -42,51 +42,41 @@ class listenNodes:
                 # Action run ok
                 if self.runAction(action):
                     # print(action)
-                    action.update({'status': 0})
+                    action.update({'status': 1})
                 # Action failed
                 else:
                     # print(action)
                     action.update({'status': 0})
+
+            print("---------------",self.queue)
             rate.sleep()
         rospy.spin()
                        
     def getFromRemoteUnit(self):
-        actionsQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].aggregate(pipeline=pipeline['Status_0|1']))
-        self.queue = actionsQueue
-
-
+      
         # _ID from local queue
         _id = [action['_id'] for action in self.queue]
         remoteQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': {'$in' : _id} }))
 
-        for local in actionsQueue:
+        # Run in all local queue
+        for local in self.queue:
             remote = next(remote for remote in remoteQueue if remote['_id'] == local['_id'])
-            if local['status'] == 1 and remote != []:
-                MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': remote['_id']}, {'$set': {'status': 1}})
+            if remote != []:
+                if local['status'] == 1:
+                    MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': remote['_id']}, {'$set': {'status': 1}})
+                else:
+                    remoteQueue.remove(remote)
+                    self.queue.remove(remote)        
+            # Local not found in remote
             else:
-                remoteQueue.remove(remote)
-                self.queue.remove(remote)
-        
-        
-            
-        print(self.queue)
-                
+                MongoClient.RemoteUnitClient[db.dataLake]['Actions'].insert_one(local)
 
-        # print(_id, remoteQueue)
-    
-        # print(next(x for x in lstdict if x["name"] == "Klaus"))
+        # Append remote in local
+        actionsQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].aggregate(pipeline=pipeline['Status_0|1']))
+        for new in actionsQueue:
+            self.queue.append(new)
 
-        
-
-
-
-        
-        #print(self.queue)
-        #print(_id)
-
-            
-
-        
+        print(self.queue)        
         
     def runAction(self, action):
         command = json.dumps(action['command'], indent=1)
