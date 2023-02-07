@@ -65,7 +65,8 @@ class listenNodes:
             remote = next(remote for remote in remoteQueue if remote['_id'] == local['_id'])
             if remote['status'] == local['status']:
                 actionsQueue.remove(local)
-                print(local)
+        
+        print(self.queue)
                 
 
         # print(_id, remoteQueue)
