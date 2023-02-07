@@ -10,7 +10,7 @@ import datetime
 dataPath = {
     'dataSource': Source.CeDRI_UGV, 
     'dataBase'  : db.dataLake,
-    'collection': col.Battery
+    'collection': col.Connection
 }
 
 class getSignal:
