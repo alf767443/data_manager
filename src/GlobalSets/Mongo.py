@@ -69,6 +69,9 @@ class Collections:
 
     # Collection Occupancy
     Actions         = 'Actions'
+    
+    # Connection
+    Connection      = 'Connection'
 
 # ---------------------------------------------------
 # FUNCTIONS
