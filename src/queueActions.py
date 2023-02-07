@@ -59,10 +59,14 @@ class listenNodes:
 
         # _ID from local queue
         _id = [action['_id'] for action in self.queue]
-        remoteIDs = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': {'$in' : _id} }))
+        remoteQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': {'$in' : _id} }))
 
-        print(_id, remoteIDs)
+        for local in actionsQueue:
+            print(next(remote for remote in remoteQueue if remoteQueue['_id'] == local['_id']))
 
+        # print(_id, remoteQueue)
+    
+        # print(next(x for x in lstdict if x["name"] == "Klaus"))
 
         
 
