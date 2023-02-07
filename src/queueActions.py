@@ -47,8 +47,6 @@ class listenNodes:
                 else:
                     # print(action)
                     action.update({'status': 0})
-            # print(self.queue)
-            updateMany(Client = MongoClient.RemoteUnitClient, dataPath = dataPath, content = self.queue)     
             rate.sleep()
         rospy.spin()
                        
@@ -63,9 +61,14 @@ class listenNodes:
 
         for local in actionsQueue:
             remote = next(remote for remote in remoteQueue if remote['_id'] == local['_id'])
-            if remote['status'] == local['status']:
-                actionsQueue.remove(local)
+            if local['status'] == 1 and remote != []:
+                MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': remote['_id']}, {'$set': {'status': 1}})
+            else:
+                remoteQueue.remove(remote)
+                self.queue.remove(remote)
         
+        
+            
         print(self.queue)
                 
 
