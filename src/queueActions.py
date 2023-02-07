@@ -48,7 +48,6 @@ class listenNodes:
                     # print(action)
                     action.update({'status': 0})
 
-            print("---------------",self.queue)
             rate.sleep()
         rospy.spin()
                        
@@ -74,9 +73,7 @@ class listenNodes:
         # Append remote in local
         actionsQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].aggregate(pipeline=pipeline['Status_0|1']))
         for new in actionsQueue:
-            self.queue.append(new)
-
-        print(self.queue)        
+            self.queue.append(new)    
         
     def runAction(self, action):
         command = json.dumps(action['command'], indent=1)
