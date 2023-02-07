@@ -36,7 +36,7 @@ class listenNodes:
                     'pitch'   : pitch,
                     'yaw'     : yaw,
                 }
-                data.update({'pose': {'pose': {'orientation': orientation}}})
+                data.update({'pose': {'pose': {'position': data['pose']['pose']['position'], 'orientation': orientation}}})
             ##
             #print(data)
             ##
