@@ -9,6 +9,7 @@
 # rosnode kill /getPositionOdom
 rosnode kill /listenNodes
 rosnode kill /bufferManager
+rosnode kill /getSignal
 
 
 
@@ -21,5 +22,6 @@ rosnode kill /bufferManager
 
 # Run buffer manager
 rosrun data_manager listenNodes.py &
+rosrun data_manager getSignal.py &
 rosrun data_manager bufferManager.py
 
