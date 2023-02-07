@@ -54,12 +54,26 @@ class listenNodes:
                        
     def getFromRemoteUnit(self):
         actionsQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].aggregate(pipeline=pipeline['Status_0|1']))
+        self.queue = actionsQueue
+
+
+        # _ID from local queue
         _id = [action['_id'] for action in self.queue]
+        remoteIDs = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': _id}))
+
+        print(_id, remoteIDs)
+
+
+        
+
+
+
+        
         print(self.queue)
         #print(_id)
-        print(list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': _id})))
-        
-        self.queue = actionsQueue
+
+            
+
         
         
     def runAction(self, action):
