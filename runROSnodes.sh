@@ -21,7 +21,7 @@ rosnode kill /queueActions
 # rosrun data_manager getPositionOdom.py &
 
 # Run buffer manager
-rosrun data_manager listenNodes.py &
+rosrun data_manager listenNode.py &
 rosrun data_manager getSignal.py &
 rosrun data_manager queueActions.py &
 rosrun data_manager bufferManager.py
