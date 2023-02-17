@@ -73,6 +73,9 @@ class Collections:
     # Connection
     Connection      = 'Connection'
 
+    # Diagnostics
+    Diagnostics     = 'Diagnostics'
+
 # ---------------------------------------------------
 # FUNCTIONS
 # Log

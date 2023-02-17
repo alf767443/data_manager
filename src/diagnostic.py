@@ -1,20 +1,7 @@
-#!/usr/bin/env python3
 
-# Global imports
-from GlobalSets.localSave import createFile
-from GlobalSets.util import msg_to_document
-
-# Import nodes.py
-from nodes import DIAGNOSTICS_NODES
-
-# Import librarys
-import rospy, bson
-from datetime import datetime
-from tf.transformations import euler_from_quaternion
-
-class listenNodes:
+class getDiagnostic:
     def __init__(self, NODES) -> None:
-        rospy.init_node('listenNodes', anonymous=False)
+        rospy.init_node('platform_diagnostics', anonymous=False)
         self.NODES = NODES
         for node in self.NODES:
             self.newSubscriber(node=node)
@@ -39,6 +26,6 @@ class listenNodes:
 
 if __name__ == '__main__':
     try:
-        listenNodes(NODES=DIAGNOSTICS_NODES)
+        listenNodes(NODES=NODES)
     except rospy.ROSInterruptException:
         pass

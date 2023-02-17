@@ -9,6 +9,9 @@ from sensor_msgs.msg import BatteryState
 from geometry_msgs.msg import PoseWithCovarianceStamped
 from ubiquity_motor.msg import MotorState
 
+from diagnostic_msgs.msg import DiagnosticArray
+from dynamic_reconfigure.msg import ConfigDescription
+
 
 
 NODES = [
@@ -98,4 +101,68 @@ NODES = [
         }
     }, 
     
+]
+
+
+DIAGNOSTICS_NODES = [
+    # {
+    #     'node'    : --The node address (diagnostics),
+    #     'msg'     : --The type of message
+    #     'rate'    : --Listen rate
+    #     'dataPath': {
+    #         'dataSource': --Name of data source in MongoDB
+    #         'dataBase'  : --Name of data base in MongoDB
+    #         'collection': --Name of collection in MongoDB
+    #     }
+    # }
+    {
+        'node'    : 'diagnostics',
+        'msg'     : DiagnosticArray,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dataLake,
+            'collection': col.Diagnostics
+        }
+    }, 
+    {
+        'node'    : 'diagnostics_agg',
+        'msg'     : DiagnosticArray,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dataLake,
+            'collection': col.Diagnostics
+        }
+    }, 
+    {
+        'node'    : 'motor_node/parameter_descriptions',
+        'msg'     : ConfigDescription,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dataLake,
+            'collection': col.Diagnostics
+        }
+    }, 
+    {
+        'node'    : 'ubiquity_velocity_controller/parameter_descriptions',
+        'msg'     : ConfigDescription,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dataLake,
+            'collection': col.Diagnostics
+        }
+    }, 
+    {
+        'node'    : 'urg_node/parameter_descriptions',
+        'msg'     : ConfigDescription,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dataLake,
+            'collection': col.Diagnostics
+        }
+    }, 
 ]
