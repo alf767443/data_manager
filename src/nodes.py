@@ -73,18 +73,18 @@ NODES = [
             'collection': col.Motor
         }
     }, 
-    # Occupancy map
-    {
-        'node'    : 'map',
-        'msg'     : OccupancyGrid,
-        'rate'    : 1,
-        'q2e'     : False,
-        'dataPath': {
-            'dataSource': Source.CeDRI_UGV, 
-            'dataBase'  : db.dataLake,
-            'collection': col.Occupancy
-        }
-    },
+    # # Occupancy map
+    # {
+    #     'node'    : 'map',
+    #     'msg'     : OccupancyGrid,
+    #     'rate'    : 1,
+    #     'q2e'     : False,
+    #     'dataPath': {
+    #         'dataSource': Source.CeDRI_UGV, 
+    #         'dataBase'  : db.dataLake,
+    #         'collection': col.Occupancy
+    #     }
+    # },
     # Battery
     {
         'node'    : 'battery_state',
