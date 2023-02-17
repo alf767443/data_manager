@@ -1,44 +1,44 @@
 #!/usr/bin/env python3
 
-# Global imports
+from GlobalSets.Mongo import DataSource as Source, Clients, DataBases as db, Collections as col
 from GlobalSets.localSave import createFile
-from GlobalSets.util import msg_to_document
+from tcppinglib import tcpping
 
-# Import nodes.py
-from nodes import DIAGNOSTICS_NODES
-
-# Import librarys
 import rospy, bson
-from datetime import datetime
-from tf.transformations import euler_from_quaternion
+import datetime
 
-class listenNodes:
-    def __init__(self, NODES) -> None:
-        rospy.init_node('listenNodes', anonymous=False)
-        self.NODES = NODES
-        for node in self.NODES:
-            self.newSubscriber(node=node)
-        rospy.spin()
-               
-    def newSubscriber(self, node):
-        rospy.Subscriber(name='/' + node['node'], data_class=node['msg'], callback=self.callback, callback_args=node)
-        
-    def callback(self, msg, args):
-        rate = rospy.Rate(args['rate'])
+dataPath = {
+    'dataSource': Source.CeDRI_UGV, 
+    'dataBase'  : db.dataLake,
+    'collection': col.Connection
+}
+
+class getSignal:
+    def __init__(self) -> None:
+        rospy.init_node('getSignal', anonymous=False)
+
+        while not rospy.is_shutdown():
+            try:
+                (isAlive , RTT) = self.getInfo(ip=Clients.ip, port=Clients.port)
+                data = {
+                    'dateTime': datetime.datetime.now(),
+                    'Connect': isAlive,
+                    'RTT': RTT
+                }
+                
+                createFile(dataPath=dataPath, content=data) 
+            except Exception as e:
+                print(e)
+
+    def getInfo(self, ip: str, port: int):
         try:
-            data = msg_to_document(msg=msg)
-            data.update({'dateTime': datetime.now()})
-            ##
-            #print(data)
-            ##
-            createFile(dataPath=args['dataPath'], content=data) 
+            ping = tcpping(address=ip, port=port, interval=1, timeout=2, count=5)
         except Exception as e:
             print(e)
-        rate.sleep()
-
+        return(ping.is_alive, ping.avg_rtt)
 
 if __name__ == '__main__':
     try:
-        listenNodes(NODES=DIAGNOSTICS_NODES)
+        getSignal()
     except rospy.ROSInterruptException:
         pass
