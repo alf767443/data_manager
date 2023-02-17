@@ -40,67 +40,45 @@ class DataBases:
     # Cloud buffer
     dbBuffer    = 'CeDRI_UGV_buffer'
 
+    # Cloud datalake
+    dataLake  = 'CeDRI_UGV_datalake'
+
 # ---------------------------------------------------
 # COLLECTIONS
 class Collections:
     # Collection battery
-    Battery         = 'Battery_Data'
+    Battery         = 'Battery'
 
     # Collection position odometry
-    PositionOdom    = 'PositionOdom_Data'
+    PositionOdom    = 'Position_Odometry'
 
     # Collection position amcl
-    PositionAMCL    = 'PositionAMCL_Data'
-
-    # Remote unit connection
-    RUConection     = 'RemoteUnitConection_Data'
+    PositionAMCL    = 'Position_AMCL'
 
     # Collection position
-    Motor           = 'Motor_Data'
+    Motor           = 'Motor'
 
     # Collection log
     Log             = 'Log'
 
-    #
-    Collections = [
-        {
-            'name'              : Battery,
-            'maxBufferSize'     : 2e5,      #bytes
-            'maxBufferCloud'    : 1e5,      #bytes
-            'maxDashboardSize'  : 100       #Itens
-        },
-        {
-            'name'              : PositionOdom,
-            'maxBufferSize'     : 2e5,      #bytes
-            'maxBufferCloud'    : 1e5,      #bytes
-            'maxDashboardSize'  : 100       #Itens
-        },
-        {
-            'name'              : PositionAMCL,
-            'maxBufferSize'     : 2e5,      #bytes
-            'maxBufferCloud'    : 1e5,      #bytes
-            'maxDashboardSize'  : 100       #Itens
-        },
-        {
-            'name'              : Motor,
-            'maxBufferSize'     : 2e5,      #bytes
-            'maxBufferCloud'    : 1e5,      #bytes
-            'maxDashboardSize'  : 100       #Itens
-        },
-        {
-            'name'              : Log,
-            'maxBufferSize'     : 1e2,      #bytes
-            'maxBufferCloud'    : 1e2,      #bytes
-            'maxDashboardSize'  : 100       #Itens
-        }
-    ]
+    # Collection LiDAR
+    LiDAR           = 'LiDAR'
+
+    # Collection Occupancy
+    Occupancy       = 'Occupancy'
+
+    # Collection Occupancy
+    Actions         = 'Actions'
+    
+    # Connection
+    Connection      = 'Connection'
 
 # ---------------------------------------------------
 # FUNCTIONS
 # Log
 def log(logData:str):
     try:
-        Clients.LocalClient[DataBases.dbBuffer][Collections.Log].insert_one({
+        Clients.LocalClient[DataBases.dataLake][Collections.Log].insert_one({
             "dateTime": datetime.now(),
             "log": logData 
         })

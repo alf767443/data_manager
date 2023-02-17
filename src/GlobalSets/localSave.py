@@ -80,3 +80,16 @@ def sendFile(Client: pymongo.MongoClient, dataPath: bson, content: bson):
         return True
     except Exception as e:
         return False
+
+def updateMany(Client: pymongo.MongoClient, dataPath: bson, content: bson):
+    # try:
+        ## Check if dataPath is valid
+        dataSource = dataPath['dataSource']
+        dataBase = dataPath['dataBase']
+        collection = dataPath['collection']
+
+        for action in content:
+            try:
+                Client[dataBase][collection].update_one(filter={'_id': action['_id']}, upsert=True, update={'$set':action})
+            except Exception as e:
+                return False
