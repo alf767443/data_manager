@@ -38,17 +38,17 @@ NODES = [
         }
     }, 
     # LiDAR
-    {
-        'node'    : 'scan',
-        'msg'     : LaserScan,
-        'rate'    : 1,
-        'q2e'     : False,
-        'dataPath': {
-            'dataSource': Source.CeDRI_UGV, 
-            'dataBase'  : db.dataLake,
-            'collection': col.LiDAR
-        }
-    }, 
+    # {
+    #     'node'    : 'scan',
+    #     'msg'     : LaserScan,
+    #     'rate'    : 1,
+    #     'q2e'     : False,
+    #     'dataPath': {
+    #         'dataSource': Source.CeDRI_UGV, 
+    #         'dataBase'  : db.dataLake,
+    #         'collection': col.LiDAR
+    #     }
+    # }, 
     # AMCL_pos
     {
         'node'    : 'amcl_pose',
