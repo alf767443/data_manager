@@ -25,7 +25,12 @@ class diagnosticsNodes:
         rospy.Subscriber(name='/' + node['node'], data_class=node['msg'], callback=self.callback, callback_args=node)
 
     def callback(self, msg, args):
+        print("---------------------------------------")
         print(msg)
+        print("---------------------------------------")
+        print(self.last_msg[args['node']])
+        print("---------------------------------------")
+
         if self.last_msg[args['node']] != msg:
             rate = rospy.Rate(args['rate'])
             try:
