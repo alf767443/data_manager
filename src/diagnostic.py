@@ -25,17 +25,16 @@ class diagnosticsNodes:
         rospy.Subscriber(name='/' + node['node'], data_class=node['msg'], callback=self.callback, callback_args=node)
 
     def callback(self, msg, args):
-        data = msg_to_document(msg=msg)
-        data.pop('header')
-        if self.last_msg[args['node']] != data:
-            rate = rospy.Rate(args['rate'])
-            try:
-                
+        rate = rospy.Rate(args['rate'])
+        try:
+            data = msg_to_document(msg=msg)
+            data.pop('header')
+            if self.last_msg[args['node']] != data:
+                self.last_msg[args['node']] = data
                 data.update({'dateTime': datetime.now()})
-                createFile(dataPath=args['dataPath'], content=data)
-                self.last_msg[args['node']] = msg
-            except Exception as e:
-                print(e)
+                createFile(dataPath=args['dataPath'], content=data)        
+        except Exception as e:
+            print(e)
         rate.sleep()
 
 
