@@ -115,18 +115,8 @@ DIAGNOSTICS_NODES = [
     #         'collection': --Name of collection in MongoDB
     #     }
     # }
-    {
-        'node'    : 'diagnostics',
-        'msg'     : DiagnosticArray,
-        'rate'    : 1,
-        'dataPath': {
-            'dataSource': Source.CeDRI_UGV, 
-            'dataBase'  : db.dataLake,
-            'collection': col.Diagnostics
-        }
-    }, 
     # {
-    #     'node'    : 'diagnostics_agg',
+    #     'node'    : 'diagnostics',
     #     'msg'     : DiagnosticArray,
     #     'rate'    : 1,
     #     'dataPath': {
@@ -135,34 +125,44 @@ DIAGNOSTICS_NODES = [
     #         'collection': col.Diagnostics
     #     }
     # }, 
-    # {
-    #     'node'    : 'motor_node/parameter_descriptions',
-    #     'msg'     : ConfigDescription,
-    #     'rate'    : 1,
-    #     'dataPath': {
-    #         'dataSource': Source.CeDRI_UGV, 
-    #         'dataBase'  : db.dataLake,
-    #         'collection': col.Diagnostics
-    #     }
-    # }, 
-    # {
-    #     'node'    : 'ubiquity_velocity_controller/parameter_descriptions',
-    #     'msg'     : ConfigDescription,
-    #     'rate'    : 1,
-    #     'dataPath': {
-    #         'dataSource': Source.CeDRI_UGV, 
-    #         'dataBase'  : db.dataLake,
-    #         'collection': col.Diagnostics
-    #     }
-    # }, 
-    # {
-    #     'node'    : 'urg_node/parameter_descriptions',
-    #     'msg'     : ConfigDescription,
-    #     'rate'    : 1,
-    #     'dataPath': {
-    #         'dataSource': Source.CeDRI_UGV, 
-    #         'dataBase'  : db.dataLake,
-    #         'collection': col.Diagnostics
-    #     }
-    # }, 
+    {
+        'node'    : 'diagnostics_agg',
+        'msg'     : DiagnosticArray,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dataLake,
+            'collection': col.Diagnostics
+        }
+    }, 
+    {
+        'node'    : 'motor_node/parameter_descriptions',
+        'msg'     : ConfigDescription,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dataLake,
+            'collection': col.Diagnostics
+        }
+    }, 
+    {
+        'node'    : 'ubiquity_velocity_controller/parameter_descriptions',
+        'msg'     : ConfigDescription,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dataLake,
+            'collection': col.Diagnostics
+        }
+    }, 
+    {
+        'node'    : 'urg_node/parameter_descriptions',
+        'msg'     : ConfigDescription,
+        'rate'    : 1,
+        'dataPath': {
+            'dataSource': Source.CeDRI_UGV, 
+            'dataBase'  : db.dataLake,
+            'collection': col.Diagnostics
+        }
+    }, 
 ]
