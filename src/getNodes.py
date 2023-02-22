@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import rospy
+import rosnode
 import xmlrpc.client
 
 def get_node_info(node_name):
@@ -11,7 +12,7 @@ def get_node_info(node_name):
 
 if __name__ == '__main__':
     rospy.init_node('node_info')
-    nodes = rospy.get_node_names()
+    nodes = rosnode.get_node_names()
     for node in nodes:
         info = get_node_info(node)
         print("Node: " + info['name'])
