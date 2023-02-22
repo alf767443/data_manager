@@ -30,7 +30,7 @@ class diagnosticsNodes:
             data = msg_to_document(msg=msg)
             try:
                 data = data['status']
-                print(data)
+                # print(data)
                 for diagnostics in data:
                     print(diagnostics)
                     if (self.status[diagnostics['name']] != diagnostics['level']):
