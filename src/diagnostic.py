@@ -28,13 +28,15 @@ class diagnosticsNodes:
         rate = rospy.Rate(args['rate'])
         try:
             data = msg_to_document(msg=msg)
-            data.pop('header')
+            try:
+                data.pop('header')
+            except:
+                pass
             print('1-------------------------------------------')
             print(data)
             print('2-------------------------------------------')
             print(self.last_msg[args['node']])
             print('3-------------------------------------------')
-            data.pop('header')
             if self.last_msg[args['node']] != data:
                 print('diferenças')
                 print(self.diff_dicts(dict1=data, dict2=self.last_msg[args['node']]))
