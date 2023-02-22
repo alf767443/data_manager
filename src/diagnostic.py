@@ -32,7 +32,7 @@ class diagnosticsNodes:
                 pass
 
             for diagnostics in data:
-                print(diagnostics)
+                print(diagnostics['level'])
 
 
         except Exception as e:
