@@ -42,9 +42,7 @@ class diagnosticsNodes:
                 print('+++++++++++++++++++++++++++++++++')
             except Exception as e:
                 print('########################################')
-                self.status.update({diagnostics['name']: diagnostics['level']})
-                diagnostics.update({'dateTime': datetime.now()})
-                createFile(dataPath=args['dataPath'], content=diagnostics)
+                print(e)
                 print('########################################')
 
             
