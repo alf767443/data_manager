@@ -33,7 +33,7 @@ class diagnosticsNodes:
                 # print(data)
                 for diagnostics in data:
                     print(diagnostics)
-                    if (self.status['a'+diagnostics['name']] != diagnostics['level']):
+                    if (self.status['_'+diagnostics['name']] != diagnostics['level']):
                         print('&&&&&')
                         self.status.update({diagnostics['name']: diagnostics['level']})
                         diagnostics.update({'dateTime': datetime.now()})
