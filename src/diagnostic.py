@@ -35,7 +35,7 @@ class diagnosticsNodes:
             print('3-------------------------------------------')
             data.pop('header')
             if self.last_msg[args['node']] != data:
-                self.test(dict1=data, dict2=self.last_msg[args['node']])
+                print(self.diff_dicts(dict1=data, dict2=self.last_msg[args['node']]))
                 self.last_msg[args['node']] = data.copy()
                 data.update({'dateTime': datetime.now()})
                 createFile(dataPath=args['dataPath'], content=data)      
@@ -45,23 +45,21 @@ class diagnosticsNodes:
             print('########################################')
         rate.sleep()
 
-    def test(self, dict1: dict, dict2:dict):
-        try:
-            # Encontra as chaves presentes no dict1 mas ausentes no dict2
-            diff1 = {key: dict1[key] for key in dict1 if key not in dict2}
-            # Encontra as chaves presentes no dict2 mas ausentes no dict1
-            diff2 = {key: dict2[key] for key in dict2 if key not in dict1}
-            # Encontra as chaves presentes em ambos dicionários, mas com valores diferentes
-            diff3 = {key: (dict1[key], dict2[key]) for key in dict1 if key in dict2 and dict1[key] != dict2[key]}
-
-            # Mostra as diferenças encontradas
-            print("Diferenças encontradas:")
-            print(diff1)
-            print(diff2)
-            print(diff3)
-        except:
-            print(Exception)
-            pass
+    def diff_dictss(self, dict1, dict2):
+        diff = {}
+        for chave, valor in dict1.items():
+            if chave not in dict2:
+                diff[chave] = valor
+            elif isinstance(valor, dict):
+                sub_diff = self.diff_dicts(valor, dict2[chave])
+                if sub_diff:
+                    diff[chave] = sub_diff
+            elif valor != dict2[chave]:
+                diff[chave] = (valor, dict2[chave])
+        for chave, valor in dict2.items():
+            if chave not in dict1:
+                diff[chave] = valor
+        return diff
 
 if __name__ == '__main__':
     try:
