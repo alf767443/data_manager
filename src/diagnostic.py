@@ -28,6 +28,7 @@ class diagnosticsNodes:
         rate = rospy.Rate(args['rate'])
         try:
             data = msg_to_document(msg=msg)
+            data.pop('header')
             print('1-------------------------------------------')
             print(data)
             print('2-------------------------------------------')
