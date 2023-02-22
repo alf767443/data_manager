@@ -30,14 +30,16 @@ class diagnosticsNodes:
             data = msg_to_document(msg=msg)
             try:
                 data = data['status']
+                for diagnostics in data:
+                    if (self.status[diagnostics['name']] != diagnostics['level']):
+                        self.status.update({diagnostics['name']: diagnostics['level']})
+                        diagnostics.update({'dateTime': datetime.now()})
+                        createFile(dataPath=args['dataPath'], content=diagnostics)
             except:
                 pass
 
-            for diagnostics in data:
-                if (self.status[diagnostics['name']] != diagnostics['level']):
-                    self.status.update({diagnostics['name']: diagnostics['level']})
-                    createFile(dataPath=args['dataPath'], content=diagnostics)
-                    
+            
+
         except Exception as e:
             print('########################################')
             print(e)
