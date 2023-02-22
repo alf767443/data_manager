@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
 import rospy
-import rosnode
+import rosgraph
 
 if __name__ == '__main__':
     rospy.init_node('node_info')
-    nodes = rosnode.get_node_names()
+    nodes = rosgraph.Master('/rostopic').getSystemState()[0]
     for node in nodes:
-        node_info = rosnode.get_node_info(node)
-        connections = node_info.connections
+        node_info = rosgraph.Master('/rostopic').getPid(node)
+        node_uri = rosgraph.Master('/rostopic').getUri(node)
         print("Node:", node)
-        print("URI:", node_info.uri)
-        print("PID:", node_info.pid)
-        print("Connections:")
-        for c in connections:
-            print("  *", c)
+        print("URI:", node_uri)
+        print("PID:", node_info)
+        published_topics = rospy.get_published_topics(node)
+        print("Published Topics:")
+        for t in published_topics:
+            print("  *", t)
+        for t in published_topics:
+            subscribers = rospy.get_subscriber_info(t[0])
+            print("Subscribers for", t[0], ":")
+            for s in subscribers:
+                print("  *", s[1], "connected to", s[0])
