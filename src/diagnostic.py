@@ -36,7 +36,7 @@ class diagnosticsNodes:
             data.pop('header')
             if self.last_msg[args['node']] != data:
                 self.test(dict1=data, dict2=self.last_msg[args['node']])
-                self.last_msg[args['node']] = data
+                self.last_msg[args['node']] = data.copy()
                 data.update({'dateTime': datetime.now()})
                 createFile(dataPath=args['dataPath'], content=data)      
         except Exception as e:
