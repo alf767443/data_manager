@@ -46,20 +46,23 @@ class diagnosticsNodes:
         rate.sleep()
 
     def diff_dicts(self, dict1, dict2):
-        diff = {}
-        for chave, valor in dict1.items():
-            if chave not in dict2:
-                diff[chave] = valor
-            elif isinstance(valor, dict):
-                sub_diff = self.diff_dicts(valor, dict2[chave])
-                if sub_diff:
-                    diff[chave] = sub_diff
-            elif valor != dict2[chave]:
-                diff[chave] = (valor, dict2[chave])
-        for chave, valor in dict2.items():
-            if chave not in dict1:
-                diff[chave] = valor
-        return diff
+        try:
+            diff = {}
+            for chave, valor in dict1.items():
+                if chave not in dict2:
+                    diff[chave] = valor
+                elif isinstance(valor, dict):
+                    sub_diff = self.diff_dicts(valor, dict2[chave])
+                    if sub_diff:
+                        diff[chave] = sub_diff
+                elif valor != dict2[chave]:
+                    diff[chave] = (valor, dict2[chave])
+            for chave, valor in dict2.items():
+                if chave not in dict1:
+                    diff[chave] = valor
+            return diff
+        except:
+            pass
 
 if __name__ == '__main__':
     try:
