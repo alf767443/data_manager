@@ -35,7 +35,7 @@ class diagnosticsNodes:
             print('-------------------------------------------')
             data.pop('header')
             if self.last_msg[args['node']] != data:
-                self.test(data, self.last_msg[args['node']])
+                self.test(dict1=data, dict2=self.last_msg[args['node']])
                 self.last_msg[args['node']] = data
                 data.update({'dateTime': datetime.now()})
                 createFile(dataPath=args['dataPath'], content=data)      
@@ -43,7 +43,7 @@ class diagnosticsNodes:
             print(e)
         rate.sleep()
 
-    def test(dict1, dict2):
+    def test(self, dict1: dict, dict2:dict):
         # Encontra as chaves presentes no dict1 mas ausentes no dict2
         diff1 = {key: dict1[key] for key in dict1 if key not in dict2}
         # Encontra as chaves presentes no dict2 mas ausentes no dict1
