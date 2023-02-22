@@ -16,7 +16,7 @@ if __name__ == '__main__':
         print(topic)
         
         # get list of nodes publishing and subscribing to this topic
-        publishers, subscribers = rosgraph.Master('/rostopic').getTopicTypes(topic[0])
+        publishers, subscribers = rosgraph.Master('/rostopic').getTopicTypes(topic)
         nodes = publishers + subscribers
         
         # print out the list of nodes publishing and subscribing to this topic
