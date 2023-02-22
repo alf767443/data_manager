@@ -60,6 +60,17 @@ class diagnosticsNodes:
                     sub_diff = self.diff_dicts(valor, dict2[chave])
                     if sub_diff:
                         diff[chave] = sub_diff
+                elif isinstance(valor, list):
+                    if len(valor) != len(dict2[chave]):
+                        diff[chave] = (valor, dict2[chave])
+                    else:
+                        sub_diffs = []
+                        for i in range(len(valor)):
+                            sub_diff = self.diff_dicts(valor[i], dict2[chave][i])
+                            if sub_diff:
+                                sub_diffs.append(sub_diff)
+                        if sub_diffs:
+                            diff[chave] = sub_diffs
                 elif valor != dict2[chave]:
                     diff[chave] = (valor, dict2[chave])
             for chave, valor in dict2.items():
