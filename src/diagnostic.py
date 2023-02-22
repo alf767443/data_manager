@@ -10,8 +10,6 @@ from nodes import DIAGNOSTICS_NODES
 # Import librarys
 import rospy, bson
 from datetime import datetime
-from tf.transformations import euler_from_quaternion
-
 class diagnosticsNodes:
     def __init__(self, NODES) -> None:
         rospy.init_node('platform_diagnostics', anonymous=False)
@@ -32,23 +30,43 @@ class diagnosticsNodes:
                 data.pop('header')
             except:
                 pass
-            print('1-------------------------------------------')
-            print(data)
-            print('2-------------------------------------------')
-            print(self.last_msg[args['node']])
-            print('3-------------------------------------------')
-            if self.last_msg[args['node']] != data:
-                print('diferenças')
-                print(self.diff_dicts(dict1=data, dict2=self.last_msg[args['node']]))
-                print('+++++++++++++++++++++++++++++++++++++++++++')
-                self.last_msg[args['node']] = data.copy()
-                data.update({'dateTime': datetime.now()})
-                createFile(dataPath=args['dataPath'], content=data)      
+
+            for diagnostics in data:
+                print(diagnostics)
+
+
         except Exception as e:
             print('########################################')
             print(e)
             print('########################################')
         rate.sleep()
+
+
+        # try:
+        #     data = msg_to_document(msg=msg)
+        #     try:
+        #         data.pop('header')
+        #     except:
+        #         pass
+
+
+        #     print('1-------------------------------------------')
+        #     print(data)
+        #     print('2-------------------------------------------')
+        #     print(self.last_msg[args['node']])
+        #     print('3-------------------------------------------')
+        #     if self.last_msg[args['node']] != data:
+        #         print('diferenças')
+        #         print(self.diff_dicts(dict1=data, dict2=self.last_msg[args['node']]))
+        #         print('+++++++++++++++++++++++++++++++++++++++++++')
+        #         self.last_msg[args['node']] = data.copy()
+        #         data.update({'dateTime': datetime.now()})
+        #         createFile(dataPath=args['dataPath'], content=data)      
+        # except Exception as e:
+        #     print('########################################')
+        #     print(e)
+        #     print('########################################')
+        # rate.sleep()
 
     def diff_dicts(self, dict1, dict2):
         try:
