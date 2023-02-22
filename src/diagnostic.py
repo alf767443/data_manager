@@ -45,7 +45,7 @@ class diagnosticsNodes:
             print('########################################')
         rate.sleep()
 
-    def diff_dictss(self, dict1, dict2):
+    def diff_dicts(self, dict1, dict2):
         diff = {}
         for chave, valor in dict1.items():
             if chave not in dict2:
