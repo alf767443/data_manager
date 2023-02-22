@@ -22,7 +22,6 @@ class listenNodes:
         rospy.spin()
                
     def newSubscriber(self, node):
-        
         rospy.Subscriber(name='/' + node['node'], data_class=node['msg'], callback=self.callback, callback_args=node, queue_size=1)
         
     def callback(self, msg, args):
