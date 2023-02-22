@@ -27,7 +27,7 @@ class diagnosticsNodes:
         try:
             data = msg_to_document(msg=msg)
             try:
-                data.pop('header')
+                data = data['status']
             except:
                 pass
 
