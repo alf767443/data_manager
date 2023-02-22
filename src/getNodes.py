@@ -6,11 +6,12 @@ if __name__ == '__main__':
     rospy.init_node('node_info')
     nodes = rosgraph.Master('/rostopic').getSystemState()[0]
     for node in nodes:
-        node_info = rosgraph.Master('/rostopic').getPid(node)
-        node_uri = rosgraph.Master('/rostopic').getUri(node)
+        node_info = rosgraph.Master('/rostopic').lookupNode(node)
+        node_uri = node_info.uri
+        node_pid = node_info.pid
         print("Node:", node)
         print("URI:", node_uri)
-        print("PID:", node_info)
+        print("PID:", node_pid)
         published_topics = rospy.get_published_topics(node)
         print("Published Topics:")
         for t in published_topics:
