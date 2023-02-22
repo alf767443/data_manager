@@ -28,16 +28,16 @@ class diagnosticsNodes:
         rate = rospy.Rate(args['rate'])
         try:
             data = msg_to_document(msg=msg)
-            # print('-------------------------------------------')
-            # print(data)
-            # print('-------------------------------------------')
-            # print( self.last_msg[args['node']])
-            # print('-------------------------------------------')
+            print('-------------------------------------------')
+            print(data)
+            print('-------------------------------------------')
+            print( self.last_msg[args['node']])
+            print('-------------------------------------------')
             data.pop('header')
             if self.last_msg[args['node']] != data:
                 self.last_msg[args['node']] = data
                 data.update({'dateTime': datetime.now()})
-                createFile(dataPath=args['dataPath'], content=data)        
+                createFile(dataPath=args['dataPath'], content=data)      
         except Exception as e:
             print(e)
         rate.sleep()
