@@ -33,7 +33,12 @@ class diagnosticsNodes:
                 # print(data)
                 for diagnostics in data:
                     print(diagnostics)
-                    if (self.status[diagnostics['name'].replace('/', '')] != diagnostics['level']):
+                    try:
+                        self.status[diagnostics['name']]
+                    except:
+                        self.status.update({diagnostics['name']: None})
+
+                    if (self.status[diagnostics['name']] != diagnostics['level']):
                         print('&&&&&')
                         self.status.update({diagnostics['name']: diagnostics['level']})
                         diagnostics.update({'dateTime': datetime.now()})
