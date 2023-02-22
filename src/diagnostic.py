@@ -11,6 +11,8 @@ from nodes import DIAGNOSTICS_NODES
 import rospy, bson
 from datetime import datetime
 class diagnosticsNodes:
+    status = {}
+
     def __init__(self, NODES) -> None:
         rospy.init_node('platform_diagnostics', anonymous=False)
         self.NODES = NODES
@@ -32,9 +34,10 @@ class diagnosticsNodes:
                 pass
 
             for diagnostics in data:
-                print(diagnostics['level'])
-
-
+                if (self.status[diagnostics['name']] != diagnostics['level']):
+                    self.status.update({diagnostics['name']: diagnostics['level']})
+                    createFile(dataPath=args['dataPath'], content=diagnostics)
+                    
         except Exception as e:
             print('########################################')
             print(e)
