@@ -35,7 +35,9 @@ class diagnosticsNodes:
             print('3-------------------------------------------')
             data.pop('header')
             if self.last_msg[args['node']] != data:
+                print('diferenças')
                 print(self.diff_dicts(dict1=data, dict2=self.last_msg[args['node']]))
+                print('+++++++++++++++++++++++++++++++++++++++++++')
                 self.last_msg[args['node']] = data.copy()
                 data.update({'dateTime': datetime.now()})
                 createFile(dataPath=args['dataPath'], content=data)      
