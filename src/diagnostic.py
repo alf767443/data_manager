@@ -31,7 +31,7 @@ class diagnosticsNodes:
             print('1-------------------------------------------')
             print(data)
             print('2-------------------------------------------')
-            print( self.last_msg[args['node']])
+            print(self.last_msg[args['node']])
             print('3-------------------------------------------')
             data.pop('header')
             if self.last_msg[args['node']] != data:
@@ -46,18 +46,22 @@ class diagnosticsNodes:
         rate.sleep()
 
     def test(self, dict1: dict, dict2:dict):
-        # Encontra as chaves presentes no dict1 mas ausentes no dict2
-        diff1 = {key: dict1[key] for key in dict1 if key not in dict2}
-        # Encontra as chaves presentes no dict2 mas ausentes no dict1
-        diff2 = {key: dict2[key] for key in dict2 if key not in dict1}
-        # Encontra as chaves presentes em ambos dicionários, mas com valores diferentes
-        diff3 = {key: (dict1[key], dict2[key]) for key in dict1 if key in dict2 and dict1[key] != dict2[key]}
+        try:
+            # Encontra as chaves presentes no dict1 mas ausentes no dict2
+            diff1 = {key: dict1[key] for key in dict1 if key not in dict2}
+            # Encontra as chaves presentes no dict2 mas ausentes no dict1
+            diff2 = {key: dict2[key] for key in dict2 if key not in dict1}
+            # Encontra as chaves presentes em ambos dicionários, mas com valores diferentes
+            diff3 = {key: (dict1[key], dict2[key]) for key in dict1 if key in dict2 and dict1[key] != dict2[key]}
 
-        # Mostra as diferenças encontradas
-        print("Diferenças encontradas:")
-        print(diff1)
-        print(diff2)
-        print(diff3)
+            # Mostra as diferenças encontradas
+            print("Diferenças encontradas:")
+            print(diff1)
+            print(diff2)
+            print(diff3)
+        except:
+            print(Exception)
+            pass
 
 if __name__ == '__main__':
     try:
