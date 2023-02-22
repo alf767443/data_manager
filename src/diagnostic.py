@@ -28,6 +28,7 @@ class diagnosticsNodes:
         rate = rospy.Rate(args['rate'])
         try:
             data = msg_to_document(msg=msg)
+            print(data)
             try:
                 data = data['status']
                 for diagnostics in data:
