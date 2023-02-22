@@ -32,7 +32,6 @@ class diagnosticsNodes:
                 data = data['status']
                 # print(data)
                 for diagnostics in data:
-                    print(diagnostics)
                     ## Verifica se existe a chave
                     try:
                         self.status[diagnostics['name']]
@@ -40,7 +39,6 @@ class diagnosticsNodes:
                         self.status.update({diagnostics['name']: None})
 
                     if (self.status[diagnostics['name']] != diagnostics['level']):
-                        print('&&&&&')
                         self.status.update({diagnostics['name']: diagnostics['level']})
                         diagnostics.update({'dateTime': datetime.now()})
                         createFile(dataPath=args['dataPath'], content=diagnostics)
