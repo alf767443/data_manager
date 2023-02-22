@@ -40,8 +40,8 @@ class diagnosticsNodes:
                         createFile(dataPath=args['dataPath'], content=diagnostics)
                     print('-------------------------')
                 print('+++++++++++++++++++++++++++++++++')
-            except:
-                 print('########################################')
+            except Exception as e:
+                print('########################################')
                 print(e)
                 print('########################################')
 
