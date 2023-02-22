@@ -28,14 +28,18 @@ class diagnosticsNodes:
         rate = rospy.Rate(args['rate'])
         try:
             data = msg_to_document(msg=msg)
-            print(data)
             try:
                 data = data['status']
+                print(data)
                 for diagnostics in data:
+                    print(diagnostics)
                     if (self.status[diagnostics['name']] != diagnostics['level']):
+                        print('&&&&&')
                         self.status.update({diagnostics['name']: diagnostics['level']})
                         diagnostics.update({'dateTime': datetime.now()})
                         createFile(dataPath=args['dataPath'], content=diagnostics)
+                    print('-------------------------')
+                print('+++++++++++++++++++++++++++++++++')
             except:
                 pass
 
