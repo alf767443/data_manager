@@ -42,7 +42,10 @@ class getNodes:
                         _createFile =True
                     else:
                         _createFile =False
-                _data = {'nodes': data}
+                _data = {
+                    'nodes': data, 
+                    'dateTime': datetime.now()
+                    }
                 if _createFile: 
                     createFile(dataPath=dataPath, content=_data) 
                     print('create file')
