@@ -23,6 +23,7 @@ if __name__ == '__main__':
         for topic in node_info['publishes'] + node_info['subscribes']:
             try:
                 pubs, subs, _ = rostopic.get_topic_type(topic)
+                print(pubs, subs)
                 pubs = [p.split('/')[1] for p in pubs if len(p.split('/')) > 1]
                 subs = [s.split('/')[1] for s in subs if len(s.split('/')) > 1]
                 if topic.startswith('/'):
@@ -31,6 +32,6 @@ if __name__ == '__main__':
                     source_node = node_name
                 for target_node in pubs + subs:
                     if target_node != source_node:
-                        print(f"  {source_node} -> {target_node}")
+                        # print(f"  {source_node} -> {target_node}")
             except rostopic.ROSTopicIOException:
                 pass
