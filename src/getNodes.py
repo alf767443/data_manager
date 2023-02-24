@@ -9,5 +9,6 @@ if __name__ == '__main__':
     node_list = rosnode.get_node_names()
     # print(node_list)
     for node in node_list:
-        print(node,5)
-        print(rosnode.rosnode_info(node))
+        print('-------------------------------------------------------')
+        info = rosnode.get_node_info_description(node)
+        print(info)
