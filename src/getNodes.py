@@ -19,6 +19,7 @@ class getNodes:
         data = []
         _createFile = False
         rospy.init_node('getNodes', anonymous=False)
+        rate = rospy.Rate(1)
         while not rospy.is_shutdown():
             try:
                 node_list = rosnode.get_node_names()
@@ -46,6 +47,8 @@ class getNodes:
                     print('create file')
             except Exception as e:
                 print(e)
+            
+        rate.sleep()
     
     def parsec(self, msg):
         # Extrai o nome do nó
