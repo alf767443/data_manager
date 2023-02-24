@@ -2,9 +2,20 @@
 
 import rospy
 
-#Obtem os nós em execução e o tipo de mensagem que este publica
 if __name__ == '__main__':
     rospy.init_node('node_info')
-    node_names = rospy.get_published_topics()
-    print("Nodes and Topics currently running:\n{}".format("\n".join([str(x) for x in node_names])))
+    topics = rospy.get_published_topics()
+    node_dict = {}
+    for topic in topics:
+        node_name = topic[0].split('/')[1]
+        if node_name not in node_dict:
+            node_dict[node_name] = {'publishes': [], 'subscribes': []}
+        if topic[0].startswith('/' + node_name + '/'):
+            node_dict[node_name]['publishes'].append(topic[0])
+        else:
+            node_dict[node_name]['subscribes'].append(topic[0])
 
+    for node_name, node_info in node_dict.items():
+        print(f"Node: {node_name}")
+        print(f"Publishes to: {node_info['publishes']}")
+        print(f"Subscribes to: {node_info['subscribes']}")
