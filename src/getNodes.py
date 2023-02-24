@@ -1,22 +1,26 @@
 #!/usr/bin/env python3
 
 import rospy
-import rosnode
-from rosnode import NodeInfoProxy
+from rospy import Message
+from rostopic import get_topic_class
+from rosgraph_msgs.msg import Log
+
+def callback(msg: Message):
+    if msg.name == "/rosout":
+        if msg.level == Log.INFO and "registered as a publisher" in msg.msg:
+            parts = msg.msg.split(" ")
+            node_name = parts[0]
+            topic_name = parts[-1]
+            topic_type = get_topic_class(topic_name)[0].__name__
+            print(f"Publisher node '{node_name}' is publishing to topic '{topic_name}' of type '{topic_type}'")
+        elif msg.level == Log.INFO and "subscribing to topic" in msg.msg:
+            parts = msg.msg.split(" ")
+            node_name = parts[0]
+            topic_name = parts[-1]
+            topic_type = get_topic_class(topic_name)[0].__name__
+            print(f"Subscriber node '{node_name}' is subscribing to topic '{topic_name}' of type '{topic_type}'")
 
 if __name__ == '__main__':
     rospy.init_node('node_info')
-    node_names = rosnode.get_node_names()
-    print("Nodes currently running:\n{}".format("\n".join(node_names)))
-
-    for node_name in node_names:
-        try:
-            node_api = rosnode.get_api_uri(rospy.get_master(), node_name)
-            node_info = NodeInfoProxy(node_name)
-            pubs, subs, srvs = node_info.get_uri(), node_info.get_published_topics(), node_info.get_service_list()
-            print("Node name: {}\nAPI URI: {}\nPublications: {}\nSubscriptions: {}\nServices: {}\n"
-                  .format(node_name, node_api, pubs, subs, srvs))
-            
-        except Exception as e:
-            print(e)
-            pass
+    rospy.Subscriber('/rosout', Log, callback)
+    rospy.spin()
