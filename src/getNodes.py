@@ -32,7 +32,7 @@ class getNodes:
                         'subs' : subscriptions,
                         'serv' : services
                     }
-                    # print(bnode)
+                    print(bnode)
                     _node = list(filter(lambda x: x['node'] == node_name, data))
                     if _node == []:
                         data.append(bnode)
