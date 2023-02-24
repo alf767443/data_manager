@@ -2,6 +2,26 @@
 
 import rospy
 import rosnode
+import re
+
+
+def parsec(info):
+# Extrai o nome do nó
+    node_name = re.search(r"Node \[(.*)\]", s).group(1)
+
+    # Extrai as publicações
+    pubs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Publications:(.*)Subscriptions", s, re.DOTALL).group(1))
+    publications = [{"topic": topic, "type": msg_type} for topic, msg_type in pubs]
+
+    # Extrai as subscrições
+    subs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Subscriptions:(.*)Services", s, re.DOTALL).group(1))
+    subscriptions = [{"topic": topic, "type": msg_type} for topic, msg_type in subs]
+
+    # Extrai os serviços
+    services = re.findall(r"\* (.*)", re.search(r"Services:(.*)", s, re.DOTALL).group(1))
+
+    return (node_name, publications, subscriptions, services)
+
 
 
 if __name__ == '__main__':
@@ -11,4 +31,4 @@ if __name__ == '__main__':
     for node in node_list:
         print('-------------------------------------------------------')
         info = rosnode.get_node_info_description(node)
-        print(info)
+        print(parsec(info=info))
