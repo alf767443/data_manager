@@ -9,5 +9,5 @@ if __name__ == '__main__':
     node_list = rosnode.get_node_names()
     # print(node_list)
     for node in node_list:
-        print(node)
+        print(node,5)
         print(rosnode.rosnode_ping(node))
