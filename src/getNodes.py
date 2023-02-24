@@ -7,18 +7,18 @@ import re
 
 def parsec(info):
 # Extrai o nome do nó
-    node_name = re.search(r"Node \[(.*)\]", s).group(1)
+    node_name = re.search(r"Node \[(.*)\]", info).group(1)
 
     # Extrai as publicações
-    pubs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Publications:(.*)Subscriptions", s, re.DOTALL).group(1))
+    pubs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Publications:(.*)Subscriptions", info, re.DOTALL).group(1))
     publications = [{"topic": topic, "type": msg_type} for topic, msg_type in pubs]
 
     # Extrai as subscrições
-    subs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Subscriptions:(.*)Services", s, re.DOTALL).group(1))
+    subs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Subscriptions:(.*)Services", info, re.DOTALL).group(1))
     subscriptions = [{"topic": topic, "type": msg_type} for topic, msg_type in subs]
 
     # Extrai os serviços
-    services = re.findall(r"\* (.*)", re.search(r"Services:(.*)", s, re.DOTALL).group(1))
+    services = re.findall(r"\* (.*)", re.search(r"Services:(.*)", info, re.DOTALL).group(1))
 
     return (node_name, publications, subscriptions, services)
 
