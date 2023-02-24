@@ -24,7 +24,6 @@ class getNodes:
                 node_list = rosnode.get_node_names()
                 for node in node_list:
                     info = rosnode.get_node_info_description(node)
-                    
                     (node_name, publications, subscriptions, services) = self.parsec(msg=info)
                     bnode = {
                         'node' : node_name,
@@ -32,6 +31,7 @@ class getNodes:
                         'subs' : subscriptions,
                         'serv' : services
                     }
+                    print(bnode)
                     _node = list(filter(lambda x: x['node'] == node_name, data))
                     if _node == []:
                         data.append(bnode)
