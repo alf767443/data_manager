@@ -24,6 +24,7 @@ class getNodes:
                 node_list = rosnode.get_node_names()
                 for node in node_list:
                     info = rosnode.get_node_info_description(node)
+                    
                     (node_name, publications, subscriptions, services) = self.parsec(info=info)
                     bnode = {
                         'node' : node_name,
@@ -44,7 +45,7 @@ class getNodes:
             except Exception as e:
                 print(e)
     
-    def parsec(info):
+    def parsec(self, info):
         # Extrai o nome do nó
         node_name = re.search(r"Node \[(.*)\]", info).group(1)
 
