@@ -15,5 +15,6 @@ if __name__ == '__main__':
             print("Node name: {}\nAPI URI: {}\nPublications: {}\nSubscriptions: {}\nServices: {}\n"
                   .format(node_name, node_api, node_info.get('publications'), node_info.get('subscriptions'),
                           node_info.get('services')))
-        except:
+        except Exception as e:
+            print(e)
             pass
