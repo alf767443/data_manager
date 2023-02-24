@@ -2,6 +2,7 @@
 
 import rospy
 
+#Obtem os nós e os seus publishers e subscribers
 if __name__ == '__main__':
     rospy.init_node('node_info')
     topics = rospy.get_published_topics()
