@@ -76,6 +76,9 @@ class Collections:
     # Diagnostics
     Diagnostics     = 'Diagnostics'
 
+    # Nodes
+    Nodes           = 'Nodes'
+
 # ---------------------------------------------------
 # FUNCTIONS
 # Log
