@@ -36,14 +36,15 @@ class getNodes:
                     _node = list(filter(lambda x: x['node'] == node_name, data))
                     if _node == []:
                         data.append(bnode)
-                        _createFile = True
+                        createFile(dataPath=dataPath, content=data)
                     elif _node[0] != bnode:
                         _node[0].update(bnode)
-                        _createFile = True
+                        createFile(dataPath=dataPath, content=data)
                     else:
                         _createFile =False
+                _data = {'nodes': data}
                 if _createFile: 
-                    createFile(dataPath=dataPath, content=data) 
+                    createFile(dataPath=dataPath, content=_data) 
                     print('create file')
             except Exception as e:
                 print(e)
