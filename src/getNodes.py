@@ -31,7 +31,7 @@ class getNodes:
                         'subs' : subscriptions,
                         'serv' : services
                     }
-                    print(bnode)
+                    # print(bnode)
                     _node = list(filter(lambda x: x['node'] == node_name, data))
                     if _node == []:
                         data.append(bnode)
@@ -41,7 +41,9 @@ class getNodes:
                         _createFile = True
                     else:
                         _createFile =False
-                if _createFile: createFile(dataPath=dataPath, content=data) 
+                if _createFile: 
+                    createFile(dataPath=dataPath, content=data) 
+                    print('create file')
             except Exception as e:
                 print(e)
     
