@@ -32,14 +32,14 @@ class getNodes:
                         'subs' : subscriptions,
                         'serv' : services
                     }
-                    print(bnode)
+                    # print(bnode)
                     _node = list(filter(lambda x: x['node'] == node_name, data))
                     if _node == []:
                         data.append(bnode)
-                        createFile(dataPath=dataPath, content=data)
+                        _createFile =True
                     elif _node[0] != bnode:
                         _node[0].update(bnode)
-                        createFile(dataPath=dataPath, content=data)
+                        _createFile =True
                     else:
                         _createFile =False
                 _data = {'nodes': data}
