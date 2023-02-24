@@ -10,4 +10,4 @@ if __name__ == '__main__':
     # print(node_list)
     for node in node_list:
         print(node,5)
-        print(rosnode.rosnode_ping(node))
+        print(rosnode.rosnode_info(node))
