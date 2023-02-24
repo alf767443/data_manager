@@ -5,7 +5,7 @@ from GlobalSets.localSave import createFile
 from tcppinglib import tcpping
 
 import rospy, bson, rosnode
-import datetime
+from datetime import datetime
 import re
 
 dataPath = {
