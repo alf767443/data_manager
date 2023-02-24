@@ -23,8 +23,8 @@ if __name__ == '__main__':
         for topic in node_info['publishes'] + node_info['subscribes']:
             try:
                 pubs, subs, _ = rostopic.get_topic_type(topic)
-                pubs = [p.split('/')[1] for p in pubs]
-                subs = [s.split('/')[1] for s in subs]
+                pubs = [p.split('/')[1] for p in pubs if len(p.split('/')) > 1]
+                subs = [s.split('/')[1] for s in subs if len(s.split('/')) > 1]
                 if topic.startswith('/'):
                     source_node = topic.split('/')[1]
                 else:
