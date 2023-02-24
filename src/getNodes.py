@@ -25,7 +25,7 @@ class getNodes:
                 for node in node_list:
                     info = rosnode.get_node_info_description(node)
                     
-                    (node_name, publications, subscriptions, services) = self.parsec(info=info)
+                    (node_name, publications, subscriptions, services) = self.parsec(msg=info)
                     bnode = {
                         'node' : node_name,
                         'pubs' : publications,
@@ -45,20 +45,20 @@ class getNodes:
             except Exception as e:
                 print(e)
     
-    def parsec(self, info):
+    def parsec(self, msg):
         # Extrai o nome do nó
-        node_name = re.search(r"Node \[(.*)\]", info).group(1)
+        node_name = re.search(r"Node \[(.*)\]", msg).group(1)
 
         # Extrai as publicações
-        pubs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Publications:(.*)Subscriptions", info, re.DOTALL).group(1))
+        pubs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Publications:(.*)Subscriptions", msg, re.DOTALL).group(1))
         publications = [{"topic": topic, "type": msg_type} for topic, msg_type in pubs]
 
         # Extrai as subscrições
-        subs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Subscriptions:(.*)Services", info, re.DOTALL).group(1))
+        subs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Subscriptions:(.*)Services", msg, re.DOTALL).group(1))
         subscriptions = [{"topic": topic, "type": msg_type} for topic, msg_type in subs]
 
         # Extrai os serviços
-        services = re.findall(r"\* (.*)", re.search(r"Services:(.*)", info, re.DOTALL).group(1))
+        services = re.findall(r"\* (.*)", re.search(r"Services:(.*)", msg, re.DOTALL).group(1))
 
         return (node_name, publications, subscriptions, services)
 
