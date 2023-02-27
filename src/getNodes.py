@@ -25,6 +25,7 @@ class getNodes:
                 node_list = rosnode.get_node_names()
                 for node in node_list:
                     info = rosnode.get_node_info_description(node)
+                    rosnode.rosnode_info(node)
                     (node_name, publications, subscriptions, services) = self.parsec(msg=info)
                     bnode = {
                         'node' : node_name,
@@ -57,7 +58,7 @@ class getNodes:
     def parsec(self, msg):
         # Extrai o nome do nó
         node_name = re.search(r"Node \[(.*)\]", msg).group(1)
-        print(msg)
+        # print(msg)
         # Extrai as publicações
         pubs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Publications:(.*)Subscriptions", msg, re.DOTALL).group(1))
         publications = [{"topic": topic, "type": msg_type} for topic, msg_type in pubs]
