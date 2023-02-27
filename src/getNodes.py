@@ -86,7 +86,7 @@ class getNodes:
     def parsecInfo(self, msg):
         #Extrai o nome do nó
         node_name = re.search(r"Node \[(.*)\]", msg).group(1)
-        print(msg)
+        # print(msg)
         # Extrai as publicações
         pubs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Publications:(.*)Subscriptions", msg, re.DOTALL).group(1))
         publications = [{"topic": topic, "type": msg_type} for topic, msg_type in pubs]
