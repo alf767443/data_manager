@@ -32,15 +32,16 @@ class getNodes:
                     print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
                     print(info)
                     # rosnode.rosnode_info(node)
-                    (node_name, publications, subscriptions, services) = self.parsec(msg=info)
-                    bnode = {
-                        'node' : node_name,
-                        'pubs' : publications,
-                        'subs' : subscriptions,
-                        'serv' : services
-                    }
+                    bnode = self.parsec(msg=info)
+                    bnode.update({'node': node})
+                    # bnode = {
+                    #     'node' : node_name,
+                    #     'pubs' : publications,
+                    #     'subs' : subscriptions,
+                    #     'serv' : services
+                    # }
                     # print(bnode)
-                    _node = list(filter(lambda x: x['node'] == node_name, data))
+                    _node = list(filter(lambda x: x['node'] == node, data))
                     if _node == []:
                         data.append(bnode)
                         _createFile =True
@@ -63,20 +64,39 @@ class getNodes:
     
     def parsec(self, msg):
         # Extrai o nome do nó
-        node_name = re.search(r"Node \[(.*)\]", msg).group(1)
-        print(msg)
-        # Extrai as publicações
-        pubs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Publications:(.*)Subscriptions", msg, re.DOTALL).group(1))
-        publications = [{"topic": topic, "type": msg_type} for topic, msg_type in pubs]
+        # node_name = re.search(r"Node \[(.*)\]", msg).group(1)
+        # print(msg)
+        # # Extrai as publicações
+        # pubs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Publications:(.*)Subscriptions", msg, re.DOTALL).group(1))
+        # publications = [{"topic": topic, "type": msg_type} for topic, msg_type in pubs]
 
-        # Extrai as subscrições
-        subs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Subscriptions:(.*)Services", msg, re.DOTALL).group(1))
-        subscriptions = [{"topic": topic, "type": msg_type} for topic, msg_type in subs]
+        # # Extrai as subscrições
+        # subs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Subscriptions:(.*)Services", msg, re.DOTALL).group(1))
+        # subscriptions = [{"topic": topic, "type": msg_type} for topic, msg_type in subs]
 
-        # Extrai os serviços
-        services = re.findall(r"\* (.*)", re.search(r"Services:(.*)", msg, re.DOTALL).group(1))
+        # # Extrai os serviços
+        # services = re.findall(r"\* (.*)", re.search(r"Services:(.*)", msg, re.DOTALL).group(1))
+        parsed_data = {}
 
-        return (node_name, publications, subscriptions, services)
+        pid_match = re.search(r'Pid:\s*(\d+)', msg)
+        if pid_match:
+            parsed_data['Pid'] = int(pid_match.group(1))
+
+        # Extrai as conexões da msg e armazena no dicionário
+        connections_match = re.findall(r'\* topic:\s*(.*?)\n\s+\* to:\s*(.*?)\n\s+\* direction:\s*(.*?)\((\d+)\s-\s(.*?)\)\s\[(\d+)\]\n\s+\* transport:\s*(.*?)\n', msg, re.DOTALL)
+        parsed_data['Connections'] = []
+        for connection in connections_match:
+            parsed_data['Connections'].append({
+                'topic': connection[0],
+                'to': connection[1],
+                'direction': connection[2],
+                'port': int(connection[3]),
+                'address': connection[4],
+                'bytes': int(connection[5]),
+                'transport': connection[6]
+            })
+
+        return (parsed_data)
 
 
 if __name__ == '__main__':
