@@ -25,23 +25,23 @@ class getNodes:
             try:
                 node_list = rosnode.get_node_names()
                 for node in node_list:
-                    print('####################################################')
-                    print(node)
+                    # print('####################################################')
+                    # print(node)
                     node_api = rosnode.get_api_uri(master, node)
-                    info = rosnode.get_node_connection_info_description(node_api, master)
-                    print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-                    print(info)
+                    # print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+                    # print(info)
                     # rosnode.rosnode_info(node)
-                    bnode = self.parsec(msg=info)
-                    bnode.update({'node': node})
-                    # bnode = {
-                    #     'node' : node_name,
-                    #     'pubs' : publications,
-                    #     'subs' : subscriptions,
-                    #     'serv' : services
-                    # }
+                    (node_name, publications, subscriptions, services) = self.parsecInfo(msg=rosnode.get_node_info_description(node))
+                    connection = self.parsecConnection(rosnode.get_node_connection_info_description(node_api, master))
+                    bnode = {
+                        'node' : node_name,
+                        'pubs' : publications,
+                        'subs' : subscriptions,
+                        'serv' : services, 
+                        'conn' : connection
+                    }
                     # print(bnode)
-                    _node = list(filter(lambda x: x['node'] == node, data))
+                    _node = list(filter(lambda x: x['node'] == node_name, data))
                     if _node == []:
                         data.append(bnode)
                         _createFile =True
@@ -62,20 +62,7 @@ class getNodes:
             
         rate.sleep()
     
-    def parsec(self, msg):
-        # Extrai o nome do nó
-        # node_name = re.search(r"Node \[(.*)\]", msg).group(1)
-        # print(msg)
-        # # Extrai as publicações
-        # pubs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Publications:(.*)Subscriptions", msg, re.DOTALL).group(1))
-        # publications = [{"topic": topic, "type": msg_type} for topic, msg_type in pubs]
-
-        # # Extrai as subscrições
-        # subs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Subscriptions:(.*)Services", msg, re.DOTALL).group(1))
-        # subscriptions = [{"topic": topic, "type": msg_type} for topic, msg_type in subs]
-
-        # # Extrai os serviços
-        # services = re.findall(r"\* (.*)", re.search(r"Services:(.*)", msg, re.DOTALL).group(1))
+    def parsecConnection(self, msg):
         parsed_data = {}
 
         pid_match = re.search(r'Pid:\s*(\d+)', msg)
@@ -96,7 +83,21 @@ class getNodes:
                 'transport': connection[6]
             })
 
-        return (parsed_data)
+    def parsecInfo(self, msg):
+        #Extrai o nome do nó
+        node_name = re.search(r"Node \[(.*)\]", msg).group(1)
+        print(msg)
+        # Extrai as publicações
+        pubs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Publications:(.*)Subscriptions", msg, re.DOTALL).group(1))
+        publications = [{"topic": topic, "type": msg_type} for topic, msg_type in pubs]
+
+        # Extrai as subscrições
+        subs = re.findall(r"\* (.*) \[(.*)\]", re.search(r"Subscriptions:(.*)Services", msg, re.DOTALL).group(1))
+        subscriptions = [{"topic": topic, "type": msg_type} for topic, msg_type in subs]
+
+        # Extrai os serviços
+        services = re.findall(r"\* (.*)", re.search(r"Services:(.*)", msg, re.DOTALL).group(1))
+        return (node_name, publications, subscriptions, services)
 
 
 if __name__ == '__main__':
