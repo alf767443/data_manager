@@ -82,6 +82,7 @@ class getNodes:
                 'bytes': int(connection[5]),
                 'transport': connection[6]
             })
+        return parsed_data
 
     def parsecInfo(self, msg):
         #Extrai o nome do nó
