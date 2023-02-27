@@ -4,7 +4,7 @@ from GlobalSets.Mongo import DataSource as Source, Clients, DataBases as db, Col
 from GlobalSets.localSave import createFile
 from tcppinglib import tcpping
 
-import rospy, bson, rosnode
+import rospy, bson, rosnode, rosgraph
 from datetime import datetime
 import re
 
@@ -17,14 +17,15 @@ dataPath = {
 class getNodes:
     def __init__(self) -> None:
         data = []
+        master = rosgraph.Master('/rosnode') 
         _createFile = False
         rospy.init_node('getNodes', anonymous=False)
         rate = rospy.Rate(1)
-        while not rospy.is_shutdown():
+        while not rospy.is_shutdown():  
             try:
                 node_list = rosnode.get_node_names()
                 for node in node_list:
-                    info = rosnode.get_node_connection_info_description(node)
+                    info = rosnode.get_node_connection_info_description(node, master)
                     # rosnode.rosnode_info(node)
                     (node_name, publications, subscriptions, services) = self.parsec(msg=info)
                     bnode = {
