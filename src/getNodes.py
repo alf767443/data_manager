@@ -25,9 +25,11 @@ class getNodes:
             try:
                 node_list = rosnode.get_node_names()
                 for node in node_list:
+                    print('####################################################')
                     print(node)
                     node_api = rosnode.get_api_uri(master, node)
                     info = rosnode.get_node_connection_info_description(node_api, master)
+                    print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
                     print(info)
                     # rosnode.rosnode_info(node)
                     (node_name, publications, subscriptions, services) = self.parsec(msg=info)
