@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+bash ~/catkin_ws/src/data_manager/killROSnodes.sh
+
 rosrun data_manager listenNode.py &
 rosrun data_manager bufferManager.py &
 rosrun data_manager getSignal.py &
