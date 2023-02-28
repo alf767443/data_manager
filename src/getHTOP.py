@@ -32,9 +32,10 @@ class getNodes:
                             _data = {
                                 'nome_executavel': os.path.basename(p.exe()),
                                 'linha_comando': " ".join(p.cmdline()),
-                                'mem_info': p.memory_info(),
+                                'mem_VMS': p.memory_info().vms,
+                                'mem_RSS': p.memory_info().rss,
                                 'mem_percent': p.memory_percent(),
-                                'cpu_percent': p.cpu_percent(0.5),
+                                'cpu_percent': p.cpu_percent(),
                                 # 'create_time': p.create_time(),
                                 'status': p.status(),
                                 'terminal': p.terminal(),
