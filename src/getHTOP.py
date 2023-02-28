@@ -5,7 +5,7 @@ from GlobalSets.localSave import createFile
 from tcppinglib import tcpping
 
 import rospy, bson, rosnode, rosgraph
-import psutil
+import psutil, os
 from datetime import datetime
 import re
 
@@ -15,66 +15,48 @@ dataPath = {
     'collection': col.Nodes
 }
 
+
+
+
+
 class getNodes:
     def __init__(self) -> None:
         rospy.init_node('getHTOP', anonymous=False)
         rate = rospy.Rate(1)
         while not rospy.is_shutdown():  
             try:              
-                # Informações da CPU
-                print("="*40, "Informações da CPU", "="*40)
-                # Número de núcleos
-                print("Número de núcleos físicos:", psutil.cpu_count(logical=False))
-                print("Número de núcleos virtuais:", psutil.cpu_count(logical=True))
-                # Frequência da CPU
-                freq = psutil.cpu_freq()
-                print(f"Frequência atual da CPU: {freq.current:.2f}MHz")
-                print(f"Frequência máxima da CPU: {freq.max:.2f}MHz")
-                print(f"Frequência mínima da CPU: {freq.min:.2f}MHz")
-                # Uso da CPU
-                print("Uso da CPU por núcleo:")
-                for i, percent in enumerate(psutil.cpu_percent(percpu=True, interval=1)):
-                    print(f"Núcleo {i}: {percent}%")
-                print(f"Uso total da CPU: {psutil.cpu_percent()}%")
-
-                # Informações da memória
-                print("="*40, "Informações da memória", "="*40)
-                svmem = psutil.virtual_memory()
-                print(f"Total de memória: {self.get_size(svmem.total)}")
-                print(f"Memória disponível: {self.get_size(svmem.available)}")
-                print(f"Memória usada: {self.get_size(svmem.used)}")
-                print(f"Percentual de uso da memória: {svmem.percent}%")
-
-                # Informações do disco
-                print("="*40, "Informações do disco", "="*40)
-                partitions = psutil.disk_partitions()
-                for partition in partitions:
-                    print(f"Disco: {partition.device}")
-                    print(f"Ponto de montagem: {partition.mountpoint}")
-                    print(f"Tipo de sistema de arquivos: {partition.fstype}")
+                processos = []
+                for proc in psutil.process_iter():
                     try:
-                        partition_usage = psutil.disk_usage(partition.mountpoint)
-                    except PermissionError:
-                        # Acesso negado para o disco
-                        continue
-                    print(f"Total de espaço: {self.get_size(partition_usage.total)}")
-                    print(f"Espaço usado: {self.get_size(partition_usage.used)}")
-                    print(f"Espaço livre: {self.get_size(partition_usage.free)}")
-                    print(f"Percentual de uso: {partition_usage.percent}%")
+                        # Ignora processos com acesso negado
+                        info = proc.as_dict(attrs=['pid', 'name', 'username', 'memory_info', 'cpu_percent', 'status', 'create_time'])
+                    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                        pass
+                    else:
+                        processos.append(info)
+                processos = sorted(processos, key=lambda proc: proc['cpu_percent'], reverse=True)
 
-                # Informações da rede
-                print("="*40, "Informações da rede", "="*40)
-                # Endereços IP
-                if_addrs = psutil.net_if_addrs()
-                for interface_name, interface_addresses in if_addrs.items():
-                    for address in interface_addresses:
-                        print(f"Interface: {interface_name}")
-                        if str(address.family) == 'AddressFamily.AF_INET':
-                            print(f"Endereço IPv4: {address.address}")
-                            print(f"Máscara de sub-rede: {address.netmask}")
-                            print(f"Gateway padrão: {address.broadcast}")
-                        elif str(address.family) == 'AddressFamily.AF_INET6':
-                            print(f"Endereço IPv6: {address.address}")
+                print("PID    USER      %CPU  %MEM    VSZ   RSS   TTY   STAT  STARTED      TIME  COMMAND")
+                for processo in processos:
+                try:
+                    # Obtém informações adicionais sobre o processo
+                    p = psutil.Process(processo['pid'])
+                    with p.oneshot():
+                        nome_executavel = os.path.basename(p.exe())
+                        linha_comando = " ".join(p.cmdline())
+                        mem_info = p.memory_info()
+                        mem_percent = p.memory_percent()
+                        cpu_percent = p.cpu_percent(interval=0.5)
+                        create_time = datetime.fromtimestamp(p.create_time())
+                        create_time_str = create_time.strftime("%Y-%m-%d %H:%M:%S")
+                        status = p.status()
+                        terminal = p.terminal()
+                except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                    # O processo pode ter terminado durante a execução do loop
+                    continue
+
+                print(f"{processo['pid']:5d} {processo['username']:<10s} {cpu_percent:6.2f} {mem_percent:6.2f} {get_size(mem_info.vms):>6s} {get_size(mem_info.rss):>6s} {terminal or '-':<6s} {status:<4s} {create_time_str} {linha_comando[:40]:<40s}")
+
 
             except Exception as e:
                 print(e)
@@ -97,5 +79,6 @@ if __name__ == '__main__':
         getNodes()
     except rospy.ROSInterruptException:
         pass
+
 
 
