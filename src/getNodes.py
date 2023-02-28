@@ -59,8 +59,9 @@ class getNodes:
                     print('create file')
             except Exception as e:
                 print(e)
+            for i in range(0,10): rate.sleep()
             
-        rate.sleep()
+        
     
     def parsecConnection(self, msg):
         parsed_data = {}
