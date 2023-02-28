@@ -15,10 +15,6 @@ dataPath = {
     'collection': 'Processes'
 }
 
-
-
-
-
 class getNodes:
     def __init__(self) -> None:
         rospy.init_node('getHTOP', anonymous=False)
@@ -34,8 +30,12 @@ class getNodes:
                         pass
                     else:
                         data.append(info)
+                _data = {
+                    'process': data, 
+                    'dateTime': datetime.now()
+                    }
                 print(data)
-                createFile(dataPath=dataPath, content=data) 
+                createFile(dataPath=dataPath, content=_data) 
                 # data = sorted(data, key=lambda proc: proc['cpu_percent'], reverse=True)
 
                 # print("PID    USER      %CPU  %MEM    VSZ   RSS   TTY   STAT  STARTED      TIME  COMMAND")
