@@ -54,7 +54,7 @@ class getNodes:
                     except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                         # O processo pode ter terminado durante a execução do loop
                         continue
-                    print(f"{processo['pid']:5d} {processo['username']:<10s} {cpu_percent:6.2f} {mem_percent:6.2f} {get_size(mem_info.vms):>6s} {get_size(mem_info.rss):>6s} {terminal or '-':<6s} {status:<4s} {create_time_str} {linha_comando[:40]:<40s}")
+                    print(f"{processo['pid']:5d} {processo['username']:<10s} {cpu_percent:6.2f} {mem_percent:6.2f} {self.get_size(mem_info.vms):>6s} {self.get_size(mem_info.rss):>6s} {terminal or '-':<6s} {status:<4s} {create_time_str} {linha_comando[:40]:<40s}")
 
 
             except Exception as e:
