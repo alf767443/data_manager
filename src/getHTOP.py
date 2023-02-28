@@ -40,9 +40,9 @@ class getNodes:
                 # Informações da memória
                 print("="*40, "Informações da memória", "="*40)
                 svmem = psutil.virtual_memory()
-                print(f"Total de memória: {get_size(svmem.total)}")
-                print(f"Memória disponível: {get_size(svmem.available)}")
-                print(f"Memória usada: {get_size(svmem.used)}")
+                print(f"Total de memória: {self.get_size(svmem.total)}")
+                print(f"Memória disponível: {self.get_size(svmem.available)}")
+                print(f"Memória usada: {self.get_size(svmem.used)}")
                 print(f"Percentual de uso da memória: {svmem.percent}%")
 
                 # Informações do disco
@@ -57,9 +57,9 @@ class getNodes:
                     except PermissionError:
                         # Acesso negado para o disco
                         continue
-                    print(f"Total de espaço: {get_size(partition_usage.total)}")
-                    print(f"Espaço usado: {get_size(partition_usage.used)}")
-                    print(f"Espaço livre: {get_size(partition_usage.free)}")
+                    print(f"Total de espaço: {self.get_size(partition_usage.total)}")
+                    print(f"Espaço usado: {self.get_size(partition_usage.used)}")
+                    print(f"Espaço livre: {self.get_size(partition_usage.free)}")
                     print(f"Percentual de uso: {partition_usage.percent}%")
 
                 # Informações da rede
@@ -80,7 +80,7 @@ class getNodes:
                 print(e)
             rate.sleep()
             
-    def get_size(bytes, suffix="B"):
+    def get_size(self, bytes, suffix="B"):
         """
         Converte bytes em um formato legível (exemplo: KB, MB, GB, TB)
         """
