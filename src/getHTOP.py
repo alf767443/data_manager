@@ -38,22 +38,22 @@ class getNodes:
 
                 print("PID    USER      %CPU  %MEM    VSZ   RSS   TTY   STAT  STARTED      TIME  COMMAND")
                 for processo in processos:
-                try:
-                    # Obtém informações adicionais sobre o processo
-                    p = psutil.Process(processo['pid'])
-                    with p.oneshot():
-                        nome_executavel = os.path.basename(p.exe())
-                        linha_comando = " ".join(p.cmdline())
-                        mem_info = p.memory_info()
-                        mem_percent = p.memory_percent()
-                        cpu_percent = p.cpu_percent(interval=0.5)
-                        create_time = datetime.fromtimestamp(p.create_time())
-                        create_time_str = create_time.strftime("%Y-%m-%d %H:%M:%S")
-                        status = p.status()
-                        terminal = p.terminal()
-                except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-                    # O processo pode ter terminado durante a execução do loop
-                    continue
+                    try:
+                        # Obtém informações adicionais sobre o processo
+                        p = psutil.Process(processo['pid'])
+                        with p.oneshot():
+                            nome_executavel = os.path.basename(p.exe())
+                            linha_comando = " ".join(p.cmdline())
+                            mem_info = p.memory_info()
+                            mem_percent = p.memory_percent()
+                            cpu_percent = p.cpu_percent(interval=0.5)
+                            create_time = datetime.fromtimestamp(p.create_time())
+                            create_time_str = create_time.strftime("%Y-%m-%d %H:%M:%S")
+                            status = p.status()
+                            terminal = p.terminal()
+                    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                        # O processo pode ter terminado durante a execução do loop
+                        continue
 
                 print(f"{processo['pid']:5d} {processo['username']:<10s} {cpu_percent:6.2f} {mem_percent:6.2f} {get_size(mem_info.vms):>6s} {get_size(mem_info.rss):>6s} {terminal or '-':<6s} {status:<4s} {create_time_str} {linha_comando[:40]:<40s}")
 
