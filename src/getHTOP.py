@@ -25,19 +25,20 @@ class getNodes:
                 for proc in psutil.process_iter():
                     try:
                         # Ignora data com acesso negado
+                        print(proc)
                         info = proc.as_dict(attrs=['pid', 'name', 'username', 'memory_info', 'cpu_percent', 'status', 'create_time'])
-                        p = psutil.Process(info['pid'])
-                        with p.oneshot():
-                            _data = {
-                                'nome_executavel': os.path.basename(p.exe()),
-                                'linha_comando': " ".join(p.cmdline()),
-                                'mem_info': p.memory_info(),
-                                'mem_percent': p.memory_percent(),
-                                'cpu_percent': p.cpu_percent(0.5),
-                                'create_time': p.create_time(),
-                                'status': p.status(),
-                                'terminal': p.terminal(),
-                            }
+                        # p = psutil.Process(info['pid'])
+                        # with p.oneshot():
+                        #     _data = {
+                        #         'nome_executavel': os.path.basename(p.exe()),
+                        #         'linha_comando': " ".join(p.cmdline()),
+                        #         'mem_info': p.memory_info(),
+                        #         'mem_percent': p.memory_percent(),
+                        #         'cpu_percent': p.cpu_percent(0.5),
+                        #         'create_time': p.create_time(),
+                        #         'status': p.status(),
+                        #         'terminal': p.terminal(),
+                        #     }
                             
                     except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                         pass
