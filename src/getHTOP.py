@@ -26,7 +26,12 @@ class getNodes:
                     try:
                         # Ignora data com acesso negado
                         print(proc)
-                        info = proc.as_dict()
+                        info = proc.as_dict(['pid', 'name', 'cpu_percent', 'status', 'cmdline', 'memory_percent'])
+                        info.update({
+                            'mem_RSS' : proc.memory_info().rss
+                        })
+                    
+                        
                         # info = proc.as_dict(attrs=['pid', 'name', 'username', 'memory_info', 'cpu_percent', 'status', 'create_time'])
                         # p = psutil.Process(info['pid'])
                         # with p.oneshot():
