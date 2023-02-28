@@ -25,31 +25,23 @@ class getNodes:
             try:
                 node_list = rosnode.get_node_names()
                 for node in node_list:
-                    # print('####################################################')
-                    # print(node)
-                    node_api = rosnode.get_api_uri(master, node)
-                    # print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-                    # print(info)
-                    # rosnode.rosnode_info(node)
-                    (node_name, publications, subscriptions, services) = self.parsecInfo(msg=rosnode.get_node_info_description(node))
-                    connection = self.parsecConnection(rosnode.get_node_connection_info_description(node_api, master))
-                    bnode = {
-                        'node' : node_name,
-                        'pubs' : publications,
-                        'subs' : subscriptions,
-                        'serv' : services, 
-                        'conn' : connection
-                    }
-                    # print(bnode)
-                    _node = list(filter(lambda x: x['node'] == node_name, data))
+                    _node = list(filter(lambda x: x['node'] == node, data))
                     if _node == []:
+                        _createFile =True
+                        node_api = rosnode.get_api_uri(master, node)
+                        (node_name, publications, subscriptions, services) = self.parsecInfo(msg=rosnode.get_node_info_description(node))
+                        connection = self.parsecConnection(rosnode.get_node_connection_info_description(node_api, master))
+                        bnode = {
+                            'node' : node_name,
+                            'pubs' : publications,
+                            'subs' : subscriptions,
+                            'serv' : services, 
+                            'conn' : connection
+                        }
                         data.append(bnode)
-                        _createFile =True
-                    elif _node[0] != bnode:
-                        _node[0].update(bnode)
-                        _createFile =True
                     else:
                         _createFile =False
+                    
                 _data = {
                     'nodes': data, 
                     'dateTime': datetime.now()
@@ -59,7 +51,7 @@ class getNodes:
                     print('create file')
             except Exception as e:
                 print(e)
-            for i in range(0,10): rate.sleep()
+            rate.sleep()
             
         
     
