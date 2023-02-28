@@ -35,7 +35,7 @@ class getNodes:
                                 'mem_info': p.memory_info(),
                                 'mem_percent': p.memory_percent(),
                                 'cpu_percent': p.cpu_percent(0.5),
-                                'create_time': p.create_time(),
+                                # 'create_time': p.create_time(),
                                 'status': p.status(),
                                 'terminal': p.terminal(),
                             }
