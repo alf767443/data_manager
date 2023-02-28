@@ -12,7 +12,7 @@ import re
 dataPath = {
     'dataSource': Source.CeDRI_UGV, 
     'dataBase'  : db.dataLake,
-    'collection': col.Nodes
+    'collection': 'Processes'
 }
 
 
@@ -25,20 +25,21 @@ class getNodes:
         rate = rospy.Rate(1)
         while not rospy.is_shutdown():  
             try:              
-                processos = []
+                data = []
                 for proc in psutil.process_iter():
                     try:
-                        # Ignora processos com acesso negado
+                        # Ignora data com acesso negado
                         info = proc.as_dict(attrs=['pid', 'name', 'username', 'memory_info', 'cpu_percent', 'status', 'create_time'])
                     except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                         pass
                     else:
-                        processos.append(info)
-                print(processos)
-                # processos = sorted(processos, key=lambda proc: proc['cpu_percent'], reverse=True)
+                        data.append(info)
+                print(data)
+                createFile(dataPath=dataPath, content=data) 
+                # data = sorted(data, key=lambda proc: proc['cpu_percent'], reverse=True)
 
                 # print("PID    USER      %CPU  %MEM    VSZ   RSS   TTY   STAT  STARTED      TIME  COMMAND")
-                # for processo in processos:
+                # for processo in data:
                 #     try:
                 #         # Obtém informações adicionais sobre o processo
                 #         p = psutil.Process(processo['pid'])
