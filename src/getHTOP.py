@@ -25,7 +25,7 @@ class getNodes:
                 for proc in psutil.process_iter():
                     try:
                         # Ignora data com acesso negado
-                        print(proc)
+                        # print(proc)
 
                         p = psutil.Process(proc.pid)
                         with p.oneshot():
@@ -70,7 +70,7 @@ class getNodes:
                     'process': data, 
                     'dateTime': datetime.now()
                     }
-                print(data)
+                # print(data)
                 createFile(dataPath=dataPath, content=_data) 
                 # data = sorted(data, key=lambda proc: proc['cpu_percent'], reverse=True)
 
