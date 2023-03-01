@@ -22,56 +22,56 @@ class getNodes:
         while not rospy.is_shutdown():  
             try:              
                 data = []
-                # psutil.Process()
-                for proc in psutil.Process().as_dict(['pid','cmdline', 'cpu_percent', 'memory_percent', 'name', 'terminal', 'username', 'threads']):
+                data = psutil.Process().as_dict(['pid','cmdline', 'cpu_percent', 'memory_percent', 'name', 'terminal', 'username', 'threads'])
+                # for proc in psutil.Process().as_dict(['pid','cmdline', 'cpu_percent', 'memory_percent', 'name', 'terminal', 'username', 'threads']):
+                    
+                # # for proc in psutil.Process()
+                #     try:
+                #         print(proc)
 
-                # for proc in psutil.Process()
-                    try:
-                        print(proc)
+                #         # p = psutil.Process(proc)
+                #         # with p.oneshot():
+                #         #     temp = {
+                #         #         'nome_executavel': os.path.basename(p.exe()),
+                #         #         'linha_comando': " ".join(p.cmdline()),
+                #         #         'mem_VMS': p.memory_info().vms,
+                #         #         'mem_RSS': p.memory_info().rss,
+                #         #         'mem_percent': p.memory_percent(),
+                #         #         'cpu_percent': p.cpu_percent(interval=None),
+                #         #         # 'create_time': p.create_time(),
+                #         #         'status': p.status(),
+                #         #         'terminal': p.terminal(),
+                #         #     }
+                #         # print(psutil.cpu_percent(interval=0.1, percpu=True))
+                #         # if(temp['cpu_percent']>0):
+                #         #     print(p.pid, p.cpu_times(), p.cpu_percent(), p.cpu_affinity(), temp['cpu_percent'])
 
-                        # p = psutil.Process(proc)
-                        # with p.oneshot():
-                        #     temp = {
-                        #         'nome_executavel': os.path.basename(p.exe()),
-                        #         'linha_comando': " ".join(p.cmdline()),
-                        #         'mem_VMS': p.memory_info().vms,
-                        #         'mem_RSS': p.memory_info().rss,
-                        #         'mem_percent': p.memory_percent(),
-                        #         'cpu_percent': p.cpu_percent(interval=None),
-                        #         # 'create_time': p.create_time(),
-                        #         'status': p.status(),
-                        #         'terminal': p.terminal(),
-                        #     }
-                        # print(psutil.cpu_percent(interval=0.1, percpu=True))
-                        # if(temp['cpu_percent']>0):
-                        #     print(p.pid, p.cpu_times(), p.cpu_percent(), p.cpu_affinity(), temp['cpu_percent'])
-
-                        # proc = proc.one
-                        # info = proc.as_dict(['pid', 'name', 'status', 'cmdline', 'memory_percent'])
-                        # info.update({
-                        #     'mem_RSS' : proc.memory_info().rss
-                        #     'cpu_percent': proc.
-                        # })
+                #         # proc = proc.one
+                #         # info = proc.as_dict(['pid', 'name', 'status', 'cmdline', 'memory_percent'])
+                #         # info.update({
+                #         #     'mem_RSS' : proc.memory_info().rss
+                #         #     'cpu_percent': proc.
+                #         # })
                     
                         
-                        # info = proc.as_dict(attrs=['pid', 'name', 'username', 'memory_info', 'cpu_percent', 'status', 'create_time'])
-                        # p = psutil.Process(info['pid'])
-                        # with p.oneshot():
-                        #     _data = {
-                        #         'nome_executavel': os.path.basename(p.exe()),
-                        #         'linha_comando': " ".join(p.cmdline()),
-                        #         'mem_info': p.memory_info(),
-                        #         'mem_percent': p.memory_percent(),
-                        #         'cpu_percent': p.cpu_percent(0.5),
-                        #         'create_time': p.create_time(),
-                        #         'status': p.status(),
-                        #         'terminal': p.terminal(),
-                        #     }
+                #         # info = proc.as_dict(attrs=['pid', 'name', 'username', 'memory_info', 'cpu_percent', 'status', 'create_time'])
+                #         # p = psutil.Process(info['pid'])
+                #         # with p.oneshot():
+                #         #     _data = {
+                #         #         'nome_executavel': os.path.basename(p.exe()),
+                #         #         'linha_comando': " ".join(p.cmdline()),
+                #         #         'mem_info': p.memory_info(),
+                #         #         'mem_percent': p.memory_percent(),
+                #         #         'cpu_percent': p.cpu_percent(0.5),
+                #         #         'create_time': p.create_time(),
+                #         #         'status': p.status(),
+                #         #         'terminal': p.terminal(),
+                #         #     }
                             
-                    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-                        pass
-                    else:
-                        data.append(proc)
+                #     except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                #         pass
+                #     else:
+                #         data.append(proc)
                 _data = {
                     'process': data, 
                     'dateTime': datetime.now()
