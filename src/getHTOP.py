@@ -69,7 +69,7 @@ class getNodes:
                     except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                         pass
                     else:
-                        data.append(temp)
+                        data.append(proc)
                 _data = {
                     'process': data, 
                     'dateTime': datetime.now()
