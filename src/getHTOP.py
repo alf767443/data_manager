@@ -12,7 +12,7 @@ import re
 dataPath = {
     'dataSource': Source.CeDRI_UGV, 
     'dataBase'  : db.dataLake,
-    'collection': 'Processes'
+    'collection': col.Processes
 }
 
 class getNodes:
@@ -42,18 +42,6 @@ class getNodes:
             except Exception as e:
                 print(e)
             rate.sleep()
-            
-    def get_size(self, bytes, suffix="B"):
-        """
-        Converte bytes em um formato legível (exemplo: KB, MB, GB, TB)
-        """
-        factor = 1024
-        for unit in ["", "K", "M", "G", "T", "P"]:
-            if bytes < factor:
-                return f"{bytes:.2f} {unit}{suffix}"
-            bytes /= factor
-
-
 
 if __name__ == '__main__':
     try:
