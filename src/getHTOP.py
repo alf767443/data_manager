@@ -25,7 +25,7 @@ class getNodes:
                 process = psutil.process_iter()
                 for proc in process:
                     try:
-                        temp = proc.as_dict(['status', 'cpu_num', 'pid', 'memory_full_info', 'connections', 'create_time', 'cpu_percent', 'nice', 'username', 'threads', 'open_files', 'name', 'num_threads', 'memory_percent'])
+                        temp = proc.as_dict(['status', 'cpu_num', 'pid', 'memory_full_info', 'connections', 'create_time', 'cpu_percent', 'nice', 'username', 'threads', 'name', 'num_threads', 'memory_percent'])
                             
                     except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                         pass
