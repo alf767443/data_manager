@@ -34,7 +34,7 @@ class getNodes:
                                 'linha_comando': " ".join(p.cmdline()),
                                 'mem_VMS': p.memory_info().vms,
                                 'mem_RSS': p.memory_info().rss,
-                                'mem_percent': p.memory_percent(0.1),
+                                'mem_percent': p.memory_percent(),
                                 'cpu_percent': p.cpu_percent(),
                                 # 'create_time': p.create_time(),
                                 'status': p.status(),
