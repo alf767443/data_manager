@@ -37,7 +37,7 @@ class getNodes:
                                 'status': p.status(),
                                 'terminal': p.terminal(),
                             }
-                        print(psutil.cpu_times_percent(percpu=True))
+                        print(psutil.cpu_percent(percpu=True))
                         if(temp['cpu_percent']>0):
                             print(p.pid, p.cpu_times(), p.cpu_percent(), p.cpu_affinity(), temp['cpu_percent'])
 
