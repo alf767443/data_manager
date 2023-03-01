@@ -40,7 +40,8 @@ class getNodes:
                                 'status': p.status(),
                                 'terminal': p.terminal(),
                             }
-                        print(p.pid,p.cpu_times(), p.cpu_percent(), p.cpu_affinity())
+                        if(p.cpu_percent() > 0):
+                            print(p.pid,p.cpu_times(), p.cpu_percent(), p.cpu_affinity())
                         # proc = proc.one
                         # info = proc.as_dict(['pid', 'name', 'status', 'cmdline', 'memory_percent'])
                         # info.update({
