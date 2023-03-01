@@ -35,11 +35,12 @@ class getNodes:
                                 'mem_VMS': p.memory_info().vms,
                                 'mem_RSS': p.memory_info().rss,
                                 'mem_percent': p.memory_percent(),
-                                'cpu_percent': p.cpu_percent(interval= 0.5),
+                                'cpu_percent': p.cpu_percent(interval=None),
                                 # 'create_time': p.create_time(),
                                 'status': p.status(),
                                 'terminal': p.terminal(),
                             }
+                            
                         # proc = proc.one
                         # info = proc.as_dict(['pid', 'name', 'status', 'cmdline', 'memory_percent'])
                         # info.update({
