@@ -22,12 +22,12 @@ class getNodes:
         while not rospy.is_shutdown():  
             try:              
                 data = []
-                for proc in psutil.process_iter():
+                for proc in psutil.pids():
                     try:
                         # Ignora data com acesso negado
                         # print(proc)
 
-                        p = psutil.Process(proc.pid)
+                        p = psutil.Process(proc)
                         with p.oneshot():
                             temp = {
                                 'nome_executavel': os.path.basename(p.exe()),
@@ -41,7 +41,7 @@ class getNodes:
                                 'terminal': p.terminal(),
                             }
                         if(temp['cpu_percent']>0):
-                            print(p.pid,p.cpu_times(), p.cpu_percent(), p.cpu_affinity(), temp['cpu_percent'])
+                            print(p.pid, p.cpu_times(), p.cpu_percent(), p.cpu_affinity(), temp['cpu_percent'])
 
                         # proc = proc.one
                         # info = proc.as_dict(['pid', 'name', 'status', 'cmdline', 'memory_percent'])
