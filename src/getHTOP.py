@@ -23,7 +23,7 @@ class getNodes:
             try:              
                 data = []
                 # psutil.Process()
-                print(psutil.Process().as_dict())
+                print(psutil.Process().as_dict(['pid','cmdline', 'cpu_percent', 'memory_percent', 'name', 'terminal', 'username', 'threads']))
                 # for proc in psutil.Process()
                 #     try:
                 #         print(proc)
