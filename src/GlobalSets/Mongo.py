@@ -79,6 +79,9 @@ class Collections:
     # Nodes
     Nodes           = 'Nodes'
 
+    # Processes
+    Processes       = 'Processes'
+
 # ---------------------------------------------------
 # FUNCTIONS
 # Log
