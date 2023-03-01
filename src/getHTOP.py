@@ -35,7 +35,7 @@ class getNodes:
                                 'mem_VMS': p.memory_info().vms,
                                 'mem_RSS': p.memory_info().rss,
                                 'mem_percent': p.memory_percent(),
-                                'cpu_percent': p.cpu_percent(),
+                                'cpu_percent': p.cpu_percent(interval= 0.5, percpu=True),
                                 # 'create_time': p.create_time(),
                                 'status': p.status(),
                                 'terminal': p.terminal(),
