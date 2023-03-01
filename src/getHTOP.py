@@ -29,7 +29,7 @@ class getNodes:
 
                         p = psutil.Process(proc.pid)
                         with p.oneshot():
-                            _data = {
+                            temp = {
                                 'nome_executavel': os.path.basename(p.exe()),
                                 'linha_comando': " ".join(p.cmdline()),
                                 'mem_VMS': p.memory_info().vms,
@@ -40,8 +40,8 @@ class getNodes:
                                 'status': p.status(),
                                 'terminal': p.terminal(),
                             }
-                        if(_data['cpu_percent']>0):
-                            print(p.pid,p.cpu_times(), p.cpu_percent(), p.cpu_affinity(), _data['cpu_percent'])
+                        if(temp['cpu_percent']>0):
+                            print(p.pid,p.cpu_times(), p.cpu_percent(), p.cpu_affinity(), temp['cpu_percent'])
 
                         # proc = proc.one
                         # info = proc.as_dict(['pid', 'name', 'status', 'cmdline', 'memory_percent'])
@@ -68,7 +68,7 @@ class getNodes:
                     except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                         pass
                     else:
-                        data.append(_data)
+                        data.append(temp)
                 _data = {
                     'process': data, 
                     'dateTime': datetime.now()
