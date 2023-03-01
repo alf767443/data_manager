@@ -25,7 +25,7 @@ class getNodes:
                 process = psutil.process_iter()
                 for proc in process:
                     try:
-                        print(proc.as_dict(attrs=['pid','cmdline', 'cpu_percent', 'memory_percent', 'name', 'terminal', 'username', 'threads']))
+                        temp = proc.as_dict(attrs=['pid','cmdline', 'cpu_percent', 'memory_percent', 'name', 'terminal', 'username', 'threads'])
 
                         # p = psutil.Process(proc)
                         # with p.oneshot():
@@ -69,7 +69,7 @@ class getNodes:
                     except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                         pass
                     else:
-                        data.append(proc)
+                        data.append(temp)
                 _data = {
                     'process': data, 
                     'dateTime': datetime.now()
