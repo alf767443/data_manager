@@ -24,9 +24,6 @@ class getNodes:
                 data = []
                 for proc in psutil.pids():
                     try:
-                        # Ignora data com acesso negado
-                        # print(proc)
-
                         p = psutil.Process(proc)
                         with p.oneshot():
                             temp = {
@@ -35,7 +32,7 @@ class getNodes:
                                 'mem_VMS': p.memory_info().vms,
                                 'mem_RSS': p.memory_info().rss,
                                 'mem_percent': p.memory_percent(),
-                                'cpu_percent': p.cpu_percent(),
+                                'cpu_percent': p.cpu_percent(interval=None),
                                 # 'create_time': p.create_time(),
                                 'status': p.status(),
                                 'terminal': p.terminal(),
