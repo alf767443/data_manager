@@ -22,24 +22,27 @@ class getNodes:
         while not rospy.is_shutdown():  
             try:              
                 data = []
-                for proc in psutil.pids():
+                for proc in psutil.process_iter(attrs=[]):
+                    
                     try:
-                        p = psutil.Process(proc)
-                        with p.oneshot():
-                            temp = {
-                                'nome_executavel': os.path.basename(p.exe()),
-                                'linha_comando': " ".join(p.cmdline()),
-                                'mem_VMS': p.memory_info().vms,
-                                'mem_RSS': p.memory_info().rss,
-                                'mem_percent': p.memory_percent(),
-                                'cpu_percent': p.cpu_percent(interval=None),
-                                # 'create_time': p.create_time(),
-                                'status': p.status(),
-                                'terminal': p.terminal(),
-                            }
-                        print(psutil.cpu_percent(interval=0.1, percpu=True))
-                        if(temp['cpu_percent']>0):
-                            print(p.pid, p.cpu_times(), p.cpu_percent(), p.cpu_affinity(), temp['cpu_percent'])
+                        print(proc)
+
+                        # p = psutil.Process(proc)
+                        # with p.oneshot():
+                        #     temp = {
+                        #         'nome_executavel': os.path.basename(p.exe()),
+                        #         'linha_comando': " ".join(p.cmdline()),
+                        #         'mem_VMS': p.memory_info().vms,
+                        #         'mem_RSS': p.memory_info().rss,
+                        #         'mem_percent': p.memory_percent(),
+                        #         'cpu_percent': p.cpu_percent(interval=None),
+                        #         # 'create_time': p.create_time(),
+                        #         'status': p.status(),
+                        #         'terminal': p.terminal(),
+                        #     }
+                        # print(psutil.cpu_percent(interval=0.1, percpu=True))
+                        # if(temp['cpu_percent']>0):
+                        #     print(p.pid, p.cpu_times(), p.cpu_percent(), p.cpu_affinity(), temp['cpu_percent'])
 
                         # proc = proc.one
                         # info = proc.as_dict(['pid', 'name', 'status', 'cmdline', 'memory_percent'])
