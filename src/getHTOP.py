@@ -22,10 +22,10 @@ class getNodes:
         while not rospy.is_shutdown():  
             try:              
                 data = []
-                process = psutil.process_iter(attrs=['pid','cmdline', 'cpu_percent', 'memory_percent', 'name', 'terminal', 'username', 'threads'])
+                process = psutil.process_iter()
                 for proc in process:
                     try:
-                        print(proc)
+                        print(proc.as_dict(attrs=['pid','cmdline', 'cpu_percent', 'memory_percent', 'name', 'terminal', 'username', 'threads']))
 
                         # p = psutil.Process(proc)
                         # with p.oneshot():
