@@ -31,11 +31,10 @@ class test:
                 'cpu_perc': psutil.cpu_percent(percpu=True),
                 'memory': psutil.virtual_memory(),
             }
-            print(data)
             createFile(dataPath=dataPath, content=data) 
         except Exception as e:
             print(e)
-        for i in range(1, 1): rate.sleep()
+        for i in range(1, 300): rate.sleep()
 
 if __name__ == '__main__':
     try:
