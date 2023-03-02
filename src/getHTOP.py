@@ -34,24 +34,19 @@ class getNodes:
                         data.append(temp)
                 _data = {
                     'process': data, 
-                    'computer': {
-                        'cpu_count': psutil.cpu_count(logical=True),
-                        'cpu_freq': psutil.cpu_freq(percpu=True),
+                    'computer': {                    
                         'cpu_perc': psutil.cpu_percent(percpu=True),
-                        'cpu_stats': psutil.cpu_stats(),
                         'net_conn': psutil.net_connections(),
-                        'disk_usa': psutil.disk_usage(),
                         'memory': psutil.virtual_memory(),
                         'memory_swap': psutil.swap_memory()
                     },
                     'dateTime': datetime.now()
                     }
-                # print(data)
                 createFile(dataPath=dataPath, content=_data) 
 
             except Exception as e:
                 print(e)
-            rate.sleep()
+            for i in range(0,60): rate.sleep()
 
 if __name__ == '__main__':
     try:
