@@ -16,14 +16,14 @@ dataPath = {
 
 
 class test:
-    rate = rospy.Rate(1)
     def __init__(self) -> None:
         rospy.init_node('testNode', anonymous=False)
-        rospy.Subscriber(name='/battery_state', data_class=BatteryState, callback_args=self.callback(), queue_size=1)
+        rospy.Subscriber(name='/battery_state', data_class=BatteryState, callback_args=self.callback, queue_size=1)
         rospy.spin()
         
             
     def callback(self, msg):
+        rate = rospy.Rate(1)
         try:
             data = {
                 'datetime': datetime.now(),
@@ -34,7 +34,7 @@ class test:
             createFile(dataPath=dataPath, content=data) 
         except Exception as e:
             print(e)
-        for i in range(1, 300): self.rate.sleep()
+        for i in range(1, 300): rate.sleep()
 
 if __name__ == '__main__':
     try:
