@@ -17,7 +17,7 @@ dataPath = {
 
 class test:
     rate = rospy.Rate(1)
-    def __init__(self, NODES) -> None:
+    def __init__(self) -> None:
         rospy.init_node('testNode', anonymous=False)
         rospy.Subscriber(name='/battery_state', data_class=BatteryState, callback_args=self.callback(), queue_size=1)
         rospy.spin()
