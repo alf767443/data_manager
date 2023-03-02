@@ -34,6 +34,16 @@ class getNodes:
                         data.append(temp)
                 _data = {
                     'process': data, 
+                    'computer': {
+                        'cpu_count': psutil.cpu_count(logical=True),
+                        'cpu_freq': psutil.cpu_freq(percpu=True),
+                        'cpu_perc': psutil.cpu_percent(percpu=True),
+                        'cpu_stats': psutil.cpu_stats(),
+                        'net_conn': psutil.net_connections(),
+                        'disk_usa': psutil.disk_usage(),
+                        'memory': psutil.virtual_memory(),
+                        'memory_swap': psutil.swap_memory()
+                    },
                     'dateTime': datetime.now()
                     }
                 # print(data)
