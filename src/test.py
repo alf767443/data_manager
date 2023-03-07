@@ -13,7 +13,7 @@ def callback(msg):
         print(_temp)
         _temp = _temp.pop()
         print(_temp)
-        return None
+        # return None
     if data != _temp:
         posQueue.append(data)
     rospy.loginfo(rospy.get_caller_id() + "I heard %s", posQueue)
