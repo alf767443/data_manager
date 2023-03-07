@@ -7,6 +7,7 @@ posQueue = []
 def callback(msg):
     data = msg.data
     _temp = None
+    print(data, _temp, posQueue)
     if posQueue != []:
         _temp = posQueue.copy().pop()
         return None
