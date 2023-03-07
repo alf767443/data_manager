@@ -8,4 +8,5 @@ rosrun data_manager getSignal.py &
 # rosrun data_manager queueAction.py &
 rosrun data_manager getNodes.py &
 rosrun data_manager diagnostic.py &
+rosrun data_manager getHTOP.py &
 

@@ -9,3 +9,4 @@ rosnode kill /getSignal
 rosnode kill /queueActions
 rosnode kill /getNodes
 rosnode kill /platform_diagnostics
+rosnode kill /getHTOP
