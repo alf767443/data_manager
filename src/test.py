@@ -10,6 +10,7 @@ def callback(msg):
     print(data, _temp, posQueue)
     if posQueue != []:
         _temp = posQueue.copy().pop()
+        print(_temp)
         return None
     if data != _temp:
         posQueue.append(data)
