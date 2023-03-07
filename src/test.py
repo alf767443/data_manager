@@ -6,6 +6,8 @@ posQueue = []
 
 def callback(msg):
     data = msg.data
+    if posQueue == []:
+        return None
     _temp = posQueue.copy().pop()
     if data != _temp:
         posQueue.append(data)
