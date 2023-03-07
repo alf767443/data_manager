@@ -9,7 +9,9 @@ def callback(msg):
     _temp = None
     print(data, _temp, posQueue)
     if posQueue != []:
-        _temp = posQueue.copy().pop()
+        _temp = posQueue.copy()
+        print(_temp)
+        _temp = _temp.pop()
         print(_temp)
         return None
     if data != _temp:
