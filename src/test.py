@@ -6,9 +6,10 @@ posQueue = []
 
 def callback(msg):
     data = msg.data
-    if posQueue == []:
+    _temp = None
+    if posQueue != []:
+        _temp = posQueue.copy().pop()
         return None
-    _temp = posQueue.copy().pop()
     if data != _temp:
         posQueue.append(data)
     rospy.loginfo(rospy.get_caller_id() + "I heard %s", posQueue)
