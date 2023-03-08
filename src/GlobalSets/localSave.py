@@ -42,7 +42,7 @@ def getFiles():
     files = sorted(os.listdir(path=path), reverse=True)
     ## Read files
     try:
-        while Mongo.Clients.RemoteUnitClient.is_primary and len(files) > 0:
+        # while Mongo.Clients.RemoteUnitClient.is_primary and len(files) > 0:
             for file in files:
                 ## Read file
                 get = open(file=path+file, mode='rb')
@@ -54,11 +54,12 @@ def getFiles():
                     get.close()
                     if os.path.exists(path=path+file):
                         os.remove(path+file)
-            files = sorted(os.listdir(path=path), reverse=True)
+            # files = sorted(os.listdir(path=path), reverse=True)
     except bson_errors.BSONError:
         get.close()
         if os.path.exists(path=path+file):
             os.remove(path+file)
+            return False
     except pymongo_erros.DuplicateKeyError:
         get.close()
         if os.path.exists(path=path+file):

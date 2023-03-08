@@ -16,7 +16,7 @@ dataPath = {
 class getSignal:
     def __init__(self) -> None:
         rospy.init_node('getSignal', anonymous=False)
-
+        rate = rospy.Rate(1)
         while not rospy.is_shutdown():
             try:
                 (isAlive , RTT) = self.getInfo(ip=Clients.ip, port=Clients.port)
@@ -29,6 +29,7 @@ class getSignal:
                 createFile(dataPath=dataPath, content=data) 
             except Exception as e:
                 print(e)
+            rate.sleep()
 
     def getInfo(self, ip: str, port: int):
         try:

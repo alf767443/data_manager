@@ -49,7 +49,6 @@ class listenNodes:
                     action.update({'status': 0})
 
             rate.sleep()
-        rospy.spin()
                        
     def getFromRemoteUnit(self):
       
