@@ -13,13 +13,23 @@ from diagnostic_msgs.msg import DiagnosticArray
 from dynamic_reconfigure.msg import ConfigDescription
 
 
+def q2e(data) -> None:
+    orientation = data['pose']['pose']['orientation']
+    (raw, pitch, yaw) = euler_from_quaternion([orientation['x'], orientation['y'], orientation['z'], orientation['w']])
+    orientation = {
+        'raw'     :  raw,
+        'pitch'   : pitch,
+        'yaw'     : yaw,
+    }
+    data.update({'pose': {'pose': {'position': data['pose']['pose']['position'], 'orientation': orientation}}})
 
 NODES = [
     #############################################################
     # {
-    #     'node'    : --The node address (odom),
+    #     'node'    : --The node name (odom),
     #     'msg'     : --The type of message
-    #     'rate'    : --Listen rate
+    #     'rate'    : --Sample rate
+    #     'q2e'     : --Convert Quaternion to Euler
     #     'dataPath': {
     #         'dataSource': --Name of data source in MongoDB
     #         'dataBase'  : --Name of data base in MongoDB
@@ -33,6 +43,7 @@ NODES = [
         'node'    : 'odom',
         'msg'     : Odometry,
         'rate'    : 1,
+        'mod'     : q2e,
         'q2e'     : True,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
