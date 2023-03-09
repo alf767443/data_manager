@@ -13,6 +13,9 @@ from diagnostic_msgs.msg import DiagnosticArray
 from dynamic_reconfigure.msg import ConfigDescription
 
 
+# Modifications
+from tf.transformations import euler_from_quaternion
+
 def q2e(data) -> None:
     orientation = data['pose']['pose']['orientation']
     (raw, pitch, yaw) = euler_from_quaternion([orientation['x'], orientation['y'], orientation['z'], orientation['w']])
@@ -43,7 +46,7 @@ NODES = [
         'node'    : 'odom',
         'msg'     : Odometry,
         'rate'    : 1,
-        'mod'     : q2e,
+        'callback': q2e,
         'q2e'     : True,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
