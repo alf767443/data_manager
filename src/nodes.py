@@ -32,7 +32,7 @@ NODES = [
     #     'node'    : --The node name (odom),
     #     'msg'     : --The type of message
     #     'rate'    : --Sample rate
-    #     'q2e'     : --Convert Quaternion to Euler
+    #     'callback': --Callback function 
     #     'dataPath': {
     #         'dataSource': --Name of data source in MongoDB
     #         'dataBase'  : --Name of data base in MongoDB
@@ -47,7 +47,6 @@ NODES = [
         'msg'     : Odometry,
         'rate'    : 1,
         'callback': q2e,
-        'q2e'     : True,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
             'dataBase'  : db.dataLake,
@@ -59,7 +58,7 @@ NODES = [
     #     'node'    : 'scan',
     #     'msg'     : LaserScan,
     #     'rate'    : 1,
-    #     'q2e'     : False,
+    #     'callback': None,
     #     'dataPath': {
     #         'dataSource': Source.CeDRI_UGV, 
     #         'dataBase'  : db.dataLake,
@@ -71,7 +70,7 @@ NODES = [
         'node'    : 'amcl_pose',
         'msg'     : PoseWithCovarianceStamped,
         'rate'    : 1,
-        'q2e'     : True,
+        'callback': q2e,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
             'dataBase'  : db.dataLake,
@@ -83,7 +82,7 @@ NODES = [
         'node'    : 'motor_state',
         'msg'     : MotorState,
         'rate'    : 1,
-        'q2e'     : False,
+        'callback': None,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
             'dataBase'  : db.dataLake,
@@ -95,7 +94,7 @@ NODES = [
     #     'node'    : 'map',
     #     'msg'     : OccupancyGrid,
     #     'rate'    : 1,
-    #     'q2e'     : False,
+    #     'callback': None,
     #     'dataPath': {
     #         'dataSource': Source.CeDRI_UGV, 
     #         'dataBase'  : db.dataLake,
@@ -107,7 +106,7 @@ NODES = [
         'node'    : 'battery_state',
         'msg'     : BatteryState,
         'rate'    : 1,
-        'q2e'     : False,
+        'callback': None,
         'dataPath': {
             'dataSource': Source.CeDRI_UGV, 
             'dataBase'  : db.dataLake,
