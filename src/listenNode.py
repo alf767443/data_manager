@@ -18,6 +18,7 @@ class listenNodes:
         self.NODES = NODES
         for node in self.NODES:
             node['ROS_rate'] = rospy.Rate(node['rate'])
+            # node.update({"ticks"})
             self.newSubscriber(node=node)
         rospy.spin()
                
@@ -43,7 +44,7 @@ class listenNodes:
             createFile(dataPath=args['dataPath'], content=data) 
         except Exception as e:
             print(e)
-        args['ROS_rate'].sleep()
+        for i in range(1,10): args['ROS_rate'].sleep()
 
 
 if __name__ == '__main__':
