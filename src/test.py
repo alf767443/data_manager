@@ -22,7 +22,7 @@ class test:
             _temp = _temp.pop()
             print(_temp)
             # return None
-        if data != _temp:
+        if data !=  _temp:
             self.posQueue.append(data)
         rospy.loginfo(rospy.get_caller_id() + "I heard %s", self.posQueue)
 
