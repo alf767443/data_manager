@@ -36,6 +36,7 @@ class listenNodes:
     def __init__(self) -> None:
         rospy.init_node('queueActions', anonymous=False)
         rate = rospy.Rate(1)
+        self.initialQuery()
         while not rospy.is_shutdown():
             self.getFromRemoteUnit()
             for action in list(filter(lambda d: d['status'] in [0], self.queue)):
@@ -49,9 +50,15 @@ class listenNodes:
                     action.update({'status': 0})
 
             rate.sleep()
+        
+    def initialQuery(self):
+        remoteQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': {'$in' : _id} }))
+        remote = next(remote for remote in remoteQueue)
+        for item in remote:
+            # if item != []:
+            MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': item['_id']}, {'$set': {'status': 3}})
                        
     def getFromRemoteUnit(self):
-      
         # _ID from local queue
         _id = [action['_id'] for action in self.queue]
         remoteQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': {'$in' : _id} }))

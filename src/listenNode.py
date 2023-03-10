@@ -30,15 +30,6 @@ class listenNodes:
             data.update({'dateTime': datetime.now()})
             if args['callback'] != None:
                 args['callback'](data)
-            # if(args['q2e']):
-            #     orientation = data['pose']['pose']['orientation']
-            #     (raw, pitch, yaw) = euler_from_quaternion([orientation['x'], orientation['y'], orientation['z'], orientation['w']])
-            #     orientation = {
-            #         'raw'     :  raw,
-            #         'pitch'   : pitch,
-            #         'yaw'     : yaw,
-            #     }
-            #     data.update({'pose': {'pose': {'position': data['pose']['pose']['position'], 'orientation': orientation}}})
             print(data)
             createFile(dataPath=args['dataPath'], content=data) 
         except Exception as e:
