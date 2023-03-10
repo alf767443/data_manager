@@ -52,9 +52,9 @@ class listenNodes:
             rate.sleep()
         
     def initialQuery(self):
-        remoteQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': {'$in' : _id} }))
-        remote = next(remote for remote in remoteQueue)
-        for item in remote:
+        remoteQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find())
+        # remote = next(remote for remote in remoteQueue)
+        for item in remoteQueue:
             # if item != []:
             MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': item['_id']}, {'$set': {'status': 3}})
                        
