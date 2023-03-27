@@ -6,7 +6,7 @@ from GlobalSets.util import msg_to_document
 
 import pymongo, bson, datetime, rospy, os, json, subprocess
 from GlobalSets.Mongo import DataSource as Source, Clients as MongoClient, DataBases as db, Collections as col
-
+from std_msgs.msg import String
 
 pipeline = {
     'Status_0|1' : [
