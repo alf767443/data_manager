@@ -35,6 +35,9 @@ class listenNodes:
 
     def __init__(self) -> None:
         rospy.init_node('queueActions', anonymous=False)
+
+        rospy.Subscriber("queue", String, self.queueCallback)
+        
         rate = rospy.Rate(1)
         self.initialQuery()
         while not rospy.is_shutdown():
@@ -50,6 +53,19 @@ class listenNodes:
                     action.update({'status': 0})
 
             rate.sleep()
+
+    def queueCallback(self, msg):
+        data = msg.data
+        data = json.loads(data)
+        try:
+            data['command']
+            data['msg']
+            data['topic']
+            data.update({'dateTime': datetime.datetime.now()})
+            self.queue.append(data)
+            
+        except Exception as e:
+            print(e)
         
     def initialQuery(self):
         remoteQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find())
@@ -74,7 +90,8 @@ class listenNodes:
                     self.queue.remove(remote)        
             # Local not found in remote
             else:
-                MongoClient.RemoteUnitClient[db.dataLake]['Actions'].insert_one(local)
+                local.update({'_id': MongoClient.RemoteUnitClient[db.dataLake]['Actions'].insert_one(local).inserted_id})
+
 
         # Append remote in local
         actionsQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].aggregate(pipeline=pipeline['Status_0|1']))
