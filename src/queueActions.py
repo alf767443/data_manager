@@ -42,7 +42,7 @@ class listenNodes:
         self.initialQuery()
         while not rospy.is_shutdown():
             self.getFromRemoteUnit()
-            self.sortQueue()
+            self.sortQueue('command')
             for action in list(filter(lambda d: d['status'] in [0], self.queue)):
                 # Action run ok
                 if self.runAction(action):
@@ -120,6 +120,7 @@ class listenNodes:
     def sortQueue(self, key):
         temp = []
         #Sort
+        self.queue = sorted(self.queue, key=lambda d: d['priority'])
         self.queue = sorted(self.queue, key=lambda d: d[key])
         #Remove duplicates
         for i in range(len(self.queue)):
