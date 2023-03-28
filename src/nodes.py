@@ -24,7 +24,7 @@ def q2e(data) -> None:
         'pitch'   : pitch,
         'yaw'     : yaw,
     }
-    data.update({'pose': {'pose': {'position': data['pose']['pose']['position'], 'orientation': orientation}}, 'msg': "hellooo i'm here" })
+    data.update({'pose': {'pose': {'position': data['pose']['pose']['position'], 'orientation': orientation}}})
 
 NODES = [
     #############################################################
