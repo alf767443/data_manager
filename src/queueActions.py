@@ -91,8 +91,8 @@ class listenNodes:
             remote = next(remote for remote in remoteQueue if remote['_id'] == local['_id'])
             if remote != []:
                 if local['status'] == 1:
-                    MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': remote['_id']}, {'$set': {'status': 1}})
-                    self.queue.remove(remote) 
+                    if MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': remote['_id']}, {'$set': {'status': 1}}).acknowledged:
+                        self.queue.remove(local) 
                 else:
                     remoteQueue.remove(remote)
                     self.queue.remove(remote)        
