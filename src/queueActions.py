@@ -41,7 +41,6 @@ class listenNodes:
         rate = rospy.Rate(1)
         self.initialQuery()
         while not rospy.is_shutdown():
-            print(self.queue)
             self.getFromRemoteUnit()
             for action in list(filter(lambda d: d['status'] in [0], self.queue)):
                 # Action run ok
@@ -82,6 +81,9 @@ class listenNodes:
         # _ID from local queue
         _id = [action['_id'] for action in self.queue]
         remoteQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': {'$in' : _id} }))
+
+        print(self.queue)
+        print(remoteQueue)
 
         # Run in all local queue
         for local in self.queue:
