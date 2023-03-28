@@ -42,6 +42,7 @@ class listenNodes:
         self.initialQuery()
         while not rospy.is_shutdown():
             self.getFromRemoteUnit()
+            self.sortQueue()
             for action in list(filter(lambda d: d['status'] in [0], self.queue)):
                 # Action run ok
                 if self.runAction(action):
@@ -129,8 +130,8 @@ class listenNodes:
         i = 1
         #Remove commands duplicates
         while i < len(temp):
-            if temp[i]['command'] == temp[i-1]['command']:
-                temp.pop(i)
+            if temp[i]['command'] == temp[i-1]['command'] and temp[i]['topic'] == temp[i-1]['topic']:
+                temp[i].update({'status': 3})
                 MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': temp['_id']}, {'$set': {'status': 3}})
             else:
                 i = i + 1
