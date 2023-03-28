@@ -71,72 +71,84 @@ class listenNodes:
             pass
         
     def initialQuery(self):
-        remoteQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find())
-        # remote = next(remote for remote in remoteQueue)
-        for item in remoteQueue:
-            # if item != []:
-            while not MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': item['_id']}, {'$set': {'status': 3}}).acknowledged:
-                rospy.sleep(1)
-                       
-    def getFromRemoteUnit(self):
-        # _ID from local queue
-        _id = [action['_id'] for action in self.queue]
-        remoteQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': {'$in' : _id} }))
-
-        print('=============================')
-        print("Local  queue: ",self.queue)
-        print("Remote queue: ",remoteQueue)
-
-        # Run in all local queue
-        for local in self.queue:
-            remote = next(remote for remote in remoteQueue if remote['_id'] == local['_id'])
-            if remote != []:
-                if local['status'] == 1:
-                    if MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': remote['_id']}, {'$set': {'status': 1}}).acknowledged:
-                        self.queue.remove(local) 
-                else:
-                    remoteQueue.remove(remote)
-                    self.queue.remove(remote)        
-            # Local not found in remote
-            else:
-                local.update({'_id': MongoClient.RemoteUnitClient[db.dataLake]['Actions'].insert_one(local).inserted_id})
-
-        # Append remote in local
-        actionsQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].aggregate(pipeline=pipeline['Status_0|1']))
-        for new in actionsQueue:
-            self.queue.append(new)    
-        
-    def runAction(self, action):
-        command = json.dumps(action['command'], indent=1)
-        command = command.replace('{','').replace('}','').replace('"', '').replace(',','\n')
-        command = "rostopic pub -1 " + action['topic'] + ' '+ action['msg'] + ' "' + command + '"'
         try:
-            result = subprocess.call(command, shell=True)
-            return True   
+            remoteQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find())
+            # remote = next(remote for remote in remoteQueue)
+            for item in remoteQueue:
+                # if item != []:
+                while not MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': item['_id']}, {'$set': {'status': 3}}).acknowledged:
+                    rospy.sleep(1)
         except Exception as e:
             print(e)
-            return False
+                       
+    def getFromRemoteUnit(self):
+        try:
+            # _ID from local queue
+            _id = [action['_id'] for action in self.queue]
+            remoteQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': {'$in' : _id} }))
+
+            print('=============================')
+            print("Local  queue: ",self.queue)
+            print("Remote queue: ",remoteQueue)
+
+            # Run in all local queue
+            for local in self.queue:
+                remote = next(remote for remote in remoteQueue if remote['_id'] == local['_id'])
+                if remote != []:
+                    if local['status'] == 1:
+                        if MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': remote['_id']}, {'$set': {'status': 1}}).acknowledged:
+                            self.queue.remove(local) 
+                    else:
+                        remoteQueue.remove(remote)
+                        self.queue.remove(remote)        
+                # Local not found in remote
+                else:
+                    local.update({'_id': MongoClient.RemoteUnitClient[db.dataLake]['Actions'].insert_one(local).inserted_id})
+
+            # Append remote in local
+            actionsQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].aggregate(pipeline=pipeline['Status_0|1']))
+            for new in actionsQueue:
+                self.queue.append(new)    
+        except Exception as e:
+            print(e)
+        
+    def runAction(self, action):
+        try:
+            command = json.dumps(action['command'], indent=1)
+            command = command.replace('{','').replace('}','').replace('"', '').replace(',','\n')
+            command = "rostopic pub -1 " + action['topic'] + ' '+ action['msg'] + ' "' + command + '"'
+            try:
+                result = subprocess.call(command, shell=True)
+                return True   
+            except Exception as e:
+                print(e)
+                return False
+        except Exception as e:
+            print(e)
 
     def sortQueue(self, key):
-        temp = []
-        #Sort
-        self.queue = sorted(self.queue, key=lambda d: d['priority'])
-        self.queue = sorted(self.queue, key=lambda d: d[key])
-        #Remove duplicates
-        for i in range(len(self.queue)):
-            if self.queue[i] not in self.queue[i + 1:]:
-                temp.append(self.queue[i])
-            else:
-                MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': self.queue[i]['_id']}, {'$set': {'status': 3}})
-        i = 1
-        #Remove commands duplicates
-        while i < len(temp):
-            if temp[i]['command'] == temp[i-1]['command'] and temp[i]['topic'] == temp[i-1]['topic']:
-                temp[i].update({'status': 3})
-                MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': temp['_id']}, {'$set': {'status': 3}})
-            else:
-                i = i + 1
-        self.queue = temp
+        try:
+            temp = []
+            #Sort
+            self.queue = sorted(self.queue, key=lambda d: d[key])
+            self.queue = sorted(self.queue, key=lambda d: d['priority'])
+            #Remove duplicates
+            for i in range(len(self.queue)):
+                if self.queue[i] not in self.queue[i + 1:]:
+                    temp.append(self.queue[i])
+                else:
+                    MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': self.queue[i]['_id']}, {'$set': {'status': 3}})
+            i = 1
+            #Remove commands duplicates
+            while i < len(temp):
+                if temp[i]['command'] == temp[i-1]['command'] and temp[i]['topic'] == temp[i-1]['topic']:
+                    temp[i].update({'status': 3})
+                    MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': temp['_id']}, {'$set': {'status': 3}})
+                else:
+                    i = i + 1
+            self.queue = temp
+        except Exception as e:
+            print(e)
 
 if __name__ == '__main__':
     try:
