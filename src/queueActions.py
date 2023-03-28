@@ -82,8 +82,8 @@ class listenNodes:
         _id = [action['_id'] for action in self.queue]
         remoteQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': {'$in' : _id} }))
 
-        print(self.queue)
-        print(remoteQueue)
+        print("Local  queue: ",self.queue)
+        print("Remote queue: ",remoteQueue)
 
         # Run in all local queue
         for local in self.queue:
