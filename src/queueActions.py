@@ -61,6 +61,7 @@ class listenNodes:
             data['command']
             data['msg']
             data['topic']
+            data['priority']
             data.update({'dateTime': datetime.datetime.now()})
             self.queue.append(data)
             
@@ -72,7 +73,8 @@ class listenNodes:
         # remote = next(remote for remote in remoteQueue)
         for item in remoteQueue:
             # if item != []:
-            MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': item['_id']}, {'$set': {'status': 3}})
+            while not MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': item['_id']}, {'$set': {'status': 3}}).acknowledged:
+                rospy.sleep(1)
                        
     def getFromRemoteUnit(self):
         # _ID from local queue
@@ -92,7 +94,6 @@ class listenNodes:
             else:
                 local.update({'_id': MongoClient.RemoteUnitClient[db.dataLake]['Actions'].insert_one(local).inserted_id})
 
-
         # Append remote in local
         actionsQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].aggregate(pipeline=pipeline['Status_0|1']))
         for new in actionsQueue:
@@ -108,9 +109,26 @@ class listenNodes:
         except Exception as e:
             print(e)
             return False
-        
 
-        
+    def sortQueue(self, key):
+        temp = []
+        #Sort
+        self.queue = sorted(self.queue, key=lambda d: d[key])
+        #Remove duplicates
+        for i in range(len(self.queue)):
+            if self.queue[i] not in self.queue[i + 1:]:
+                temp.append(self.queue[i])
+            else:
+                MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': self.queue[i]['_id']}, {'$set': {'status': 3}})
+        i = 1
+        #Remove commands duplicates
+        while i < len(temp):
+            if temp[i]['command'] == temp[i-1]['command']:
+                temp.pop(i)
+                MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': temp['_id']}, {'$set': {'status': 3}})
+            else:
+                i = i + 1
+        self.queue = temp
 
 if __name__ == '__main__':
     try:
