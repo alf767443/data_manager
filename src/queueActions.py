@@ -82,6 +82,7 @@ class listenNodes:
         _id = [action['_id'] for action in self.queue]
         remoteQueue = list(MongoClient.RemoteUnitClient[db.dataLake]['Actions'].find({'_id': {'$in' : _id} }))
 
+        print('=============================')
         print("Local  queue: ",self.queue)
         print("Remote queue: ",remoteQueue)
 
@@ -91,6 +92,7 @@ class listenNodes:
             if remote != []:
                 if local['status'] == 1:
                     MongoClient.RemoteUnitClient[db.dataLake]['Actions'].update_one({'_id': remote['_id']}, {'$set': {'status': 1}})
+                    self.queue.remove(remote) 
                 else:
                     remoteQueue.remove(remote)
                     self.queue.remove(remote)        
