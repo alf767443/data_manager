@@ -104,7 +104,7 @@ class listenNodes:
             # Create data string
             data = bson.encode(document={'dataPath': dataPath, 'content': content})
             # Create the file name
-            fileName =  datetime.datetime.strftime(datetime.datetime.now(),"%Y%m%d%H%M%S_%f")
+            fileName =  datetime.strftime(datetime.now(),"%Y%m%d%H%M%S_%f")
             # Define the extension
             extencion = '.cjson'
             # Create the extension
