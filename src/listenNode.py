@@ -4,15 +4,14 @@
 from GlobalSets.util import msg_to_document
 
 # Import nodes.py
-from nodes import NODES, PATH
+from nodes import NODES
+from config import PATH, CLIENT
 
 # Import librarys
 import rospy, bson, os
+from pymongo import errors as pymongo_erros
 from fractions import Fraction
 from datetime import datetime
-
-# Data storage path
-path =  PATH
 class listenNodes:
     def __init__(self, NODES) -> None:
         # Starts unique node in the ROS core with the name listenNode
@@ -59,8 +58,18 @@ class listenNodes:
                 args['callback'](data)
         except Exception as e:
             rospy.logerr("Error in callback function\n" + e)
-        # Create the storage file
-            self.createFile(dataPath=args['dataPath'], content=data) 
+        try:
+            # If MongoDB is available
+            if CLIENT.is_primary:
+                # Send to cloud
+                if not self.createFile(dataPath=args['dataPath'], content=data):
+                    # If can't send, create a file
+                    self.createFile(dataPath=args['dataPath'], content=data)     
+            else:
+                # Create the storage file
+                self.createFile(dataPath=args['dataPath'], content=data) 
+        except:
+            rospy.logerr("Error with MongoDB client\n" + e)
         # Wait the set time
         for i in range(1,args['ticks']): args['rate'].sleep()
 
@@ -82,7 +91,7 @@ class listenNodes:
                 return False
     
 # Create a file that contains the information for storage
-    def createFile(dataPath: bson, content: bson):
+    def createFile(self, dataPath: bson, content: bson):
         try:
             # Check if dataPath is valid
             test = dataPath['dataSource']
@@ -99,11 +108,11 @@ class listenNodes:
             # Define the extension
             extencion = '.cjson'
             # Create the extension
-            fullPath = path+fileName+extencion
+            fullPath = PATH+fileName+extencion
             # Create directory if it don't exist
-            if not os.path.exists(path=path):
+            if not os.path.exists(path=PATH):
                 os.chmod
-                os.makedirs(name=path)
+                os.makedirs(name=PATH)
             # Create file
             file = open(file=fullPath, mode='a')
             file = open(file=fullPath, mode='wb')
@@ -113,6 +122,23 @@ class listenNodes:
             return True
         except Exception as e:
             rospy.logerr("Error to create the file\n" + e)
+            return False
+        
+    def send2cloud(self, dataPath: bson, content: bson):
+        try:
+            # Check if dataPath is valid
+            test = dataPath['dataSource']
+            test = dataPath['dataBase']
+            test = dataPath['collection']
+        except Exception as e:
+            rospy.logerr("Error in storage data path\n" + e)
+            return False
+        try:
+            return CLIENT[dataPath['dataBase']][dataPath['collection']].insert_one(content).acknowledged
+        except pymongo_erros.DuplicateKeyError:
+            return True
+        except Exception as e:
+            rospy.logerr("Error when update to cloud\n" + e)
             return False
 
 if __name__ == '__main__':

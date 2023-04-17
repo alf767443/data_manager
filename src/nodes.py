@@ -1,8 +1,7 @@
 # Global imports
 from GlobalSets.Mongo import DataSource as Source, DataBases as db, Collections as col
-import os
 
-PATH = os.path.expanduser('~')+'/UGV_tempData/'
+from config import DATALAKE, DATASOURCE
 
 # Messages
 from nav_msgs.msg import Odometry
@@ -50,8 +49,8 @@ NODES = [
         'rate'    : 1,
         'callback': q2e,
         'dataPath': {
-            'dataSource': Source.CeDRI_UGV, 
-            'dataBase'  : db.dataLake,
+            'dataSource': DATASOURCE, 
+            'dataBase'  : DATALAKE,
             'collection': col.PositionOdom
         }
     }, 
@@ -62,8 +61,8 @@ NODES = [
     #     'rate'    : 1,
     #     'callback': None,
     #     'dataPath': {
-    #         'dataSource': Source.CeDRI_UGV, 
-    #         'dataBase'  : db.dataLake,
+    #         'dataSource': DATASOURCE, 
+    #         'dataBase'  : DATALAKE,
     #         'collection': col.LiDAR
     #     }
     # }, 
@@ -74,8 +73,8 @@ NODES = [
         'rate'    : 1,
         'callback': q2e,
         'dataPath': {
-            'dataSource': Source.CeDRI_UGV, 
-            'dataBase'  : db.dataLake,
+            'dataSource': DATASOURCE, 
+            'dataBase'  : DATALAKE,
             'collection': col.PositionAMCL
         }
     }, 
@@ -86,8 +85,8 @@ NODES = [
         'rate'    : 1,
         'callback': None,
         'dataPath': {
-            'dataSource': Source.CeDRI_UGV, 
-            'dataBase'  : db.dataLake,
+            'dataSource': DATASOURCE, 
+            'dataBase'  : DATALAKE,
             'collection': col.Motor
         }
     }, 
@@ -98,8 +97,8 @@ NODES = [
     #     'rate'    : 1,
     #     'callback': None,
     #     'dataPath': {
-    #         'dataSource': Source.CeDRI_UGV, 
-    #         'dataBase'  : db.dataLake,
+    #         'dataSource': DATASOURCE, 
+    #         'dataBase'  : DATALAKE,
     #         'collection': col.Occupancy
     #     }
     # },
@@ -110,8 +109,8 @@ NODES = [
         'rate'    : 1,
         'callback': None,
         'dataPath': {
-            'dataSource': Source.CeDRI_UGV, 
-            'dataBase'  : db.dataLake,
+            'dataSource': DATASOURCE, 
+            'dataBase'  : DATALAKE,
             'collection': col.Battery
         }
     }, 
@@ -135,8 +134,8 @@ DIAGNOSTICS_NODES = [
     #     'msg'     : DiagnosticArray,
     #     'rate'    : 1,
     #     'dataPath': {
-    #         'dataSource': Source.CeDRI_UGV, 
-    #         'dataBase'  : db.dataLake,
+    #         'dataSource': DATASOURCE, 
+    #         'dataBase'  : DATALAKE,
     #         'collection': col.Diagnostics
     #     }
     # }, 
@@ -145,8 +144,8 @@ DIAGNOSTICS_NODES = [
         'msg'     : DiagnosticArray,
         'rate'    : 1,
         'dataPath': {
-            'dataSource': Source.CeDRI_UGV, 
-            'dataBase'  : db.dataLake,
+            'dataSource': DATASOURCE, 
+            'dataBase'  : DATALAKE,
             'collection': col.Diagnostics
         }
     }, 
@@ -155,8 +154,8 @@ DIAGNOSTICS_NODES = [
     #     'msg'     : ConfigDescription,
     #     'rate'    : 1,
     #     'dataPath': {
-    #         'dataSource': Source.CeDRI_UGV, 
-    #         'dataBase'  : db.dataLake,
+    #         'dataSource': DATASOURCE, 
+    #         'dataBase'  : DATALAKE,
     #         'collection': col.Diagnostics
     #     }
     # }, 
@@ -165,8 +164,8 @@ DIAGNOSTICS_NODES = [
     #     'msg'     : ConfigDescription,
     #     'rate'    : 1,
     #     'dataPath': {
-    #         'dataSource': Source.CeDRI_UGV, 
-    #         'dataBase'  : db.dataLake,
+    #         'dataSource': DATASOURCE, 
+    #         'dataBase'  : DATALAKE,
     #         'collection': col.Diagnostics
     #     }
     # }, 
@@ -175,8 +174,8 @@ DIAGNOSTICS_NODES = [
     #     'msg'     : ConfigDescription,
     #     'rate'    : 1,
     #     'dataPath': {
-    #         'dataSource': Source.CeDRI_UGV, 
-    #         'dataBase'  : db.dataLake,
+    #         'dataSource': DATASOURCE, 
+    #         'dataBase'  : DATALAKE,
     #         'collection': col.Diagnostics
     #     }
     # }, 
