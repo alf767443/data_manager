@@ -71,7 +71,7 @@ class listenNodes:
         except:
             rospy.logerr("Error with MongoDB client\n" + e)
         # Wait the set time
-        for i in range(1,args['ticks']): args['rate'].sleep()
+        for i in range(0,args['ticks']): args['rate'].sleep()
 
 # Set the rate and ticks parameters for the node
     def sleepDef(self, node):
@@ -83,7 +83,7 @@ class listenNodes:
             # Define this data node
             node['rate'] = rospy.Rate(rate)
             node['ticks'] = ticks
-            rospy.loginfo("\tNode rate: " + str(rate) + "\n\t     ticks: " + str(ticks))
+            rospy.loginfo("\n\tNode: " + node['node'] + "\n\trate: " + str(rate) + "\n\tticks: " + str(ticks))
             return True
         except Exception as e:
                 rospy.logerr("Error to create the timer\n" + e)
