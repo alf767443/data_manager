@@ -81,7 +81,7 @@ class listenNodes:
                 print(e)
                 return False
     
-# Cria um arquivo que contenha as informações para armazenamento
+# Create a file that contains the information for storage
     def createFile(dataPath: bson, content: bson):
         try:
             # Check if dataPath is valid
