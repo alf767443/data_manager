@@ -62,7 +62,7 @@ class listenNodes:
             # If MongoDB is available
             if CLIENT.is_primary:
                 # Send to cloud
-                if not self.createFile(dataPath=args['dataPath'], content=data):
+                if not self.send2cloud(dataPath=args['dataPath'], content=data):
                     # If can't send, create a file
                     self.createFile(dataPath=args['dataPath'], content=data)     
             else:
