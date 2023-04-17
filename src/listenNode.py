@@ -83,7 +83,7 @@ class listenNodes:
             # Define this data node
             node['rate'] = rospy.Rate(rate)
             node['ticks'] = ticks
-            rospy.loginfo("\n\tNode: " + node['node'] + "\n\trate: " + str(rate) + "\n\tticks: " + str(ticks))
+            rospy.logdebug("\n\tNode: " + node['node'] + "\n\trate: " + str(rate) + "\n\tticks: " + str(ticks))
             return True
         except Exception as e:
                 rospy.logerr("Error to create the timer\n" + e)
