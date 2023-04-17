@@ -1,5 +1,8 @@
 # Global imports
 from GlobalSets.Mongo import DataSource as Source, DataBases as db, Collections as col
+import os
+
+PATH = os.path.expanduser('~')+'/UGV_tempData/'
 
 # Messages
 from nav_msgs.msg import Odometry
@@ -11,7 +14,6 @@ from ubiquity_motor.msg import MotorState
 
 from diagnostic_msgs.msg import DiagnosticArray
 from dynamic_reconfigure.msg import ConfigDescription
-
 
 # Modifications
 from tf.transformations import euler_from_quaternion
