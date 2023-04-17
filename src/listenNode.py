@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 # Global imports
-# from GlobalSets.localSave import createFile
 from GlobalSets.util import msg_to_document
 
 # Import nodes.py
@@ -16,69 +15,65 @@ from datetime import datetime
 path =  PATH
 class listenNodes:
     def __init__(self, NODES) -> None:
-        # Inicia o nó unico no ROS core com o nome de listenNode
+        # Starts unique node in the ROS core with the name listenNode
         rospy.init_node('listenNodes', anonymous=False)
-
-        # Lê a lista de nós presente no arquivo nodes.py
+        # Reads out the list of nodes present in the file nodes.py
         self.NODES = NODES
-
-        # Configura os subscriber para cada item em NODES
+        # Set up the subscribers for each item in NODES
         for node in self.NODES:
             try:
-                # Define rate e ticks do nó
+                # Set node rate and ticks
                 self.sleepDef(node=node)
-                # Cria o subscriber
+                # Creates the subscriber
                 self.newSubscriber(node=node)
             except Exception as e:
                 rospy.logerr("Error in node.py error\n" + e)
-                print(e)
-        # Mantém o nó ativo
+        # Keeps the node active
         rospy.spin()
                
-# Cria novos subscriber
+# Create new subscriber
     def newSubscriber(self, node): 
         try:
-            # Utiliza das informações presentes no dicionario 'node' para criar um subscriber
+            # Uses the information in the node dictionary to create a subscriber
             rospy.Subscriber(name='/' + node['node'], data_class=node['msg'], callback=self.callback, callback_args=node, queue_size=1)
+
             rospy.loginfo("Subscriber to the node /" + node['node'] + " create")
             return True
         except Exception as e:
             rospy.logerr("Error in the creation of subscriber\n" + e)
             return False
         
-# Callback para o nó
+# Callback to the node
     def callback(self, msg, args):
         try:
-            # Obtém os dados da mensagem
+            # Gets the message data
             data = msg_to_document(msg=msg)
-            # Adiciona a data 
+            # Adds the date 
             data.update({'dateTime': datetime.now()})
         except Exception as e:
             rospy.logerr("Error to convert the mensage\n" + e)
         try:
-            # Se o nó possuir uma função de callback executa
+            # If the node has a callback function it executes
             if args['callback'] != None:
-                # Executa a função de callback
+                # Execute the callback function
                 args['callback'](data)
         except Exception as e:
             rospy.logerr("Error in callback function\n" + e)
-        # Cria o arquivo de armazenamento
+        # Create the storage file
             self.createFile(dataPath=args['dataPath'], content=data) 
-        # Espera o tempo definido
+        # Wait the set time
         for i in range(1,args['ticks']): args['rate'].sleep()
 
-# Define os parametros de rate e ticks para o nó
+# Set the rate and ticks parameters for the node
     def sleepDef(self, node):
         try: 
-            # Encontra a frequencia para o nó e o número de tick de sleep
+            # Find the frequency for the node and the number of sleep ticks
             fraction = Fraction(node['rate']).limit_denominator()
             rate = fraction.numerator
             ticks = fraction.denominator
-
-            # Define estes dados node
+            # Define this data node
             node['rate'] = rospy.Rate(rate)
             node['ticks'] = ticks
-
             rospy.logdebug("\tNode rate: " + str(rate) + "\n\t     ticks: " + str(ticks))
             return True
         except Exception as e:
@@ -119,7 +114,6 @@ class listenNodes:
         except Exception as e:
             rospy.logerr("Error to create the file\n" + e)
             return False
-
 
 if __name__ == '__main__':
     try:
