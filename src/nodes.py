@@ -3,7 +3,7 @@ from GlobalSets.Mongo import DataSource as Source, DataBases as db, Collections 
 
 from config import DATALAKE, DATASOURCE
 
-# Messages
+# ============= ROS messages ============= #
 from nav_msgs.msg import Odometry
 from nav_msgs.msg import OccupancyGrid
 from sensor_msgs.msg import LaserScan
@@ -14,9 +14,9 @@ from ubiquity_motor.msg import MotorState
 from diagnostic_msgs.msg import DiagnosticArray
 from dynamic_reconfigure.msg import ConfigDescription
 
+# ============= callback functions ============= #
 # Modifications
 from tf.transformations import euler_from_quaternion
-
 def q2e(data) -> None:
     orientation = data['pose']['pose']['orientation']
     (raw, pitch, yaw) = euler_from_quaternion([orientation['x'], orientation['y'], orientation['z'], orientation['w']])
@@ -27,6 +27,8 @@ def q2e(data) -> None:
     }
     data.update({'pose': {'pose': {'position': data['pose']['pose']['position'], 'orientation': orientation}}})
 
+
+# ============= Nodes to listen ============= #
 NODES = [
     #############################################################
     # {
@@ -55,17 +57,17 @@ NODES = [
         }
     }, 
     # LiDAR
-    # {
-    #     'node'    : 'scan',
-    #     'msg'     : LaserScan,
-    #     'rate'    : 1,
-    #     'callback': None,
-    #     'dataPath': {
-    #         'dataSource': DATASOURCE, 
-    #         'dataBase'  : DATALAKE,
-    #         'collection': col.LiDAR
-    #     }
-    # }, 
+    {
+        'node'    : 'scan',
+        'msg'     : LaserScan,
+        'rate'    : 1,
+        'callback': None,
+        'dataPath': {
+            'dataSource': DATASOURCE, 
+            'dataBase'  : DATALAKE,
+            'collection': col.LiDAR
+        }
+    }, 
     # AMCL_pos
     {
         'node'    : 'amcl_pose',
@@ -90,18 +92,18 @@ NODES = [
             'collection': col.Motor
         }
     }, 
-    # # Occupancy map
-    # {
-    #     'node'    : 'map',
-    #     'msg'     : OccupancyGrid,
-    #     'rate'    : 1,
-    #     'callback': None,
-    #     'dataPath': {
-    #         'dataSource': DATASOURCE, 
-    #         'dataBase'  : DATALAKE,
-    #         'collection': col.Occupancy
-    #     }
-    # },
+    # Occupancy map
+    {
+        'node'    : 'map',
+        'msg'     : OccupancyGrid,
+        'rate'    : 1,
+        'callback': None,
+        'dataPath': {
+            'dataSource': DATASOURCE, 
+            'dataBase'  : DATALAKE,
+            'collection': col.Occupancy
+        }
+    },
     # Battery
     {
         'node'    : 'battery_state',
